@@ -1,0 +1,21 @@
+<apex:page controller="ObjectFieldExplorerController">
+   <apex:form id="form">
+     <apex:pageBlock title="Select Object and Fields">
+       <apex:pageBlockSection title="Select an Object" collapsible="false" columns="2">
+       <apex:pageBlockSectionItem >
+                 <apex:outputLabel value="Select an object:"></apex:outputLabel>
+        <apex:selectList value="{!selectedObject}" size="1">
+            <apex:selectOptions value="{!objectOptions}" />
+            <apex:actionSupport reRender="form" event="onchange" />
+        </apex:selectList>
+    </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+     <apex:outputLabel value="Select Fields:"> </apex:outputLabel>
+        <apex:selectList value="{!selectedField}" multiselect="true" size="6">
+            <apex:selectOptions value="{!fieldOptions}" />
+        </apex:selectList>
+    </apex:pageBlockSectionItem>
+       </apex:pageBlockSection>
+      </apex:pageBlock>
+   </apex:form>
+</apex:page>

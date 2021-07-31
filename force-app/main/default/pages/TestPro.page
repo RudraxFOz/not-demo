@@ -1,0 +1,46 @@
+<apex:page controller="PagingDemoWithAlpabets">
+	<apex:form >
+		<apex:pageBlock title="Contact">
+
+			<table>
+				<tr>
+				<apex:repeat value="{!SerchAlpabet}" var="nn">
+					<td><apex:commandLink action="{!display}"  reRender="pg" ><apex:param value="{!nn}" name="sss"  assignTo="{!SearchVar}"/> {!nn}</apex:commandLink></td>
+					</apex:repeat>
+				</tr>
+			</table>
+			<apex:outputpanel id="pg">
+
+				<div id="showdata">
+					<apex:pageBlockTable value="{!ShowCon}" var="k">
+
+					<apex:column headerValue="Name" value="{!k.Name}"/> 
+					<!-- <apex:column headerValue="Email" value="{!k.email}"/> --> 
+					<apex:column headerValue="Mobile Phone" value="{!k.Phone}"/> 
+					<apex:column headerValue="Date of Birth" value="{!k.Active__c}"/> 
+					</apex:pageBlockTable>
+					</div>
+					<div id="nodata" style = "display:none;">
+					<p><b>No record by selected letter.</b></p>
+				</div>  
+				<script>
+					var sze='{!sizee}';
+					sz=parseInt(sze);
+					//  alert(sz);
+					if(sz>0)
+					{
+						document.getElementById('showdata').style.display="block";
+						document.getElementById('nodata').style.display="none";
+					}
+					else
+					{
+						document.getElementById('showdata').style.display="none";
+						document.getElementById('nodata').style.display="block";
+					}
+				</script>   
+			</apex:outputpanel>
+
+		</apex:pageBlock>
+	</apex:form>
+
+</apex:page>

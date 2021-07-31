@@ -1,0 +1,16 @@
+<apex:page controller="TestApex">
+     <apex:pageMessages id="pageMessages" />
+     
+     <apex:form >
+           <apex:pageBlock >
+                <apex:pageBlockSection title="Dynamic fields" columns="3" showHeader="true">
+                     <apex:repeat value="{!fieldNames1}" var="FieldName" >
+                          <apex:pageBlockSectionItem >
+                              <apex:inputText value="{!FieldName.Name}"/> 
+                              <apex:inputText value="{!FieldName.AccountNumber}"/>
+                          </apex:pageBlockSectionItem>
+                     </apex:repeat>
+               </apex:pageBlockSection>
+          </apex:pageBlock>
+     </apex:form>
+</apex:page>

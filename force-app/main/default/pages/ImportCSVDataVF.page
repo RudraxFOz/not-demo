@@ -1,0 +1,55 @@
+<apex:page controller="ImportCSVDataController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+        <apex:form >
+        <apex:slds />
+                <apex:actionFunction name="download" action="downloadCsv()" />
+                <script>
+                        function downloadCsv() {
+                                var csv = '{!generatedCSVFile}';
+                                alert(csv.length); 
+                                if (csv.length == 0) { 
+                                        alert("All the contact Save Success"); 
+                                } else {
+                                        
+                                        console.log(csv);
+                                        //var csv = csv1.replace('"sl"', "\n");
+                                        alert(csv); 
+                                        // var csv = replaceAll(csv1,'"sl"','\n');
+                                        // alert(csv); 
+                                        // ####--code for create a temp. <a> html tag [link tag] for download the CSV file--####     
+                                        var hiddenElement = document.createElement('a');
+                                        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+                                        hiddenElement.target = '_self'; // 
+                                        hiddenElement.download = 'ContactData.csv';  // CSV file Name* you can change it.[only name not .csv] 
+                                        document.body.appendChild(hiddenElement); // Required for FireFox browser
+                                        hiddenElement.click(); // using click() js function to download csv file
+                                }
+                        } 
+                </script>
+                <apex:pagemessages > 
+                </apex:pagemessages>
+                <apex:pageblock > 
+                        <apex:pageBlockSection columns="3" title="Upload Csv File For Contact">
+                                <apex:inputFile value="{!csvBodyData}"  filename="{!csvInString}"/>
+                                <apex:commandButton value="Import Contact" action="{!importCSVFile}"/>  
+                                <apex:commandButton value="Download Csv" onclick="downloadCsv();"/> 
+                        </apex:pageBlockSection>
+                </apex:pageblock>
+                <apex:pageblock > 
+                        <apex:pageBlockSection columns="3" title="Create Campaign">
+                                <apex:inputField value="{!campaign.Name}" required="true"/>
+                                <apex:inputField value="{!campaign.IsActive}"/>
+                                <apex:inputField value="{!campaign.Type}"/>
+                                <apex:inputField value="{!campaign.Status}"/>
+                                <apex:inputField value="{!campaign.StartDate}"/> 
+                                <apex:inputField value="{!campaign.EndDate}"/>
+                                <apex:inputField value="{!campaign.ParentId}"/>
+                                <apex:inputField value="{!campaign.Description}"/>
+                        </apex:pageBlockSection>
+                </apex:pageblock>
+                <apex:pageBlock > 
+                        <apex:pageBlockSection columns="2" title="Create CampaignMember">
+                                <apex:inputField value="{!campaignMember.Status}" required="true"/>
+                        </apex:pageBlockSection>
+                </apex:pageBlock>
+        </apex:form>
+</apex:page>

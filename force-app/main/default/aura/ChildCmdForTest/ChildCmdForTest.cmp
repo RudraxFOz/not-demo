@@ -1,0 +1,9 @@
+<aura:component>
+    <aura:registerEvent name="SmapleCmdEvent" type="c:SampleComponentEvent" />
+    <aura:handler  event="c:SampleComponentEvent" action="{!c.parentEventFunFormParent}" />
+    <aura:method name="childMessageMethod" action="{!c.getMessage}" access="public">
+        <aura:attribute name="childGreetingParam" type="String" default="Hello"/> 
+        <aura:attribute name="childPersonNameParam" type="String" default="World"/> 
+    </aura:method>
+    <lightning:button label="Click to fire event" variant="brand" onclick="{!c.childCmdEventFun}" />
+</aura:component>

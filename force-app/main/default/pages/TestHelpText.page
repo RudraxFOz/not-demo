@@ -1,0 +1,22 @@
+<apex:page standardController="Account">   
+    <!-- Style Panel Satrts--->   
+    <apex:slds />
+    <style type="text/css">
+        button:hover + .slds-popover.slds-popover_tooltip.slds-hide {
+            display : block!important;
+        }
+    </style>
+    <div style="padding-left:2rem;padding-top:5rem;position:relative">
+        <button class="slds-button slds-button_icon slds-button slds-button_icon" aria-describedby="help" aria-disabled="true" title="Help">
+            <svg class="slds-button__icon" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                     xlink:href="/apexpages/slds/latest/assets/icons/action-sprite/svg/symbols.svg#info">
+                </use>
+            </svg>
+            <span class="slds-assistive-text">Help</span>
+        </button>
+        <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left slds-hide" role="tooltip" id="help" style="position:absolute;bottom:25px;left:15px;">
+            <div class="slds-popover__body">{!$ObjectType.Contact.fields.Checkbox_1__c.InlineHelpText}</div>
+        </div>
+    </div>      
+</apex:page>

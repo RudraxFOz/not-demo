@@ -1,0 +1,15 @@
+<apex:page Controller="CustomAccountController" >
+    <apex:form >
+        <apex:pageBlock >
+            <apex:inputtext value="{!AccountName}"/>
+            <apex:commandButton value="Save" action="{!SaveRecord}"/>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Accounts">
+            <apex:pageBlockTable value="{!Accounts}" var="acc">
+                <apex:column value="{!acc.Name}"/>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+
+</apex:page>

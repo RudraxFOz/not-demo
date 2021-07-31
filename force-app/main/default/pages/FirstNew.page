@@ -1,0 +1,11 @@
+<apex:page controller="TestMyPage" >
+ <apex:form >
+    <apex:pageBlock id="block">
+          <apex:pageBlockSection title="Section 1" rendered="{!showSection1}"/>        
+          <apex:pageBlockSection title="Section 2" rendered="{!showSection2}"/>    
+          <apex:pageBlockSection title="Section 3" rendered="{!showSection3}"/>   
+    </apex:pageBlock>
+    <apex:commandButton action="{!method1}" value="Button1" reRender="block"/>
+    <apex:commandButton action="{!method2}" value="Button2" reRender="block"/>
+  </apex:form>
+</apex:page>

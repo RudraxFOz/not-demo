@@ -1,0 +1,41 @@
+.THIS .HandWOfCard {
+    height: 30rem;
+    width: 40%;
+    margin-left: 26%;
+    margin-top: 7%;
+    background-color:azure ;
+
+}
+
+
+.THIS .backImg {
+      
+   position: relative;
+   height: 30vh;
+   background:'v.backgroundColor'  url('v.backgroundImageURL') no-repeat;
+   background-position: center;
+   background-size: cover;
+        
+   
+
+}
+
+.THIS .imgCss {
+    margin-left: -43%;
+    /* margin-bottom: -58%; */
+    width: 27%;
+    margin-top: 10%;
+}
+
+.THIS .CvvWidth {
+    width: 49%;
+}
+
+.THIS .badgeCss {
+    background-color: chartreuse;
+
+}
+
+.THIS .toastMessage.forceActionsText{
+    white-space : pre-line !important;
+}

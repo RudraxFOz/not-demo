@@ -1,0 +1,25 @@
+<apex:page standardController="Account" extensions="FileUploadController">
+    <html>
+        <title>File Upload</title>
+        <apex:form >
+            <apex:pageBlock >
+                <apex:actionRegion >
+                    <apex:inputFile value="{!file}" filename="{!filename}" onchange="checkFileSize(event)"/>
+                     <apex:inputfield id="jobApplicationId" value="{!account.name}"/>   
+                    <apex:commandbutton action="{!uploadFile}" value="Upload File" />
+                </apex:actionRegion>
+            </apex:pageBlock>
+        </apex:form>
+        <script type="text/javascript">
+            function checkFileSize(event) {
+              if(event.target.files && event.target.files[0]) {
+                if(event.target.files[0].size > 200000) {
+                  alert('File must be less than 500kb');
+                } else {
+                  // ...
+                }
+              }
+            }
+        </script>
+    </html>
+</apex:page>

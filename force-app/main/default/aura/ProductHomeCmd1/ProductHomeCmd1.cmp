@@ -1,0 +1,39 @@
+<aura:component controller="ProductHomeController1" implements="force:appHostable">
+	<aura:attribute name="parentProducts" type="list"/>
+	<aura:handler name="init" value="{!this}" action="c.doInit"/>
+	<lightning:navigation aura:id="navService"/>
+	<aura:if isTrue="{!not(empty(v.parentProducts))}">
+	 	<lightning:layout  class="slds-align_absolute-center">
+			<aura:iteration items="{!v.parentProducts}" var="parent_product">
+				<lightning:layoutItem size="4" padding="horizontal-large" class="slds-m-top_medium">
+					<lightning:card >
+						<aura:set attribute="title">
+							<div class="slds-text-align_center slds-text-color_chartreuse">
+								{!parent_product.Name}
+							</div>
+						</aura:set>
+						<aura:set attribute="body">
+							<div class="slds-align_absolute-center">
+								<aura:if isTrue="{!parent_product.Name == 'Bulb'}">
+									<img src="{!$Resource.BulbImg}"  />
+								</aura:if>
+								<aura:if isTrue="{!parent_product.Name == 'Shoes'}">
+									<img src="{!$Resource.ShoesImg}" />
+								</aura:if>
+								<aura:if isTrue="{!parent_product.Name == 'T-Shrit'}">
+									<img src="{!$Resource.TshirtImg1}" class="imgWid"/>
+								</aura:if>
+							</div>
+						</aura:set>
+						<aura:set attribute="footer">
+							<lightning:button variant="brand" label="View" name="{!parent_product.Name}" value="{!parent_product.Id}" title="view products" onclick="{!c.navigateToChildProducts}"/>
+						</aura:set>
+					</lightning:card>
+				</lightning:layoutItem>	
+			</aura:iteration>
+		</lightning:layout>
+		<aura:set attribute="else">
+			No Products Available
+		</aura:set>
+	</aura:if>
+</aura:component>

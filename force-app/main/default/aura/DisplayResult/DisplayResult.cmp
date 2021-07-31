@@ -1,0 +1,6 @@
+<aura:component >
+    <aura:attribute name="get_result" type="Integer" />
+    <aura:handler event="c:Result" action="{!c.getValueFormApp}" />
+    
+    The result is {!v.get_result}.
+</aura:component>

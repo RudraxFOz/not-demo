@@ -1,0 +1,6 @@
+<apex:page controller="Controller2" sidebar="true" showHeader="true" >
+    <apex:form >
+        <apex:inputtext value="{!inputText2}"  />  
+        <br />
+    </apex:form>
+</apex:page>

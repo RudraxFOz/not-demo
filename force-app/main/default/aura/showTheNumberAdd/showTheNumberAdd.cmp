@@ -1,0 +1,10 @@
+<aura:component>
+    <aura:attribute name="num1" type="integer" default="10"/>
+    <p><ui:outputText value="{!'First Number - '+ v.num1}"/></p>
+    <br></br>
+    <aura:attribute name="num2" type="integer" default="20"/>
+    <p><ui:outputText value="{!'Second Number - '+v.num2}"/> </p>
+    <br></br>
+    <p><ui:outputText value="{!'Sum is - '}"/>
+    <ui:outputText value="{!v.num1+v.num2}"/></p> 
+</aura:component>

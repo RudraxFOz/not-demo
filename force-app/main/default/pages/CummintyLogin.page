@@ -1,0 +1,78 @@
+<apex:page showHeader="false" sidebar="false" controller="SiteLoginController" standardStylesheets="false" >
+	<html class="forBackImg">
+		<head>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+			<apex:stylesheet value="{!$Resource.CummnityLoginCss}"/>
+			<!-- jQuery library -->
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<!-- Latest compiled JavaScript -->
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"/>
+			<link rel="stylesheet" type="text/css" href="personal-style.css"/>
+			<script type='text/javascript'>
+	        	function noenter(ev)  {
+		            if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+		                javascriptLogin();
+		                return false;
+		             } else {
+		                  return true;
+		             }
+         		}
+        	</script>
+        	<style type="text/css"> 
+        		.forBackImg{
+        			background-image:url(https://suresh1999-dev-ed--c.visualforce.com/resource/1550647135000/CummintyLoginSecond?);
+     		 		
+     		 		width: 100%;
+     		 		height: 100%;
+     		 		background-repeat:repeat;
+
+        		}
+        	</style>
+		</head>
+		<body>
+			
+			<div class="container forBackImg">
+				<br/>
+				<br/>
+				<br/>
+				<br/>
+				<!-- <center> <b id="login-name">LOGIN Here </b> </center>>	 -->	
+				<div class="row">				
+					<div class="col-md-6 col-md-offset-3" id="login">  
+						<apex:form >
+							<apex:actionFunction name="javascriptLogin" action="{!login}" />
+							
+							<div class="form-group">
+								<label class="user"> UserName  </label>
+								<div class="input-group">
+									<span class="input-group-addon" id="iconn"> <i class="glyphicon glyphicon-user"></i></span>
+									<input type="text" class="form-control" id="text1" name="tl" placeholder="username" value="{!username}"/>
+								</div>					
+							</div>
+							<div class="form-group">
+								<label class="user"> Password </label>
+								<div class="input-group">
+									<span class="input-group-addon" id="iconn1"> <i class="glyphicon glyphicon-lock"></i></span>
+									<input type="text" class="form-control" id="text2" name="tl" placeholder=" Enter Password" value="{!password}" onkeypress="return noenter(event);"/>
+								</div>
+							</div>
+							<!-- <div class="form-group">
+								<input type="submit" class="btn btn-success" value="login" style="border-radius:0px; "/>							
+							</div> -->
+							<div class="form-group">
+								<input type="submit" class="btnr btn-success" onclick="loginPage();" value="login" style="border-radius:0px;" />
+								<apex:actionFunction name="loginPage" action="{!login}" />
+								
+							</div>
+						    <br/><br/><br/>
+						    <a href="#" style="color: white; font-size: 15px; float: right; margin-right: 10px;"> Forget Password </a>
+						    <a href="#" style="color: white; font-size: 15px; float: right; margin-right: 10px;"> Register </a>
+						</apex:form>
+  					</div>
+				</div>
+			</div>
+		</body>
+	</html>
+</apex:page>

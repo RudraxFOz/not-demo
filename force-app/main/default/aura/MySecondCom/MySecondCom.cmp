@@ -1,0 +1,4 @@
+<aura:component>
+    
+    <p>This is my second compent </p>
+</aura:component>

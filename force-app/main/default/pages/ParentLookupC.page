@@ -1,0 +1,56 @@
+<apex:page controller="LookUpPageController" id="page1">
+<apex:form id="formid">
+<apex:pageBlock title="Parent Page" id="block1">
+<apex:pageBlockSection id="sec1">
+<apex:pageBlockSectionItem id="item1">
+<apex:outputLabel value="Book Name"/>
+<apex:outputPanel >
+<apex:inputHidden value="{!bookId}" id="inputid" />
+<apex:inputText size="20" value="{!bookName}" id="inputname" onchange="test();"/>
+<a href="#" onclick="openLookupPopup('{!$Component.inputname}', '{!$Component.inputid}');return false ">
+<apex:image value="https://na15.salesforce.com/resource/1405511203000/lookupicon"/>
+</a>
+</apex:outputPanel>
+</apex:pageBlockSectionitem>
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+   <script type="text/javascript"> 
+    
+    function test() {
+        console.log('==name==@@');
+        
+        }
+var newWin=null;
+function openLookupPopup(name,id1)
+{
+ console.log('==name=='+name);
+    console.log('==id1=='+id1);
+var inid1=document.getElementById("{!$Component.page1.formid.block1.sec1.item1.inputid}").value;
+var inname=document.getElementById("{!$Component.page1.formid.block1.sec1.item1.inputname}").value;
+console.log('==inid1=='+inid1);
+    console.log('==inname=='+inname);
+    var url="/apex/ParentLookupC1?namefield=" + name + "&idfield=" +id1+"&parentid="+inid1+"&parentname="+inname;
+    newWin=window.open(url, 'Popup','height=500,width=600,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,status=no');
+    
+    
+if (window.focus) 
+{
+    
+newWin.focus();
+    
+}
+   
+return false;
+  
+}
+ 
+function closeLookupPopup()
+{
+if (null!=newWin)
+{
+    //newWin.close();
+}
+}
+    </script>
+</apex:page>

@@ -1,0 +1,7 @@
+<aura:component>
+    <div>
+        <p>Hello World</p>
+        <c:MySecondCom/>
+    </div>
+    <ui:button label="click me" press="{!c.firstmethod}"/>
+</aura:component>

@@ -1,0 +1,417 @@
+<apex:page standardController="Contact" extensions="FieldSetUIGenerator"  sidebar="false" showHeader="false" lightningStylesheets="true">
+    <apex:slds />
+    
+    <style>
+        .wrapper600-mar-auto {
+        	max-width: 600px;
+    		margin: 0 auto;
+    		min-height: 150px;
+        }
+        .Krow .slds-p-bottom--small {
+        	padding-bottom: 0.75rem;
+        }
+        .Krow .slds-p-top--small {
+        	padding-top: 0.75rem;
+        }
+        .img-logo-css {
+    		width: 153px;
+    		height: 56px;
+    		background-image: URL('/resource/logo');
+    		background-size: 155px 56px;
+		}
+        .Krow .slds-text-heading--medium {
+    		font-weight: 300;
+    		font-size: 1.25rem;
+    		line-height: 1.25;
+		}
+        .Krow .slds-m-top--small {
+    		margin-top: 0.75rem;
+		}
+        .Krow .slds-text-heading--small {
+    		font-size: 1rem;
+    		line-height: 1.25;
+		}
+        .Krow .slds-p-bottom--large {
+    		padding-bottom: 1.5rem;
+		}
+		.Krow .slds-p-top--large {
+    		padding-top: 1.5rem;
+		}
+		.background-color-grey {
+    		background-color: #F6F6F6;
+		}
+        .wrapper600-mar-auto {
+    		max-width: 600px;
+    		margin: 0 auto;
+    		min-height: 150px;
+		}
+        .Krow .slds-hidden {
+    		visibility: hidden;
+		}
+		.Krow .slds-notify-container, .Krow .slds-notify_container {
+    		position: fixed;
+    		width: 100%;
+    		left: 0;
+    		top: 0;
+    		z-index: 10000;
+	    	text-align: center;
+		}
+        .Krow .slds-theme--success {
+            color: white;
+            background-color: #04844b;
+        }
+        .Krow .slds-notify--toast {
+            border-radius: 0.25rem;
+            margin: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            min-width: 30rem;
+            display: inline-block;
+            text-align: left;
+        }
+        .Krow .slds-notify {
+            color: white;
+            position: relative;
+            background: #54698d;
+            font-weight: 300;
+        }
+        Krow .slds-notify--toast .slds-notify__close {
+    		transform: translate3d(0.5rem, 0, 0);
+        }
+        .Krow .slds-notify__close {
+            float: right;
+            margin-left: 0.25rem;
+            line-height: 1;
+        }
+        .Krow .slds-button--icon-inverse, .Krow .slds-button--icon-border-inverse {
+            color: white;
+        }
+        .Krow .slds-button--icon, .Krow .slds-button--icon-inverse, .Krow .slds-button--icon-container, .Krow .slds-button--icon-border, .Krow .slds-button--icon-border-filled, .Krow .slds-button--icon-border-inverse, .Krow .slds-button--icon-more, .Krow .slds-button--icon-error {
+            line-height: 1;
+            vertical-align: middle;
+            color: #54698d;
+        }
+        .Krow .slds-button {
+            position: relative;
+            display: inline-block;
+            padding: 0;
+            background: transparent;
+            background-clip: border-box;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            line-height: 1.875rem;
+            text-decoration: none;
+            color: #0070d2;
+            -webkit-appearance: none;
+            white-space: normal;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transition: color 0.05s linear, background-color 0.05s linear;
+        }
+        .Krow a, .Krow button {
+            cursor: pointer;
+        }
+        .Krow button, .Krow input[type=button], .Krow input[type=reset], .Krow input[type=submit] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+        .Krow button, .Krow select {
+            text-transform: none;
+        }
+        .Krow button {
+            overflow: visible;
+        }
+        .Krow svg:not(:root) {
+            overflow: hidden;
+        }
+        .Krow .slds-button__icon--large {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        .Krow .slds-button__icon {
+            width: 0.875rem;
+            height: 0.875rem;
+            fill: currentColor;
+        }
+        .Krow .slds-assistive-text {
+            position: absolute !important;
+            margin: -1px !important;
+            border: 0 !important;
+            padding: 0 !important;
+            width: 1px !important;
+            height: 1px !important;
+            overflow: hidden !important;
+            clip: rect(0 0 0 0) !important;
+        }
+        .Krow *, .Krow *:before, .Krow *:after {
+            box-sizing: border-box;
+        }
+        .Krow .slds-text-align--left {
+            text-align: left;
+        }
+        .Krow .slds-m-bottom--small {
+            margin-bottom: 0.75rem;
+        }
+        .Krow .slds-form-element {
+            position: relative;
+        }
+        .Krow .slds-text-heading--medium {
+            font-weight: 300;
+            font-size: 1.25rem;
+            line-height: 1.25;
+        }
+        .Krow .slds-m-top--small {
+            margin-top: 0.75rem;
+        }
+        .Krow .slds-form-element {
+            position: relative;
+        }
+        Krow input {
+            line-height: normal;
+        }
+        .Krow button, .Krow input, .Krow optgroup, .Krow select, .Krow textarea {
+            color: inherit;
+            font: inherit;
+            margin: 0;
+        }
+        .upload-resume {
+            opacity: 0;
+            width: 0px;
+        }
+        .Krow .slds-button--neutral {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #d8dde6;
+            background-color: white;
+        }
+        .Krow .slds-button {
+            position: relative;
+            display: inline-block;
+            padding: 0;
+            background: transparent;
+            background-clip: border-box;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            line-height: 1.875rem;
+            text-decoration: none;
+            color: #0070d2;
+            -webkit-appearance: none;
+            white-space: normal;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transition: color 0.05s linear, background-color 0.05s linear;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        element.style {
+            display: none;
+            margin-left: 3px;
+        }
+        .Krow img {
+            max-width: 100%;
+            height: auto;
+        }
+        .Krow .slds-text-align--left {
+            text-align: left;
+        }
+        .Krow .slds-m-bottom--small {
+            margin-bottom: 0.75rem;
+        }
+        .Krow .slds-m-top--small {
+            margin-top: 0.75rem;
+        }
+        .Krow .slds-form-element {
+            position: relative;
+        }
+        .Krow .slds-text-heading--small {
+            font-size: 1rem;
+            line-height: 1.25;
+        }
+        .Krow *, .Krow *:before, .Krow *:after {
+            box-sizing: border-box;
+        }
+        .Krow .slds-text-align--left {
+            text-align: left;
+        }
+        .Krow .slds-m-top--small {
+            margin-top: 0.75rem;
+        }
+        .Krow .slds-form-element {
+            position: relative;
+        }
+        .Krow .slds-text-align--center {
+            text-align: center;
+        }
+        .Krow .slds-p-top--medium {
+            padding-top: 1rem;
+        }
+        .Krow .slds-m-top--small {
+            margin-top: 0.75rem;
+        }
+        .Krow .slds-button--neutral {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            text-align: center;
+            vertical-align: middle;
+            border: 1px solid #d8dde6;
+            background-color: white;
+        }
+        .Krow .slds-button {
+            position: relative;
+            display: inline-block;
+            padding: 0;
+            background: transparent;
+            background-clip: border-box;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            line-height: 1.875rem;
+            text-decoration: none;
+            color: #0070d2;
+            -webkit-appearance: none;
+            white-space: normal;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transition: color 0.05s linear, background-color 0.05s linear;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+        .Krow .slds-button--brand {
+            padding-left: 1rem;
+            padding-right: 1rem;
+            text-align: center;
+            vertical-align: middle;
+            background-color: #0070d2;
+            border: 1px solid #0070d2;
+            color: white;
+        }
+        .Krow .slds-button {
+            position: relative;
+            display: inline-block;
+            padding: 0;
+            background: transparent;
+            background-clip: border-box;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            line-height: 1.875rem;
+            text-decoration: none;
+            color: #0070d2;
+            -webkit-appearance: none;
+            white-space: normal;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transition: color 0.05s linear, background-color 0.05s linear;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        
+                
+        
+        
+    </style>
+    
+    <apex:form >
+        <apex:actionFunction name="callAction" action="{!saveContact}" >
+              	
+        </apex:actionFunction>
+     </apex:form>
+    
+    <div class="Krow">
+    	<div class="wrapper600-mar-auto">
+            <div class="slds-p-top--small slds-p-bottom--small">
+                <div class="img-logo-css" id="careers_site_logo"> </div>
+                <div class="slds-text-heading--medium slds-m-top--small">Delivery Architect</div>
+                    <div class="slds-m-top--small">
+                        <span class="slds-text-heading--small ">
+                        	<span id="j_id0:j_id10">Remote</span>
+                        </span>
+                	</div>
+            </div>
+        </div>
+        <div class="background-color-grey slds-p-top--large slds-p-bottom--large">
+            <div class="wrapper600-mar-auto">
+                <div class="slds-notify_container slds-hidden" id="messagebox">
+                    <div class="slds-notify slds-notify--toast slds-theme--success mobile-style-toast-success" role="alert">
+                        <span class="slds-assistive-text">Success</span>
+                        <button class="slds-button slds-notify__close slds-button--icon-inverse" title="close">
+                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--large">
+                            	
+                            </svg>
+                            <span class="slds-assistive-text">
+                                Close
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-text-align--left slds-m-bottom--small">
+                    <span class="slds-text-heading--medium " >SUBMIT YOUR APPLICATION</span>
+                </div>
+                <div class="slds-form-element slds-m-top--small">
+                    <div class="slds-form-element__control ">
+                        <input class="upload-resume" id="uploadResume" type="file"/>
+                        <label class="slds-button slds-button--neutral cursor-pointer" for="uploadResume">Upload Resume</label>
+                        <label id="infoLabel">(pdf,doc Max-Size:4.2 mb)</label>
+                        <span id="loadingIcon" style="display: none; margin-left: 3px;">
+                            <img src="/careers/resource/1615208489000/Krow__loading_icon/loading_icon.gif"/>
+                        </span>
+                        <label id="uploadedMessage" style="display: none;">Uploaded..</label>
+                    </div>
+                    <input id="applicationId" type="hidden" value="a0e2T00000TpuuDQAR"/>
+                    <input id="resourceRequestId" type="hidden" />
+                    <input id="jobId" type="hidden" value="a102T000008IaUJQA0"/>
+                </div>
+                <div class="slds-form-element slds-m-top--small">
+                    <div class="slds-form-element__control slds-m-top--small">
+                        <apex:form id="form1">
+                            <apex:pageMessages id="msgs" />
+                            <apex:repeat value="{!$ObjectType.Contact.FieldSets.TestFieldSet}" var="fs1">
+                                <tr>
+                                    <td>
+                                        <span> {!fs1.label} </span>
+                                    </td>
+                                    <td>
+                                        <apex:inputfield value="{!obj[fs1]}" ></apex:inputfield>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                            <apex:commandButton value="Submit" action="{!saveContact}" rerender="form1"/>
+                        </apex:form>
+                    </div>       
+                </div>    
+                <div class="slds-form-element slds-text-align--left slds-m-bottom--small slds-m-top--small">  
+                    <span class="slds-text-heading--small">LINKS</span>
+                </div>
+                <div class="slds-form-element slds-m-top--small">
+                    <div class="slds-form-element__control">
+                        <input class="slds-input" id="linkedInURL" placeholder="LinkedIn URL" type="text"/>
+                    </div>
+                </div>
+                <div class="slds-form-element slds-m-top--small">
+                    <div class="slds-form-element__control">
+                        <input class="slds-input" id="twitterUrl" placeholder="Twitter URL" type="text"/>
+                    </div>
+                </div>
+              <div class="slds-p-top--medium slds-text-align--center slds-m-top--small">
+                    
+                    <button class="slds-button slds-button--brand cursor-pointer" type="button" onclick="callAction()">Apply</button>
+                </div>
+            </div>  
+        </div>
+    </div>
+</apex:page>

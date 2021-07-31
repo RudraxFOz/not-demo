@@ -1,0 +1,20 @@
+<apex:page standardController="AllInOne__c" extensions="CallVfPage">
+  <apex:form >
+      <apex:pageBlock >
+          <apex:pageBlockSection >
+              <apex:inputField value="{!AllInOne__c.S_No__c}"/>
+          </apex:pageBlockSection>
+          <apex:pageBlockSection >
+              <apex:inputField value="{!AllInOne__c.First_Name__c}"/>
+              <apex:inputField value="{!AllInOne__c.Last_Name__c}"/>
+              <apex:inputField value="{!AllInOne__c.EmailId__c}"/>
+              <apex:inputField value="{!AllInOne__c.Phone_No__c}"/>
+              <apex:inputField value="{!AllInOne__c.Gender__c}"/>
+          </apex:pageBlockSection>
+          <apex:pageBlockButtons >
+              <apex:commandButton action="{!save}" value="save"/>
+          </apex:pageBlockButtons>
+          
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

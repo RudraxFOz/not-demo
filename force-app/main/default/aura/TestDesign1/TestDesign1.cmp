@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:attribute name="welcomeTitle" type="String" default="Welcome in Lightning" access="global" />
+    <aura:attribute name="hideLogo" type="Boolean" default="true" access="global" />
+    <aura:attribute name="favoriteColors" type="String" default="Blue" access="global"/>
+   	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <div class="header-section-top">
+        <div class="slds-text-heading_large" style="{!'color:' + v.favoriteColors}" >
+            {!v.welcomeTitle}
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,220 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,lightning:isUrlAddressable">
+    <aura:attribute name="booleanBulbCard" type="boolean" default="false" />
+    <aura:attribute name="booleanShoesCard" type="boolean" default="false" />
+    <aura:attribute name="booleanTshirtCard" type="boolean" default="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:if isTrue="{!v.booleanBulbCard}">
+        <div class="slds-grid slds-wrap slds-grid-pull-padded ">
+            <div class="slds-col--padded" style="width: 0%;">
+                <lightning:card>
+                    <aura:set attribute="title">
+                        
+                    </aura:set>
+                    <div>
+                        <img src="{!$Resource.BulbImg}"/> 
+                    </div>
+                </lightning:card>
+            </div>
+            <div class="slds-col--padded">
+                <lightning:card>
+                    <aura:set attribute="title">
+                    </aura:set> 
+                    <div class="slds-m-left_xx-large">
+                        <div class="forlabel"> 
+                            <h1>SELECT ATTRIBUTES:</h1>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Watt
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="5" value="5W" onclick="{!c.bulbWatt}"/>
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="7" value="7W" onclick="{!c.bulbWatt}"/>
+                            </div>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Type
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="LED" />
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="CFL" />
+                            </div>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Color
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="RED" />
+                            </div>
+                            <div class="slds-col">
+                                <lightning:button  label="WHITE" />
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="GREEN" />
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-m-top_x-large">
+                            <div class="slds-col">
+                                <lightning:button  label="Show Product" />
+                            </div>
+                            <div class="slds-col forRightMargin1">
+                                <lightning:button  label="Reset" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.booleanShoesCard}">
+        <div class="slds-grid slds-wrap slds-grid-pull-padded ">
+            <div class="slds-col--padded" style="width: 0%;">
+                <lightning:card>
+                    <aura:set attribute="title">
+                        
+                    </aura:set>
+                    <div>
+                        <img src="{!$Resource.ShoesImg}"/> 
+                    </div>
+                </lightning:card>
+            </div>
+            <div class="slds-col--padded">
+                <lightning:card>
+                    <aura:set attribute="title">
+                    </aura:set> 
+                    <div class="slds-m-left_xx-large">
+                        <div class="forlabel"> 
+                            <h1>SELECT ATTRIBUTES:</h1>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Size
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="7" />
+                            </div>
+                            <div class="slds-col">
+                                <lightning:button  label="8" />
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="9" />
+                            </div>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Color
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="RED" />
+                            </div>
+                            <div class="slds-col">
+                                <lightning:button  label="WHITE" />
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="BLUE" />
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-m-top_x-large">
+                            <div class="slds-col">
+                                <lightning:button  label="Show Product" />
+                            </div>
+                            <div class="slds-col forRightMargin1">
+                                <lightning:button  label="Reset" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </aura:if>
+    <aura:if isTrue="{!v.booleanTshirtCard}">
+        <!-- <lightning:card>
+            <aura:set attribute="title">
+                <center><h1>T-Shrit</h1></center>
+            </aura:set>
+            <div class="form-group">
+                <img src="{!$Resource.TshirtImg}"/> 
+            </div>
+        </lightning:card> -->
+        <div class="slds-grid slds-wrap slds-grid-pull-padded ">
+            <div class="slds-col--padded" style="width: 0%;">
+                <lightning:card>
+                    <aura:set attribute="title">
+                        
+                    </aura:set>
+                    <div>
+                        <img src="{!$Resource.TshirtImg}"/> 
+                    </div>
+                </lightning:card>
+            </div>
+            <div class="slds-col--padded">
+                <lightning:card>
+                    <aura:set attribute="title">
+                    </aura:set> 
+                    <div class="slds-m-left_xx-large">
+                        <div class="forlabel"> 
+                            <h1>SELECT ATTRIBUTES:</h1>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Size
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="L" />
+                            </div>
+                            <div class="slds-col">
+                                <lightning:button  label="XL" />
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="XXL" />
+                            </div>
+                        </div>
+                        <div class="forlabel1">
+                            <h1>
+                                Color
+                            </h1>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning:button  label="GREEN" />
+                            </div>
+                            <div class="slds-col">
+                                <lightning:button  label="WHITE" />
+                            </div>
+                            <div class="slds-col forRightMargin">
+                                <lightning:button  label="BLACK" />
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-m-top_x-large">
+                            <div class="slds-col">
+                                <lightning:button  label="Show Product" />
+                            </div>
+                            <div class="slds-col forRightMargin1">
+                                <lightning:button  label="Reset" />
+                            </div>
+                        </div>
+                    </div>
+                </lightning:card>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>

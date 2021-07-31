@@ -1,0 +1,131 @@
+<aura:component controller="kanbanForAccountController1" implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+	         
+    <aura:attribute name="accList" type="List" />   
+    <aura:attribute name="accSelectList" type="List" />   
+    <aura:attribute name="selectListName" type="String" />
+    <aura:attribute name="showSelectedAcc" type="List" default="[]"/>
+    <aura:attribute name="indexOfSelectAcc" type="Integer"/>
+    <aura:attribute name="selectedRecord" type="Integer"/>
+    <aura:attribute name="SelectedData" type="List" />
+	<aura:attribute name="maxind" type="Integer"/>
+	<aura:attribute name="includeInd" type="List"/>
+	<aura:attribute name="selectAcc" type="Object"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <!-- <lightning:layout multipleRows="true"> -->
+
+            <lightning:layout multipleRows="true" verticalAlign="stretch">
+                     
+                   <!-- <lightning:layoutItem size="4" class="border" padding="around-small">size=4<br />
+                        <lightning:layout multipleRows="true">
+                            <lightning:layoutItem size="12" class="border">size=12</lightning:layoutItem>
+                            <lightning:layoutItem size="12" class="border">size=12</lightning:layoutItem>
+                        </lightning:layout>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem size="12" class="border">size=12</lightning:layoutItem> -->
+               
+    <lightning:card title="">
+	    <div class="slds-grid slds-wrap">
+            <lightning:layoutItem size="12" class="border" largeDeviceSize="6" mediumDeviceSize="6" smallDeviceSize="6" padding="around-small">
+            <div>
+                <center> <b> AccountRecords </b></center>
+                <div class="slds-scrollable_y" style="height:25rem;width:33rem">
+                    <div class="slds-col slds-box"  style="overflow: auto;">
+                        <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}" class="slds-has-dividers_around-space dropZone list1" >
+                            <aura:iteration var="accRec" items="{!v.accList}" indexVar="index"> 
+                                <aura:if isTrue="{!accRec.isSelected}" >
+                                    <li class="slds-item slds-m-around_small changeSelectedRowColor list1"  title="list1"  draggable="true" ondragstart="{!c.drag}" id="{!accRec.Id}" onclick="{!c.itemSelected}" data-produto="list1" value="{!index}" >	                            
+                                        <h3 class="slds-truncate list1" title="{!accRec.Name}" >                                       
+                                        <div value="list1" data-drag-id="{!index}">
+                                                {!accRec.Name}
+                                            </div>
+                                        </h3>  	                            
+                                    </li>
+                                    <aura:set attribute="else" >
+                                        <li class="slds-item slds-m-around_small list1" draggable="true" title="list1" ondragstart="{!c.drag}" id="{! accRec.Id}" onclick="{!c.itemSelected}" data-produto="list1" value="{!index}">
+                                            <article class="slds-tile slds-tile_board list1">
+                                                <h3 class="slds-truncate list1" title="{!accRec.Name}" >                                       
+                                                    <div value="list1" data-drag-id="{!index}">
+                                                        {!accRec.Name}
+                                                    </div>
+                                                </h3>  
+                                            </article>
+                                        </li>
+                                    </aura:set>
+                                </aura:if>			           
+                            </aura:iteration>
+                        </ul>                
+                    </div>
+                </div>
+            </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="border" largeDeviceSize="6" mediumDeviceSize="6" smallDeviceSize="6" padding="around-small">
+            <div>
+                <center> <b> Selected Records </b></center>
+                <div  style="height:2rem;width:33rem">
+                    <div class="slds-col slds-order_1  slds-box slds-m-left_medium list2 slds-scrollable">		    
+                        <ul ondrop="{!c.drop}" ondragover="{!c.allowDrop}" class="slds-has-dividers_around-space dropZone list2" >
+                            <aura:iteration var="accSelectRec" items="{!v.accSelectList}" indexVar="index">                               
+                                <aura:if isTrue="{!accSelectRec.isSelected}">
+                                    <li class="slds-item slds-m-around_small changeSelectedRowColor list2" title="list2" draggable="true" ondragstart="{!c.drag}" id="{! accSelectRec.Id}" value="{!index}" data-produto="list2" onclick="{!c.itemSelected}" >				                
+                                        <h3 class="slds-truncate list2" title="{!accSelectRec.Name}">
+                                            <div data-drag-id="{!index}">
+                                                {!accSelectRec.Name}
+                                            </div>
+                                        </h3>				                
+                                    </li> 
+                                    <aura:set attribute="else">
+                                        <li class="slds-item slds-m-around_small list2" draggable="true" title="list2" ondragstart="{!c.drag}" id="{! accSelectRec.Id}" value="{!index}" data-produto="list2" onclick="{!c.itemSelected}" >					                
+                                            <h3 class="slds-truncate list2" title="{!accSelectRec.Name}">
+                                                <div data-drag-id="{!index}" id="{!index}" >{!accSelectRec.Name}</div>
+                                            </h3>	                    					                
+                                        </li> 
+                                    </aura:set>
+                                </aura:if>
+                            </aura:iteration>
+                        </ul>                
+                    </div>
+                </div>	    	
+            </div>
+            </lightning:layoutItem>
+        </div>
+        
+	    <div style="text-align:center" class="slds-m-top_medium" >	    
+    		<lightning:button label="Show Data" variant="brand" onclick="{!c.showData}" />	    	
+	    </div>
+	    <div class="slds-m-top_medium">
+	    	<aura:if isTrue="{!v.showSelectedAcc.length > 0}" >
+		    	<div aura:id = "table" class="slds-m-around_small">
+		            <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+		                <thead>      
+		                	<th class="slds-is-sortable slds-text-title--caps " scope="col">
+		                        <div class="slds-truncate">
+		                            <span  title="Name">Name</span> 
+	                        	</div>
+	                    	</th>
+
+	                    	<th class="slds-is-sortable slds-text-title--caps " scope="col">
+		                        <div class="slds-truncate">
+		                            <span  title="Name">Id</span> 
+	                        	</div>
+	                    	</th>
+		                </thead>
+		                <tbody>  
+		                	<aura:iteration items="{!v.showSelectedAcc}" var="acc" >                  
+			                    <tr>                                                                                        
+			                        <td scope="row" data-label="Name" >
+			                            <div class="slds-truncate" title="">{!acc.Name}</div>
+			                        </td>
+			                        <td scope="row" data-label="Name" >
+			                            <div class="slds-truncate" title="">{!acc.Id}</div>
+			                        </td>
+			                    </tr>
+			                </aura:iteration>
+		                </tbody>
+		            </table>		            
+		        </div >
+		    </aura:if>
+	    </div>
+    </lightning:card>
+</lightning:layout>
+</aura:component>

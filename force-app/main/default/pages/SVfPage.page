@@ -1,0 +1,12 @@
+<apex:page standardController="AllInOne__c" extensions="SCallVfPage">
+  <apex:form >
+      <apex:pageBlock >
+          <apex:pageBlockSection >
+              //{!AllInOne__c.S_No__c};
+            //  <apex:outputField value="{!AllInOne__c.Last_Name__c}"/>
+      
+
+          </apex:pageBlockSection>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

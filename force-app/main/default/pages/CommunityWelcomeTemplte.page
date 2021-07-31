@@ -1,0 +1,61 @@
+<apex:page showHeader="false" sidebar="false">
+	<html>
+		<head>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+			<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+			<link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"/>
+			<link rel="stylesheet" type="text/css" href="personal-style.css"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    		
+		</head>
+		<body>
+			<div class="container">  
+				<div class="modal" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog modal-sm">
+			    		<div class="modal-content">
+			      			<div class="modal-header">
+			        			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+			        			<h4>Log Out <i class="fa fa-lock"></i></h4>
+			      			</div>
+			      			<div class="modal-body">
+			        			<p><i class="fa fa-question-circle"></i> Are you sure you want to log-off? <br /></p>
+			        		</div>
+			        		<div class="actionsBtns">
+			            		<form action="" method="post">
+			                		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+			                		<a href="{!$Site.Prefix}/secur/logout.jsp">
+			                		<span class="glyphicon glyphicon-log-out">Logout</span>
+			                	</a>
+				                	<button class="btn btn-default" data-dismiss="modal">Cancel</button>
+			            		</form>
+			        		</div>
+			      		</div>
+			   		</div>
+				</div>
+			</div>
+			<div class="container" style="width:100%;">    
+			  <table class="table">
+			    <thead>
+			      <tr>
+			      	<th><a href="https://suresgcommunities-developer-edition.ap4.force.com/apex/HomePageForCommunity" >Home</a></th>
+			      	<th><a href="https://suresgcommunities-developer-edition.ap4.force.com/apex/DropboxPage">Dropbox</a></th>
+			      	<th><a href="https://suresgcommunities-developer-edition.ap4.force.com/apex/GoogleDriveCommunity">Google Drive</a></th>
+			      	<th><a href="https://suresgcommunities-developer-edition.ap4.force.com/apex/BoxIntegrationVf">Box.com</a></th>
+			        <th>
+			        	<a  class="btn btn-info btn-lg"  data-toggle="modal" data-target="#logoutModal" style="margin-left: 90rem;">
+          					<span class="glyphicon glyphicon-log-out"></span> Log out
+          				</a>
+			        </th>			         
+			      </tr>
+			    </thead>
+			   </table>
+  			</div>
+  		</body>
+    </html>
+</apex:page>

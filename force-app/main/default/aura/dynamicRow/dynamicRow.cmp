@@ -1,0 +1,48 @@
+<aura:component controller="ObjectAuraController" Implements="flexipage:availableForRecordHome,force:hasRecordId">
+  <!--Init handler which is call doInit js function on component Load-->  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+ <!--Event handler for Add and Delete Row Event which is fire from Child Component-->    
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>
+    <aura:registerEvent name="lstForAcc" type="c:AccountListForBulkAddEvent" />
+    <aura:handler name="indexForMultipleRow" event="c:AddMultipleRowEvt" action="{!c.AddMultiRows}"/>
+    <aura:handler name="forAccList" event="c:DeleteRowEvt"  action="{!c.valueForClone}"/> 
+ <!--Aura Attribute for store Account Object List as Array-->    
+    <aura:attribute name="AccList" type="Account[]" /> 
+    <aura:attribute name="AddMultiRow" type="Integer" /> 
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+    <aura:method name="GetValueFromChildMethod" action="{!c.getValueMethod}" access="public">
+        <aura:attribute name="NumberForRow" type="Integer" default="1"/>
+    </aura:method>
+    <aura:registerEvent name="myComponentEvent" type="c:CallParentCmdAfterSaveBulkAccEvt"/>
+
+ <!--Table Part-->           
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate">S.No</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title=" Name">Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Type">Type</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Phone">Phone</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Action">Action</div>
+                </th>
+            </tr>
+        </thead>   
+        <tbody>
+            <aura:iteration items="{!v.AccList}" var="item" indexVar="index">
+                <c:dynamicRowItem AccountInstance="{!item}" rowIndex="{!index}" />
+            </aura:iteration>
+        </tbody>
+    </table>
+    <br/>
+    <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>
+</aura:component>

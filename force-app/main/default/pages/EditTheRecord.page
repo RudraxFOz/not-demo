@@ -1,0 +1,15 @@
+<apex:page showHeader="true" sidebar="true" controller="PagningToPagning">
+	<apex:form >
+	<apex:sectionHeader title="Edit the record"/>  
+	 <apex:pageBlock >  
+ 		<!-- <apex:pageBlockButtons location="both">  
+			<apex:commandButton value="save" action="{!save}"/>  
+	    </apex:pageBlockButtons>  
+ 		<apex:pageBlockSection >  
+ 			<apex:repeat value="{!listOfSelectedFields}" var="field">
+ 				<apex:inputField value="{!field}"/>  
+			</apex:repeat>
+ 		</apex:pageBlockSection>  --> 
+	 </apex:pageBlock>  
+	</apex:form>
+</apex:page>

@@ -1,0 +1,46 @@
+<aura:component>
+
+    <aura:attribute name="activeSection" type="List" />
+    <aura:attribute name="activeSectionMessage" type="String" />
+    <lightning:avatar src="/docs/component-library/app/images/examples/avatar1.jpg"  fallbackIconName="standard:person_account" alternativeText="Bob Wilson"/>
+    <lightning:avatar size="x-small" src="/docs/component-library/app/images/examples/avatar2.jpg"  fallbackIconName="standard:person_account" alternativeText="Jane Doe" class="slds-m-right_small"/>
+    <lightning:avatar size="small"   src="/docs/component-library/app/images/examples/avatar3.jpg"  fallbackIconName="standard:person_account" alternativeText="Tony Price" class="slds-m-right_small"/>
+    <lightning:avatar size="medium"  src="/docs/component-library/app/images/examples/avatar1.jpg"  fallbackIconName="standard:person_account" alternativeText="Ryan Eddie" class="slds-m-right_small"/>
+    <lightning:avatar size="large"   src="/docs/component-library/app/images/examples/avatar2.jpg"  fallbackIconName="standard:person_account" alternativeText="Cindy Rice" class="slds-m-right_small"/>
+
+    <aura:attribute name="myBreadcrumbs" type="Object"/>
+    <aura:handler name="init" value="{! this }" action="{! c.initRec }"/>
+    <lightning:breadcrumbs>
+        <aura:iteration items="{! v.myBreadcrumbs }" var="crumbs">
+            <lightning:breadcrumb label="{! crumbs.label }" onclick="{! c.navigateTo }" name="{! crumbs.name }"/>
+        </aura:iteration>
+    </lightning:breadcrumbs>
+
+    <h1>{!v.activeSectionMessage}</h1>
+    <lightning:accordion allowMultipleSectionsOpen="true" onsectiontoggle="{!c.handleSectionToggle}" activeSectionName="{!v.activeSection}">
+        <lightning:accordionSection name="A" label="Accordion Section A" >
+            <aura:set attribute="actions">
+                <lightning:buttonMenu aura:id="menu" alternativeText="Shown menu" menuAlignment="Right" iconSize="x-small">
+                    <lightning:menuItem value="New" label="Menu Item One" />
+                    <lightning:menuItem value="Edit" label="Menu Item Two" />
+                </lightning:buttonMenu>
+            </aura:set>
+            <aura:set attribute="body">
+                <p>This is A Section part</p>
+                <p>This is first time i will use</p>
+            </aura:set>
+        </lightning:accordionSection>
+        <lightning:accordionSection name="B" label="Accordion Section B">
+            <aura:set attribute="body">
+                <p>.......</p>
+                <p>This is section B</p>
+            </aura:set>
+        </lightning:accordionSection>
+        <lightning:accordionSection name="c" label="Accordion Section C">
+            <aura:set attribute="body">
+                <p>This is three Section</p>
+                <p>........</p>
+            </aura:set>
+        </lightning:accordionSection>
+    </lightning:accordion>
+</aura:component>

@@ -1,0 +1,10 @@
+<aura:component>
+    <!-- <lightning:select>
+        <lightning:option>
+
+        </lightning:option>
+    </lightning:select> -->
+    <lightning:combobox name="boats"  placeholder="All Types" options="{! v.options }" onchange="{! c.handleChange }"/>
+    <lightning:button name="Search" label="Search" variant="brand" />
+    <lightning:button name="New" label="New" variant="Success" onclick="{!c.createNewBoat}"/>/>
+</aura:component>

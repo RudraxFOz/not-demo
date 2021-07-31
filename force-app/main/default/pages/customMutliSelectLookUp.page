@@ -1,0 +1,38 @@
+<apex:page standardController="Account" extensions="customMutliSelectLookUpCntrl" docType="html-5.0">
+    <style type="text/css">
+        .customPopupStyle{ background-color: white; border-style: solid; border-width: 2px; left:20%; padding:10px; position: absolute; z-index: 9999; width: 500px; top:20%;} .disabledTextBoxStyle{ background-color: white; border: 1px solid; color: black; cursor: default; width: 90px; display: table; padding: 2px 1px; text-align: right;}.closeButtonStyle{ float: right;}
+    </style>
+    <apex:form >
+        <apex:pageBlock id="counter">
+            <apex:input value="{!lookUp}" label="Contact"/>
+            <apex:image id="edit" value="https://na15.salesforce.com/resource/1405511203000/lookupicon"  height="20" width="20">
+                <apex:actionSupport event="onclick" reRender="out"  action="{!add}">
+                    
+                </apex:actionSupport>
+			</apex:image>
+            <apex:outputPanel id="out">
+                <apex:outputPanel styleClass="customPopupStyle" rendered="{!bool}">
+                    <apex:commandButton value="XX" title="Close the popup" action="{!closePopup}" styleClass="closeButtonStyle" rerender="out"/>
+                    <apex:actionRegion >  
+                      <apex:outputPanel id="top" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+                        <apex:outputLabel value="Search" style="font-weight:Bold;padding-right:10px;" for="txtSearch"/>
+                        <apex:inputText id="txtSearch" value="{!searchString}" />
+                          <span style="padding-left:5px">
+                              <apex:commandButton id="btnGo" value="Go" action="{!Search}" rerender="searchResults"></apex:commandButton>
+                          </span>
+                      </apex:outputPanel>
+                    </apex:actionRegion>
+                    <apex:pageBlockTable value="{!contactList}" var="e" title="show" id="searchResults">
+                        <apex:column >
+                            <apex:inputCheckbox value="{!e.check}"/>
+                            <apex:actionSupport event="onclick" action="{!inIt}"/>
+                        </apex:column>
+                        <apex:column >
+                            <apex:commandLink value="{!e.con.Name}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

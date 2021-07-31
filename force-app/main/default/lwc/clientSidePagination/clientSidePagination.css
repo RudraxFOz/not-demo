@@ -1,0 +1,10 @@
+.slds-select {
+    width : 14%;
+}  
+.slds-form-element__label {
+    color :black;
+    font-size : 1 rem;
+} 
+.slds-box {
+    margin-top: 3%;
+}

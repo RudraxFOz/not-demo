@@ -1,0 +1,189 @@
+<apex:page controller="SobjectAndFieldsController" standardStylesheets="false"  docType="html-5.0" showHeader="false" sidebar="false"  lightningstylesheets="true">	
+	<Html>
+    	<head>
+    		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+		    <script src="http://malsup.github.com/jquery.blockUI.js" />  
+  			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+  			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+			<style type="text/css">
+				#table1 {
+					margin-top: 5rem;
+				}
+				#table2 {
+					margin-top: 4rem;
+				}
+				#forDesable {
+					margin-left: 6rem;
+				    /*width: 8rem;
+				    height: 3rem;*/
+				}
+	        	.objCss { 
+		            height: 1.5rem ;
+		            color: black ;
+		            font-size: 14px ;
+		            margin-left: 15rem ;
+		            margin-top: 2rem ;
+		            width: 9rem ;
+	            }  
+	            .closebtn {
+					  margin-left: 15px;
+					  color: white;
+					  font-weight: bold;
+					  float: right;
+					  font-size: 22px;
+					  line-height: 20px;
+					  cursor: pointer;
+					  transition: 0.3s;
+				}
+	            .forFieldsStyle {
+	            	
+	            	margin-left: -48rem;
+	            	width: 15rem;
+    				height: 3rem;
+	            } 
+	            
+	            .yellowOnCheck {
+  					background-color: yellow;
+				}
+	           
+	            .forGapOnTable {
+	            	margin-top: 3rem ;
+	            }
+	            .forLeftInput { 
+	            	margin-left: 23rem;
+	            	width: 38rem;
+	             }
+	             .chartBl{
+	             	margin-left: 71rem;
+	             	margin-top: -5rem;
+
+	             }
+	             .forLeftH2{
+	             	//margin-left: 18rem;
+    				margin-bottom: -3rem;
+    				margin-top: 10rem;
+	             }
+	             .forSobjectedOptionList {
+	             	margin-left: 23rem;
+	             }
+	             .forFieldsHeader {
+	             	//margin-left: 61rem; 
+	             	margin-bottom: 2rem;
+	             }
+
+			    .form{
+			        margin: 20px 0;
+			    }
+			    .form  {
+			        padding: 5px;
+			    }
+			    .forSobjectHeader {
+			    	margin-bottom: -3rem;
+			    }
+			    .forGoButton {
+			    	margin-left: 2rem;
+			    }
+			    .mainDiv {
+			    	width: 100%;
+    				background-color: lightblue;
+
+			    }
+			    table{
+			        width: 100%;
+			        margin-bottom: 20px;
+					border-collapse: collapse;
+			    }
+			    table, th, td{
+			        border: 5px  solid #2c678a;
+			    }
+			    table th, table td{
+			        padding: 10px;
+			        text-align: left;
+			    }	
+		</style>	
+        <script type="text/javascript">
+			$(document).ready(function() {
+    			$('[id$=forDesableEdit]').hide();
+  				$('[id$=forDesable]').hide();
+	       		$('[id$=forDesableSave]').hide();
+	       		$( "#tagss" ).hide();
+	       		$( ".chartBl" ).hide();
+	       		$( ".forLeftH2" ).hide();
+	       		$( ".forFieldsHeader" ).hide();
+	       		$( "#showSuccessfulMsg" ).hide();
+			});
+        	var availableTags = [];
+	   		function objectListChanged(){
+	   				$( ".forFieldsHeader" ).show();
+	   				$( ".chartBl" ).show();
+	   				$( ".forLeftH2" ).hide();
+	   				$( "#tagss" ).hide();
+	   				$('[id$=forDesableEdit]').hide();
+  					$('[id$=forDesable]').hide();
+	       			$('[id$=forDesableSave]').hide();
+	       			$('[id$=forDesable]').prop('disabled',true);
+	       			$('[id$=forDesableSave]').prop('disabled',true);
+	       			$('[id$=forDesableEdit]').prop('disabled',true);
+	       			$('[id$=sobjectFields]').empty();       			
+	       			$("table tbody").html("");
+	       			$( "#tagss" ).val('');
+	           	    $.blockUI({ message: '<h1><img src="https://suresh1999-dev-ed--c.visualforce.com/resource/1553686219000/AutomaticUiBlock" /> Just a moment...</h1>' }); 
+		            var sobjectOptionList = document.getElementsByClassName("chartBlock")[0];
+					var selectedObject = sobjectOptionList.options[sobjectOptionList.selectedIndex].value;
+		            Visualforce.remoting.Manager.invokeAction(
+		                '{!$RemoteAction.SobjectAndFieldsController.changedObject}',
+		                selectedObject,
+		                function(result, event){                   
+	                        if(result && result.length) {                           
+	                        	var create ='<option value="'+''+'">'+'--None--'+'</option>';
+			                    for(var i = 0;i < result.length;i++) {
+			                       create += '<option value="'+result[i].value+'">'+result[i].label+'</option>';
+			                    }    
+		                        $('[id$=sobjectFields]').append(create);	
+		                        $('[id$=sobjectFields]').prop('disabled',false);
+	                    	} else {
+	                        	$('[id$=sobjectFields]').prop('disabled',true);
+	                        	$('[id$=forDesable]').prop('disabled',true);
+	                    	}  	
+	                    	$.unblockUI();
+		                }, 
+		                {escape: false});
+	       	}
+
+       		/*fuction callMeForUiBlock() {
+       			alert("hello");
+       			$.blockUI({ message: '<h1><img src="https://suresh1999-dev-ed--c.visualforce.com/resource/1553686219000/AutomaticUiBlock" /> Just a moment...</h1>' }); 
+       		}*/
+        </script>
+        </head>
+        <body class="mainDiv">
+        	<apex:form styleClass="form">
+            	<div class="container " >
+            		<div class="alert alert-success alert-dismissible" id='showSuccessfulMsg'>
+  					</div>
+            		<div class="mdb-select md-form colorful-select dropdown-primary dropdown">
+            			<h2 class="forSobjectHeader">Choose object: </h2>
+                		<apex:selectList size="1"  styleClass="chartBlock forSobjectedOptionList" id="objectname"  onchange="objectListChanged();return false;" style="height: 3rem;">
+                    		<apex:selectOptions value="{!listOfSObject}"   /> 
+                        </apex:selectList>
+                    </div>
+                    <h2 class="forFieldsHeader">Choose Field: </h2>
+                    <div class="chartBl">                      
+			     		<select id="sobjectFields"  Class="form-control forFieldsStyle"  onchange="cheackTheSelectedFields();return false;"  />
+					</div> 
+						<h2 class="forLeftH2">Field Record: </h2>
+        				<input type="text"  class="typeahead tt-query forLeftInput" id="tagss" onkeyup="myFunction()"  autocomplete="on" spellcheck="false" placeholder="Please Enter the Min. 3 Charater for Search the record...." />
+        				<button type="submit" id="forDesable" class="btn btn-info btn-lg" onclick="showTheRecordByJs();return false;" ><span class="glyphicon glyphicon-search"></span> Search </button>	
+        			<div id="table1" >	
+					</div>
+					<button type="submit" id="forDesableEdit" class="editByCheck btn btn-info btn-lg" onclick="forTheEditRecordBySelectedCheakbox();return false;" ><span class="glyphicon glyphicon-edit"></span> Edit </button>
+					<c:SobjectAndFieldsComponent />
+					<button type="submit" id="forDesableSave" class="saveByCheck success btn btn-info btn-lg" onclick="forEditTableSave();return false;" ><span class="glyphicon glyphicon-save"></span> Save </button>
+					
+            	</div>
+        	</apex:form>   
+        </body>
+    </Html>
+</apex:page>

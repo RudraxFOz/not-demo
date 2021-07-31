@@ -1,0 +1,92 @@
+<apex:page standardController="Process__c"  extensions="UpdateTaskTriggerHandller" sidebar="true" showHeader="false" >     
+    <apex:slds />
+    <style>
+        .row {
+            padding: 10px;
+            height: 32px;
+            background: aquamarine;
+        }
+        #mainTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        #mainTable td, #mainTable th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        }
+
+        #mainTable tr:nth-child(even){background-color: #f2f2f2;}
+
+        #mainTable tr:hover {background-color: #ddd;}
+
+        #mainTable th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+        }
+    </style>
+    <apex:form id="frm">                 
+        <apex:actionPoller action="{!checkStatus}" enabled="{!bProcess}" interval="5" reRender="frm" />
+        <!-- <apex:pageblock> 
+            <br/>  -->
+        <table id="mainTable"> 
+            <tr>
+                <th>Users/Dates</th>
+                <apex:repeat var="sEndDate" value="{!startToEndDates}">
+                    <th>{!sEndDate}</th>  
+                </apex:repeat>
+            </tr> 
+            <tr>
+                <apex:repeat var="ProTask" value="{!Process__c.TaskChild__r}">
+                    <tr>
+                        <td>{!ProTask.Contact__r.Name}</td>
+                        <apex:repeat var="sEndDate" value="{!startToEndDates}">
+                            <!-- <apex:outputPanel rendered="{!if(ProTask.Start_Date__c != null , true ,false)}">  -->
+                                <td >
+                                    <!-- <apex:outputPanel rendered="{!if(ProTask.Start_Date__c > ProTask.End_Date__c , true ,false)}"> -->
+                                        <apex:outputPanel rendered="{!if(ProTask.Status__c=='In Progress' , true ,false)}">  
+                                            <div class="slds-grid slds-gutters" style="width: 171%;">
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <div style="display: block; margin-top:5%;" class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100"
+                                                            aria-valuenow="{!deProgressBarWidth}" role="progressbar">
+                                                        <span class="slds-progress-bar__value" style="width: {!deProgressBarWidth}%;">
+                                                            <span class="slds-assistive-text">Progress: {!deProgressBarWidth}%</span>
+                                                        </span>
+                                                        <div class="slds-text-align--center slds-text-title" style="color:rgb(139, 34, 57);">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel rendered="{!if(ProTask.Status__c=='Completed' , true ,false)}">   
+                                            <!-- <apex:outputPanel rendered="{!if(CONTAINS(sEndDate,TEXT(ProTask.End_Date__c)),true,false)}"> -->
+                                                <apex:outputPanel rendered="{!if(VALUE(sEndDate) > VALUE(TEXT(ProTask.End_Date__c)) , true ,false)}"> 
+                                                <div class="slds-grid slds-gutters" style="width: 171%;">
+                                                    <div class="slds-col slds-size_1-of-1">
+                                                        <div style="display: block; margin-top:5%;" class="slds-progress-bar slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100"
+                                                                aria-valuenow="{!deProgressBarWidth}" role="progressbar">
+                                                            <span class="slds-progress-bar__value slds-progress-bar__value_success" style="width: {!deProgressBarWidth}%;">
+                                                                <span class="slds-assistive-text">Progress: {!deProgressBarWidth}%</span>
+                                                            </span>
+                                                            <!-- <div class="slds-text-align--center slds-text-title" style="color:forestgreen;"> -->
+                                                            <div class="slds-text-align--center slds-text-title" style="color:yellow;">   
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>    
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>	
+                                    <!-- </apex:outputPanel> -->
+                                </td>
+                            <!-- </apex:outputPanel> -->
+                        </apex:repeat>
+                    </tr> 
+                </apex:repeat>
+            </tr>
+        </table> 
+    </apex:form>  
+</apex:page>

@@ -1,0 +1,58 @@
+<template>
+    hello
+    <template if:true={Accounts}>
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+          <thead>
+            <tr class="slds-line-height_reset">
+              <th class="slds-text-title_caps" scope="col">
+                <div class="slds-truncate" title="Id">Id</div>
+              </th>
+              <th class="slds-text-title_caps" scope="col">
+                <div class="slds-truncate" title="Account Name">Name</div>
+              </th>
+              <th class="slds-text-title_caps" scope="col">
+                <div class="slds-truncate" title="Description">Description</div>
+              </th>
+              <th class="slds-text-title_caps" scope="col">
+                <div class="slds-truncate" title="Phone">Phone</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={Accounts} for:item="acc" >
+                acc
+              <tr class="slds-hint-parent" key={acc.id}>
+                <td data-label="Id">
+                  <div class="slds-truncate" title={acc.Id}>{acc.Id}</div>
+                </td>
+                <td data-label="Account Name">
+                  <div class="slds-truncate" title={acc.Name}>{acc.Name}</div>
+                </td>
+                <td data-label="Account Name">
+                    <div class="slds-truncate" title={acc.Description}>{acc.Description}</div>
+                  </td>
+                <td data-label="Account Name">
+                  <div class="slds-truncate" title={acc.Phone}>{acc.Phone}</div>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+        
+    </template>
+        <label for="FieldSelect" class="slds-form-element__label slds-no-flex">
+            Record Per Page:
+        </label>
+        <select class="slds-select" name="optionSelect" onchange={changeDropDownValue} >
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select> 
+       
+        <lightning-button variant="Neutral" label="First" title="First" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="Neutral" label="Previous" title="Previous" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="Neutral" label="Next" title="Next" onclick={clickNext} class="slds-m-left_x-small"></lightning-button>
+        <lightning-button variant="Neutral" label="Last" title="Last" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+        
+</template>

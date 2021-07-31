@@ -1,0 +1,27 @@
+<apex:component access="global">
+    <HTML>
+        
+    
+     <script type="text/javascript" src="/js/functions.js"></script>
+    <script src="/soap/ajax/11.1/connection.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+ 
+ 
+    <form >
+          <input type="button" id="btnSearch" name="btnSearch"  value="Search"  />
+  </form>
+          <script type='text/javascript'>  
+  
+    document.getElementById("btnSearch").addEventListener("click", searchTerm);
+    function searchTerm(){
+        console.log("==Testt==");
+        //var searchTerm = document.getElementById("keyword").value; 
+        //var url="/apex/PortalSearch?s="+searchTerm; 
+        // window.location = url; 
+        return false;
+    }         
+</script>
+    
+
+    </HTML>
+</apex:component>

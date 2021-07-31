@@ -1,0 +1,31 @@
+<apex:page controller="HelpTextController">
+    <html>
+        <head>
+            <apex:slds /> 
+        </head>
+        
+   
+     <apex:form >
+         <apex:repeat value="{!$ObjectType.Contact.FieldSets.TestFieldSet}" var="fieldSetVal">
+             <div class="slds-form-element__control slds-m-top--small ">
+                
+
+ 				
+                 <apex:image url="{!URLFOR($Resource.Asset,'/utility/info_60.png')}" title="{!$ObjectType.Contact.fields[fieldSetVal].InlineHelpText}" width="12" height="12" />
+
+			
+    				
+                 <apex:inputfield id="jobApplicationId" styleClass="slds-input" value="{!con[fieldSetVal]}"  html-placeholder="{!fieldSetVal.label}" required="false"/>                               
+             </div>                                	
+         </apex:repeat> 
+         <button onclick="myFunction()">Showimage</button>
+     </apex:form>
+    <script>
+        function myFunction() {
+            //document.getElementById("myImg").src = imageicon;
+            //document.getElementById('!$Component.form.icon').value= imageicon;
+            console.log(document.getElementById("myImg").src);
+        }
+     </script>
+         </html>
+</apex:page>

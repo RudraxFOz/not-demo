@@ -1,0 +1,5 @@
+<design:component>
+	<design:attribute name="welcomeTitle" label="Welcome Title" />
+
+    <design:attribute name="favoriteColors" label="Color" datasource="Red,Black,White,Blue"/>
+</design:component>

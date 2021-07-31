@@ -1,0 +1,190 @@
+<apex:component controller="PagningToPagning" allowDML="true"  >
+ 	<apex:attribute name="selectedObj" description="Name of Object" type="String" assignTo="{!selectedSObject}"/>
+ 	<apex:attribute name="selectedFields" description="List of Fields" type="SelectOption[]"  assignTo="{!allSelectedFields}"/>
+ 	<apex:attribute name="showThenTrue" description="List of Fields" type="Boolean" assignTo="{!passCondition}" />
+ 	<script type="text/javascript" id="myScript">
+        function selectAllCheckboxes(){
+            var inputCheckBox =  document.getElementsByClassName("input");                  
+            for(var i=0; i<inputCheckBox.length; i++){          
+                if(inputCheckBox[i].type== "checkbox") {
+                	if( inputCheckBox[i].checked ) {
+                		inputCheckBox[i].checked = false;
+                		//findIdFormCheckBox();
+                	} 
+                	else {
+                		inputCheckBox[i].checked = true;
+                		//findIdFormCheckBox();
+                	}
+                }  
+            }
+        }
+
+
+   
+        function selectBoxFunction(obj,isSelected,receivedInputID){
+        	var inputCheckBoxes = document.getElementsByClassName('input');
+        	if( isSelected) {
+        		for( var i in inputCheckBoxes ) {
+
+        			inputCheckBoxes[i].checked = true;
+        		}
+        	} else {
+        		for( var i in inputCheckBoxes ) {
+        			inputCheckBoxes[i].checked = false;
+        		}
+        	}
+            callCheckBoxMethod(isSelected);
+        }
+
+
+    	
+    	function cheakPage(gopageSize) {
+    		if(gopageSize < 0) {
+    			console.log('This is invalid Number');
+    		}
+    		else {
+    			console.log('This is  Number');
+    			pageGo();
+    			checkMasterCheckbox();
+    		}
+    	}
+
+    	function findId(isSelected, recValue) {
+    		console.log(isSelected);
+    		console.log(recValue);
+    	}
+
+    	function checkMasterCheckbox() {
+    		var allCheckBox = document.getElementsByClassName('input');
+    		var allChecked = true;
+    		for(var i in allCheckBox) {
+    			if(allCheckBox[i].checked == false) {
+    				allChecked = false;
+    				break;
+    			}
+    		}
+    		document.getElementsByClassName('masterCheckbox')[0].checked = allChecked;
+    	}
+    </script>
+
+
+<!--  	<apex:attribute name="flagBoolean" type="Boolean" description="List of Fields"/> -->
+
+ 	 	<apex:actionFunction name="showRecordByQuery"  action="{!callPagningClass}"/>
+ 	 	<apex:actionFunction name="nextButton" action="{!next}" reRender="myScript, table" />
+ 	 	<apex:actionFunction name="previousButton" action="{!previous}" reRender="myScript, table" />
+ 	 	<apex:actionFunction name="firstButton" action="{!firstPage}" reRender="myScript, table" />
+ 	 	<apex:actionFunction name="lastButton" action="{!lastPage}" reRender="myScript, table" />
+ 		<apex:actionFunction name="ListView" action="{!callTheQueryByListView}"/>  
+ 		<apex:actionFunction name="pageGo"	 action="{!countThePageSize}" />   
+ 		<apex:actionFunction name="selectBox" action="{!clickOnCheakBox}" />
+ 		<apex:actionFunction name="deleteRecord" action="{!deleteRec}" />
+ 		<apex:actionFunction name="selAndDeselMethod" action="{!SelectedAndDeselectMethod}" />
+ 		<apex:actionFunction name="findId" action="{!findIdFormCheckBox}" reRender="none">
+ 			<apex:param name="isSelected" value="" assignTo="{!findIdFormVf}"/>
+ 			<apex:param name="recValue" value="" assignTo="{!checkBoxRecId}"/>
+  		</apex:actionFunction>
+  		<apex:actionFunction name="callCheckBoxMethod" action="{!findMasterIdFormCheckBox}" reRender="none">
+ 			<apex:param name="isSelected" value="" assignTo="{!statusOfMasterCheckBox}"/>
+  		</apex:actionFunction>
+ 		<!-- 
+  	 	<table border="1"  >
+			<thead>
+				<tr>
+					<apex:repeat value="{!listOfSelectedFields}" var="field">
+ 						<th>{!field}</th>
+					</apex:repeat>
+ 				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<apex:variable var="count" value="{!0}"/>
+					<apex:repeat value="{!queryOnRecord}" var="rec">
+						<apex:variable value="{!count+1}" var="count"/>
+					</apex:repeat>
+				</tr>
+			</tbody>
+		</table>--> 
+
+		<!-- <table >
+			<tr>
+				<apex:repeat value="{!SerchAlpabet}" var="nn">
+				
+					<td>
+						<apex:commandLink action="{!display}" value="{!nn}" reRender="table" >
+							<apex:param value="{!nn}" name="sss"  assignTo="{!SearchVar}"/> 
+						</apex:commandLink>
+					</td>
+					
+				</apex:repeat>
+			</tr>
+	  </table> -->
+
+
+		
+    <apex:pageBlock id="table"  rendered="{!IF( queryOnRecord.size>0,true,false)}">
+
+    <!--   <div class="slds-grid slds-grid_pull-padded-medium"> -->
+      <!-- <div class="slds-align_absolute-right" style="height: 5rem;">This content will be positioned in the absolute center of its container</div> -->
+      <table   >
+			<tr>
+				<!-- <div class="slds-col slds-p-horizontal_medium"> -->
+				<apex:repeat value="{!SerchAlpabet}" var="allAlpa">
+					
+					<td>
+						<apex:commandLink action="{!display}" value="{!allAlpa}" reRender="table" >
+						
+							<apex:param value="{!allAlpa}" name="sss"  assignTo="{!SearchVar}"/> 
+							
+						</apex:commandLink>
+					</td>
+					
+				</apex:repeat>
+				<!-- </div> -->
+			</tr>
+	  </table>
+	  
+	 <!--  </div> -->
+	<div id="foo">
+
+ 	  <apex:pageBlockTable width="100%" value="{!wrapperList}" var="rec" id="pageTable" styleClass="slds-table slds-table--bordered slds-table--striped"  >
+ 	  	<apex:param value="{!rec.record.id}" assignTo="{!allRecordId}"/>
+ 	  	<apex:column headerValue="Select" >
+ 	  		<apex:facet name="header">
+ 	  	    	<input type="checkbox" class="masterCheckbox" title="master check box" onclick="selectBoxFunction(this,this.checked,'input');"/>
+ 	  	    </apex:facet>	    
+ 	  		<apex:inputCheckbox styleClass="input"  selected="{!rec.selected}" onchange="checkMasterCheckbox();" onclick="findId(this.checked, '{!rec.record.id}');" >
+ 	  		</apex:inputCheckbox>
+ 	  			
+  	    </apex:column>
+
+ 		<apex:column headerValue="Action" id="edit">
+ 			<apex:commandLink value="Edit" onclick="window.open('/{!rec.record.id}/e')" reRender="edit">  	 
+ 			</apex:commandLink>  
+			&nbsp;&nbsp;&nbsp;&nbsp; 
+			<apex:commandLink value="Delete" oncomplete="deleteRecord();" >  
+		 		<apex:param name="cid" value="{!rec.record.id}" assignTo="{!dcid}" />  
+		 	</apex:commandLink> 
+		</apex:column>
+		
+ 		<apex:repeat value="{!listOfSelectedFields}" var="field">
+			<apex:column value="{!rec.record[field]}" />				 
+		</apex:repeat>
+	  </apex:pageBlockTable>
+	</div>
+	  <apex:outputLabel id="showFooterNumbers">{!firstNumberOnBottom}-{!SecondNumberOnBottom} Of {!totalRecord}    Total {!totalRecord} Records</apex:outputLabel>
+	  <apex:selectList value="{!RecPerPageSize}" styleClass="slds-size_2-of-12" size="1"   onchange="ListView();">
+      	<apex:selectOptions value="{!listViewOfRecord}" />
+      </apex:selectList>
+      <apex:selectList value="{!chooseSelectAndDeselect}"  styleClass="slds-size_2-of-12" size="1"  onchange="selectAllCheckboxes()" >
+      	<apex:selectOptions value="{!SelectAndDeselect}" />
+      </apex:selectList>
+ 	  <apex:commandButton value="First" action="{!firstPage}" oncomplete="checkMasterCheckbox();"  disabled="{!prev}" reRender="myScript, table"/>
+ 	  <apex:commandButton value="Previous" action="{!previous}" oncomplete="checkMasterCheckbox();"  disabled="{!prev}" reRender="myScript, table"/>
+ 	  <apex:commandButton value="Next" action="{!next}" oncomplete="checkMasterCheckbox();" disabled="{!nxt}"  reRender="myScript, table"/>
+  	  <apex:commandButton value="Last" action="{!lastPage}" oncomplete="checkMasterCheckbox();" disabled="{!nxt}" reRender="myScript, table"/>
+ 	  <label class="slds-form-element__label" >page:</label>
+      	<apex:input type="number" styleClass="slds-input" html-min="1" html-max="{! CEILING(totalRecord / limitSize) }" value="{!gopageSize}"  onchange="cheakPage(this.gopageSize)" />
+      <label class="slds-form-element__label" >{!pageSize} of {! CEILING(totalRecord / limitSize) }</label>
+    </apex:pageBlock>
+</apex:component>

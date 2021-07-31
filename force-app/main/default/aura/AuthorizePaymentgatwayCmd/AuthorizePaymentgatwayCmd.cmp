@@ -1,0 +1,71 @@
+<aura:component controller="AuthorizePaymentGatewayController" implements="force:appHostable" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="cardNumber" type="String" />
+    <aura:attribute name="ccvNumber" type="String" />
+    <aura:attribute name="title" type="String" default="Authorize.net Integration"/>
+    <aura:attribute name="monthForCard" type="String[]" default="01,02,03,04,05,06,07,08,09,10,11,12"/>
+    <aura:attribute name="yearForCard" type="String[]" />
+    <aura:attribute name="sizeOfCard" type="Integer"  />
+    <aura:attribute name="sizeOfCvv" type="Integer"  />
+    <aura:attribute name="backgroundImageURL" type="String" default=""/> 
+    <aura:attribute name="amtForPay" type="String" />
+
+    <div style="{!'position: relative; height: 141%; background:' + v.backgroundColor + ' url(' + v.backgroundImageURL +') no-repeat;background-position: center;background-size: cover;'}"> 
+        <div class="slds-grid slds-grid--frame">
+            <lightning:card class="HandWOfCard">
+                <aura:set attribute="title"> 
+                   <center> <lightning:badge label="{!v.title}" class="badgeCss"/></center> 
+                </aura:set>
+                <div class="slds-m-around--xx-large">
+                    <div class="container-fluid">  
+                        <div class="form-group">
+                            <lightning:input name="amt" aura:id="amt" type="text" onchange="{!c.CheckNumberForAmt}"  maxlength="16" required="true" placeholder="Enter Amount....."  label="Amount:" value="{!v.amtForPay}"  />
+                            <!-- <input type="number" name="sMonth" value="" max="6"/> -->
+                        </div>
+                        <div class="form-group">
+                            <lightning:input name="cnumber" aura:id="number" type="number"  onchange="{!c.CheckLength}" maxlength="16" required="true" placeholder="Enter the 16 digits card number"  label="Card Number:" value="{!v.cardNumber}" />
+                            <!-- <input type="number" name="sMonth" value="" max="6"/> -->
+                        </div>
+                        <div class="slds-grid slds-grid--pull-padded">
+                            <div class="slds-col--padded">
+                                <div class="form-group"> 
+                                    <lightning:select aura:id="selectM" label="Valid month" required="true" onchange="{!c.selectMonth}"> 
+                                        <option value="">Month</option>
+                                            <aura:iteration items="{!v.monthForCard}" var="month">
+                                                <option text="{!month}"></option>
+                                            </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                            <div class="slds-col--padded">
+                                <div class="form-group">
+                                    <lightning:select aura:id="selectY" label="Valid year" required="true" onchange="{!c.selectYear}">
+                                        <option value="">year</option>
+                                            <aura:iteration items="{!v.yearForCard}" var="year" >
+                                                <option text="{!year}"></option>
+                                            </aura:iteration>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid--pull-padded">
+                            <div class="slds-col--padded">
+                                <div class="form-group CvvWidth">
+                                    <lightning:input name="ccvnumber" type="number" aura:id="numberForCvv" maxlength="3" onchange="{!c.CheckLengthForCvv}" placeholder="Enter the cvv" value="{!v.ccvNumber}" label="Cvv Number:" required="true"/>   
+                                </div>
+                            </div>
+                            <div class="slds-col--padded">
+                                <div class="form-group imgCss">
+                                    <img src="{!$Resource.CvvNumber}"/> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-grid--align-center slds-m-top_medium">
+                            <lightning:button variant="brand" name="Payment" label="Payment" disabled="{!v.disableButton}" value="Payment" onclick="{!c.cheackPayment}" />
+                        </div>
+                    </div>   
+                </div>
+            </lightning:card>
+        </div>
+    </div> 
+</aura:component>

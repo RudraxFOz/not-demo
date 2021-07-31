@@ -1,0 +1,9 @@
+<apex:page controller="DemoForDocumentCss">
+    <apex:stylesheet value="{!imageURL}"/>
+    <div class="test">
+        <h> This is only for test purpose. </h>
+    </div>
+    <apex:form >
+        <apex:image id="theImage" value="{!'/servlet/servlet.FileDownload?file=' & documentList1}" width="100" height="100"/>
+    </apex:form>
+</apex:page>

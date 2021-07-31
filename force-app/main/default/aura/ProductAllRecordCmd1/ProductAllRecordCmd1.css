@@ -1,0 +1,27 @@
+.THIS .imgWidth {
+    width: 42%;  
+} 
+
+.THIS .headerLabel {
+    color:Green;
+    font-size:15px;
+    font-weight: bold;
+}
+
+.THIS .productName {
+    font-size:15px;
+    font-weight:bold;
+}
+
+.THIS .productButton {
+    font-size:12px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.THIS .resultLabel {
+    padding-left:30px;
+    font-weight:bold;
+    font-size:15px;
+    color:#2A5776;
+}

@@ -1,0 +1,18 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 <aura:attribute name="welcomeTitle" type="String" default="Welcome in Lightning" access="global" />
+    <aura:attribute name="hideLogo" type="Boolean" default="true" access="global" />
+    <aura:attribute name="LogoURL" type="String" default="https://c1.sfdcstatic.com/content/dam/web/en_us/www/images/home/logo-salesforce.svg" access="global" />
+    <aura:attribute name="favoriteColors" type="String" default="Blue" access="global"/>
+   
+    <div class="header-section-top">
+        <div class="slds-text-heading_large" style="{!'color:' + v.favoriteColors}" >
+            {!v.welcomeTitle}
+        </div>
+       
+        <aura:if isTrue="{!v.hideLogo}">
+            <div class="header-section-top">
+                <img src="{!v.LogoURL}" width="200" height="200" />
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

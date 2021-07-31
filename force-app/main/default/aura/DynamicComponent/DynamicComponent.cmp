@@ -1,0 +1,12 @@
+<aura:component controller="OpportunityStageUpdate" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+        <aura:attribute name="variant" type="String" default="non-linear"/>
+    <aura:attribute name="hideUpdateButton" type="Boolean" default="true"/>
+    <lightning:path aura:id="path" recordId="{!v.recordId}"
+                    variant="{!v.variant}"
+                    hideUpdateButton="{!v.hideUpdateButton}"
+                    onselect="{!c.handleSelect}"
+                    />
+
+                    <aura:attribute name="val" type="Integer" default="50"/>
+    <lightning:slider label="Volume" value="{!v.val}"/>
+</aura:component>

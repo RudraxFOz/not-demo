@@ -1,0 +1,93 @@
+<aura:component>
+    <aura:attribute name="timeSheetIdFromParent" type="String" />
+
+    <aura:attribute name="timeSheetItemInstance" type="Timesheet_Line_items__c"/>  
+    <aura:attribute name="moColValue" type="Integer" default="0"/>
+    <aura:attribute name="rowIndex" type="String"/>
+    <aura:attribute name="totalHrsRow" type="Integer" default="0"/>
+    <aura:attribute name="totalHrsColumn" type="Integer" default="0"/>
+
+    <aura:attribute name="totalOfColumn" type="Integer" default="0"/>
+    <aura:attribute name="totalOfRow" type="Integer"/>  
+    <aura:attribute name="preNumberLen" type="Integer" default="0"/>
+    <aura:attribute name="preNumberValue" type="Integer" default="0"/>
+
+    <aura:attribute name="preColNumberLen" type="Integer" default="0"/>
+    <aura:attribute name="preColNumberValue" type="Integer" default="0"/>
+    
+    <!-- Register 2 Lightning Event for handle add or Delete rows on Parent Component  --> 
+    <aura:registerEvent name="DeleteRowEvt" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="AddRowEvt" type="c:AddNewRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalMo" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalTu" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalWe" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalTh" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalFr" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalSa" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowColumnTotalSu" type="c:DeleteRowEvt"/> 
+    <aura:registerEvent name="ShowRowTotal" type="c:DeleteRowEvt"/>  
+    <aura:registerEvent name="ShowColumnTotal" type="c:DeleteRowEvt"/>   
+
+    <!-- <aura:handler name="ShowColumnTotalValidation" event="c:DeleteRowEvt" action="{!c.handleCustomValidation}"/> -->
+    <aura:handler event="c:DeleteRowEvt" action="{!c.handleCustomValidation}"/>
+    
+    
+    <!-- Table Row -->   
+    <tr class="slds-text-title_caps">
+        <td>
+            <lightning:input type="text" value="{!v.timeSheetItemInstance.Project_Name__c}"/>
+        </td>
+        <td onchange="{!c.keyForMo}">
+            <!-- <div > -->
+                <lightning:input type="number" name="inputMo" aura:id="forMo"  oncommit="{!c.commit}" onblur="{! c.handleBlur }" value="{!v.timeSheetItemInstance.Monday__c}"
+                messageWhenBadInput="You can not put this input Because this thi big to 24" />
+                <!-- <ui:inputText class="slds-input" aura:id="forMo" value="{!v.timeSheetItemInstance.Monday__c}"  /> -->
+                
+            <!-- </div> -->
+        </td>
+        <td onchange="{!c.keyForTu}">
+            <!-- <span > -->
+                <lightning:input type="number" name="inputTu" aura:id="forTu" oncommit="{!c.commit}" value="{!v.timeSheetItemInstance.Tuesday__c}"/>
+            <!-- </span> -->
+        </td>
+        <td onchange="{!c.keyForWe}"> 
+            <!-- <span > -->
+                <lightning:input type="number" name="inputWe" aura:id="forWe" oncommit="{!c.commit}" value="{!v.timeSheetItemInstance.Wednesday__c}"/>
+            <!-- </span> -->
+        </td>
+        <td onchange="{!c.keyForTh}">
+            <lightning:input type="number" name="inputTh" aura:id="forTh" oncommit="{!c.commit}" value="{!v.timeSheetItemInstance.Thursday__c}"/>
+        </td>
+        <td onchange="{!c.keyForFr}">
+            <lightning:input type="number" name="inputFr" aura:id="forFr" oncommit="{!c.commit}" value="{!v.timeSheetItemInstance.Friday__c}"/>
+        </td>
+        <td onchange="{!c.keyForSa}">
+            <lightning:input type="number" name="inputSa" aura:id="forSa" oncommit="{!c.commit}" value="{!v.timeSheetItemInstance.Saturday__c}"/>
+        </td>
+        <td onchange="{!c.keyForSu}">
+            <lightning:input type="number" name="inputSu" aura:id="forSu" oncommit="{!c.commit}" value="{!v.timeSheetItemInstance.Sunday__c}"/>
+        </td>
+        <td>
+            <!-- conditionally Display Add or Delete Icons
+                 if rowIndex is 0 then show Add New Row Icon else show delete Icon
+             --> 
+            <aura:if isTrue="{!v.rowIndex == 0}">
+                <a onclick="{!c.AddNewRow}">
+                  <lightning:icon iconName="utility:add" class="slds-icon slds-icon_small" size="small" alternativeText="add"/>
+                  <span class="slds-assistive-text">Add Icon</span>
+                </a>    
+              <aura:set attribute="else">
+                  <a onclick="{!c.removeRow}">
+                   <lightning:icon variant="error" iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="icon"/>
+                   <span class="slds-assistive-text">Delete Icon</span>
+                  </a>
+              </aura:set> 
+            </aura:if>
+        </td> 
+        <td>
+            {!v.totalHrsRow}
+        </td>
+    </tr>
+    
+ 
+</aura:component>

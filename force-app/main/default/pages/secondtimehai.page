@@ -1,0 +1,16 @@
+<apex:page standardController="Student__c" readOnly="false" recordSetVar="students">
+   <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+               <apex:dataTable var="student" value="{!students}" border="5" cellpadding="3" cellspacing="5">
+                  <apex:column headerValue="student name">
+                    <apex:outputText value="{!Student.Name}"/>
+                  </apex:column>
+                  <apex:column headerValue="coures">
+                    <apex:outputText value="{!Student.course__c}"/>
+                  </apex:column>
+               </apex:dataTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+   </apex:form>
+</apex:page>

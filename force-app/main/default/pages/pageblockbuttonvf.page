@@ -1,0 +1,13 @@
+<apex:page standardController="Student__c">
+  <apex:form >
+      <apex:pageBlock >
+          <apex:pageBlockButtons >
+              <apex:commandButton action="{!save}" value="save"/>
+          </apex:pageBlockButtons>
+          <apex:pageBlockSection >
+              <apex:inputField value="{!Student__c.Name}"/>
+              <apex:inputField value="{!Student__c.course__c}"/>
+          </apex:pageBlockSection>
+      </apex:pageBlock>
+  </apex:form>
+</apex:page>

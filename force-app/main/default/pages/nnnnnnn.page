@@ -1,0 +1,35 @@
+<apex:page standardController="Contact" id="page">
+    <apex:form id="frm">
+        <apex:pageblock id="pblck">
+            <apex:pageblockSection id="pbSectn" >
+                <apex:pageblockSectionItem id="pbSitemLookup">
+                    <apex:inputField id="accountLookup" value="{!Contact.AccountId}"/>
+                </apex:pageblockSectionItem>
+                
+                <apex:pageblockSectionItem id="pbSitemLastName">
+                    <apex:inputField id="contactLastname" value="{!Contact.LastName}"/>
+                </apex:pageblockSectionItem>
+                
+                <apex:pageblockSectionItem id="pbSitemLink">
+                    <b><a href="#" onClick="clearValue()" > Clear </a> </b> 
+                </apex:pageblockSectionItem>
+            </apex:pageblockSection>
+        </apex:pageblock>
+        
+        <p> <apex:commandButton action="{!Save}" value="Save" id="cmdSave"/> </p>
+    </apex:form>
+    
+    <script>
+    function clearValue()
+    {
+    document.getElementById('{!$Component.page:frm:pblck:pbSectn:pbSitemLookup:accountLookup}').value = '';
+    document.getElementById('{!$Component.page:frm:pblck:pbSectn:pbSitemLastName:contactLastname}').value = '';
+  
+    alert();
+    return false;
+    }
+    
+    </script>
+    
+    
+</apex:page>

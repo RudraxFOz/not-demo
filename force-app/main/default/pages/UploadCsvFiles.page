@@ -1,0 +1,21 @@
+<apex:page showHeader="true" sidebar="true"  controller="UploadCsvFileControlerClass">
+	<apex:form >
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4"> 
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}" accept="csv"/>
+                  <apex:commandButton value="Import Contact" action="{!importCSVFile}"/>
+                  <apex:commandButton value="Send Email" action="{!callBatch}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+           <apex:pageblocktable value="{!conList}" var="con">
+               
+              <apex:column value="{!con.FirstName__c}" />
+              <apex:column value="{!con.LastName}" />
+              <apex:column value="{!con.MobilePhone }" />
+              <apex:column value="{!con.Status__c }" />
+        </apex:pageblocktable>
+     </apex:pageBlock>
+   </apex:form>
+</apex:page>

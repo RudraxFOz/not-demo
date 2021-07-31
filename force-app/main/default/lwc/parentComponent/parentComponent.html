@@ -1,0 +1,53 @@
+<!--
+@description       : 
+@author            : ChangeMeIn@UserSettingsUnder.SFDoc
+@group             : 
+@last modified on  : 12-14-2020
+@last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+Modifications Log 
+Ver   Date         Author                               Modification
+1.0   12-10-2020   ChangeMeIn@UserSettingsUnder.SFDoc   Initial Version
+-->
+<template>
+    
+    <table>
+        <tr>
+        <template for:each={accRecWrap} for:item= "account">
+            <td key={account.accRec.Id} style="padding-left: 0.5%;padding-right: 0.5%;">
+            <lightning-card  style="height: 10rem;" variant="narrow" icon-name="standard:account">
+                    <h1 slot="title"> {account.accRec}</h1>
+                    <p class="slds-p-horizontal_small">
+                    <template for:each={account.accRecList} for:item= "record">
+                    <div key={record}>
+                        {record}
+                    </div>
+                    </template>
+                    </p>
+                <div slot="actions">        
+                </div>
+                <div slot="footer">
+        
+                </div>
+            </lightning-card>
+            </td>
+    </template>
+    </tr>
+    <tr>
+        <template for:each={accRecWrap} for:item= "account" for:index="index">
+        <td key={account.Id} style="padding-left: 0.5%;padding-right: 0.5%;">
+                <div id={account.tableId} data-item={index}  ondragover={allowDrop} ondrop={drop}>
+                    <template if:true={account.accRec.Contacts} for:each={account.accRec.Contacts} for:item= "contact">
+                        <div key={contact.Id} id={contact.Id} data-item={index} style="border: 1px solid black; text-align: center;"  draggable="true" ondragstart={drag}>
+                            Contact : {contact}<br/>
+                            Account Name :{contact.Account}
+                        </div>
+                    </template>
+                    <div if:false={account.accRec.Contacts} data-item={index} class="slds-align--absolute-center" style="border: solid 1px;width: 85%;">                          
+                        Please drop here
+                    </div>
+                </div>
+            </td> 
+        </template> 
+    </tr>
+</table>
+</template>

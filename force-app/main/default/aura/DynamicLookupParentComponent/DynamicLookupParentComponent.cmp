@@ -1,0 +1,22 @@
+<aura:component>
+    <div class="container YourClass">
+        <div class="page-header">
+            <h1>Contact Component</h1>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Example for Lookup </div>
+            <div class="panel-body">
+                <div class="form-horizontal information-box" >
+                     <div class="form-group">
+                        <label class="control-label col-sm-1">Select Account</label>
+                        <div class="col-sm-4">
+                            <c:DynamicLookupChildCmd type="Account"  
+                                           value="{!v.contact.Account__c}"
+                                           className="form-control "/>  
+                        </div>
+                     </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

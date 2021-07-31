@@ -1,0 +1,7 @@
+<apex:page controller="Controller1" sidebar="true" showHeader="true" >
+    <apex:form >
+        <apex:inputtext value="{!inputText1}"  />  
+        <br />
+        <apex:commandButton value="Send" action="{!GoToPage2}" reRender="result"/>
+    </apex:form>
+</apex:page>
