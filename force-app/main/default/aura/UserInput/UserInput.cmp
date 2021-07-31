@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable">
+    <aura:registerEvent name="loadMyEvent" type="c:Result" />
+    <ui:inputNumber aura:id="input1" label="First value" />
+    <ui:inputNumber aura:id="input2" label="second value" />
+    <ui:button label="sum" press="{!c.add}" />
+	
+</aura:component>

@@ -1,0 +1,19 @@
+<apex:page standardController="AllInOne__c">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:inputField value="{!AllInOne__c.EmailId__c}"/>
+                <apex:inputField value="{!AllInOne__c.Dollar__c}"/>
+                <apex:inputField value="{!AllInOne__c.Female__c}"/>
+                <apex:inputField value="{!AllInOne__c.Male__c}"/>
+                 <apex:inputField value="{!AllInOne__c.FirstMultiGlobalPicklist__c}"/>
+                <apex:inputField value="{!AllInOne__c.LongTextRich__c}"/>
+                <apex:inputField value="{!AllInOne__c.S_No__c}"/>
+                <apex:inputField value="{!AllInOne__c.MySite__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

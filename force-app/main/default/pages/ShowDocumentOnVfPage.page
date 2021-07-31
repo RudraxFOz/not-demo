@@ -1,0 +1,30 @@
+<apex:page standardcontroller="Document" extensions="ImageController" showheader="false" sidebar="false">
+    
+        <html>
+<head>
+  <apex:outputField value="{!Document.name}"/>
+  <apex:image id="theImage" value="{!'/servlet/servlet.FileDownload?file=' &'0156F00000KDUCpQAP'}" width="100" height="100"/>
+    <apex:includeScript value="{https://suresh1999-dev-ed--c.documentforce.com/servlet/servlet.FileDownload?file=0156F00000KDUDE}"/>
+    <script type="text/javascript" src="https://suresh1999-dev-ed--c.documentforce.com/servlet/servlet.FileDownload?file=0156F00000KDUDE"></script>
+    <link rel='stylesheet' href='https://suresh1999-dev-ed--c.documentforce.com/servlet/servlet.FileDownload?file=0156F00000KDUDE' type='text/css' media='screen'/>
+        <apex:stylesheet value="https://suresh1999-dev-ed.my.salesforce.com/0156F00000KDUDE"/>
+    <apex:form >
+<apex:image url="{!imageURL}">
+</apex:image></apex:form>
+    
+
+
+
+</head>
+<body>
+<div class="intro">
+  <p>My name is Donald.</p>
+  <p>I live in Duckburg.</p>
+</div>
+<h1>This is a heading</h1>
+<p>This is a paragraph.</p>
+
+</body>
+</html>
+
+</apex:page>

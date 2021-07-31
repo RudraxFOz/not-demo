@@ -1,0 +1,62 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute name="shoesList" type="List" />
+    <aura:attribute name="tshirtList" type="List" />
+    <aura:attribute name="bulbList" type="List" />
+    <aura:attribute name="shoesIcon" type="String" />
+    <aura:attribute name="tshirtIcon" type="String" />
+    <aura:attribute name="bulbIcon" type="String" />
+    <lightning:navigation aura:id="navService"/>
+
+
+    <div>
+        <!-- <div class="forRightMargin"> -->
+            <div class="slds-grid slds-wrap slds-grid-pull-padded ">
+                <div class="slds-col--padded forWidth">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <center><h1>Bulb</h1></center>
+                        </aura:set>
+                        <div class="form-group">
+                            <img src="{!$Resource.BulbImg}"/> 
+                        </div>
+                        <div>
+                            <center>
+                                <lightning:button variant="brand" label="View" onclick="{!c.NavigatetoBubl}" />
+                            </center>
+                        </div>
+                    </lightning:card>
+                </div>
+                <div class="slds-col--padded forWidth">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <center><h1>Shoes</h1></center>   
+                        </aura:set>
+                        <div class="form-group">
+                            <img src="{!$Resource.ShoesImg}"/> 
+                        </div>
+                        <div>
+                            <center>
+                                <lightning:button variant="brand" label="View" onclick="{!c.NavigatetoShoes}" />
+                            </center>
+                        </div>
+                    </lightning:card>
+                </div>
+                <div class="slds-col--padded forWidth1">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <center><h1>T-Shirt</h1></center>   
+                        </aura:set>
+                        <div class="form-group">
+                            <img src="{!$Resource.TshirtImg}"/> 
+                        </div>
+                        <div>
+                            <center>
+                                <lightning:button variant="brand" label="View" onclick="{!c.NavigatetoTshirt}" />
+                            </center>
+                        </div>
+                    </lightning:card>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+</aura:component>

@@ -1,0 +1,12 @@
+<apex:component >
+    <!-- Attribute Definitions -->
+    <apex:attribute name="myValue" description="This is the value for the component."
+                    type="String" required="true"/>
+    <apex:attribute name="textColor" description="This is color for the text."
+                    type="String" required="true"/>
+
+    <!-- Component Definition -->
+    <h1 style="color:{!textColor};">
+        <apex:outputText value="{!myValue}"/> 
+    </h1> 
+</apex:component>

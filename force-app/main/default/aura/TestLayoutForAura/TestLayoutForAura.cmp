@@ -1,0 +1,29 @@
+<aura:component >
+	<div class="c-container">
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="3" mediumDeviceSize="3" padding="around-small">
+                <div class="custom-box">1</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" mediumDeviceSize="3" padding="around-small">
+                <div class="custom-box">2</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" mediumDeviceSize="3" padding="around-small">
+                <div class="custom-box">3</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="3" mediumDeviceSize="3" padding="around-small">
+                <div class="custom-box">4</div>
+            </lightning:layoutItem>
+        </lightning:layout>
+	</div>
+    
+    <label class="mdp-form-user-element__label" id="enteredName"></label><br/><br/>
+     {!v.body}
+
+    <div id="myDiv" aura:id="div1">
+        <input type="text" id="input12" name="input12"/>
+        <lightning:input name="input1" aura:id="someId" id="input1" label="Text field with a placeholder" onfocus="{! c.handleFocus }" onblur="{! c.handleBlur }" onchange="{!c.handleClick1}" placeholder="type here..."/>
+    </div>
+        <lightning:button variant="base" aura:id="button1" label="Base" title="Base action" onclick="{! c.handleClick }"/>
+    <lightning:button variant="base" aura:id="button2" label="Call Dyanmic Cmd" title="Base button2" onclick="{!c.callDynmicCmd}" />
+    <lightning:button variant="base" aura:id="button3" label="Call Dyanmic" title="Base button2" onclick="{!c.callDynmicCmd1}" />
+</aura:component>

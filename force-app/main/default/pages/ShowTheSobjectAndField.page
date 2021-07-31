@@ -1,0 +1,7 @@
+<apex:page showHeader="true" sidebar="true"  controller="GiveTheSobjectAndFields" >
+  <apex:form >
+    <apex:SelectList size="1">
+      <apex:selectOptions value="{!Name}"></apex:selectOptions>
+    </apex:SelectList>
+  </apex:form>
+</apex:page>

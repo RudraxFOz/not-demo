@@ -1,0 +1,23 @@
+<apex:page showHeader="true" sidebar="true" controller="DropboxController">
+	<apex:form >
+		<!-- <apex:actionFunction name="author" value={!callAuthCode} /> -->
+		<apex:commandButton value="Connect" action="{!callAuthCode}" />
+		<table >
+			<tr>
+				<!-- <div class="slds-col slds-p-horizontal_medium"> -->
+				<apex:repeat value="{!listOfFolder}" var="listOfFolder">
+					
+					<td>
+						<!-- <apex:commandLink action="{!display}" value="{!allAlpa}" reRender="table" >
+						
+							<apex:param value="{!allAlpa}" name="sss"  assignTo="{!SearchVar}"/> 
+							
+						</apex:commandLink> -->
+					</td>
+					
+				</apex:repeat>
+				<!-- </div> -->
+			</tr>
+	  </table>
+	</apex:form>
+</apex:page>

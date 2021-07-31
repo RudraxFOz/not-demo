@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+ <aura:attribute name="record" type="Object" 
+      description="The record object to be displayed"/>
+    <aura:attribute name="simpleRecord" type="Object" 
+      description="A simplified view record object to be displayed"/>
+    <aura:attribute name="recordError" type="String" 
+      description="An error message bound to force:recordData"/>
+    
+    <force:recordData aura:id="accountRecord"
+        layoutType="FULL"
+        recordId="{!v.recordId}"
+        targetError="{!v.recordError}"
+        targetRecord="{!v.record}"
+        targetFields ="{!v.simpleRecord}"
+        fields="Name"
+        mode="EDIT"/>
+    
+     <!-- Display an editing form -->
+        <div class="Record Details">
+            <lightning:card iconName="action:edit" title="Edit Account">
+                <div class="slds-p-horizontal--small">
+                    <lightning:input label="Account Name" value="{!v.accountRecord.Name}"/>
+                    <br/>
+                    <lightning:button label="Save Account" variant="brand" onclick="{!c.handleSaveRecord}" />
+                </div>
+            </lightning:card>
+        </div>
+</aura:component>

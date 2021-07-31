@@ -1,0 +1,419 @@
+<aura:component controller="QuestionAnswerClass" access="global" implements="force:appHostable,flexipage:availableForAllPageTypes">   
+  
+   <aura:attribute name="questions" type="List"/>    
+   <aura:attribute name="questions1" type="List"/>    
+   <aura:attribute name="questionsLst1" type="List"/>  
+   <aura:attribute name="instructionsLst" type="Object"/> 
+   <aura:attribute name="isModalOpen" type="boolean" default="false"/>
+   <aura:attribute name="questionsLst" type="Object"/>
+   <aura:attribute name="numberForShowQuestion" type="Integer" default="0"/>   
+   <aura:attribute name="numberForShowQuestionForRadio" type="Integer" default="0"/>   
+   <aura:attribute name="numberForShowQuestionCheckBox" type="Integer" default="0"/>
+   <aura:attribute name="totalSecond" type="Integer" default="1"/> 
+   <aura:attribute name="my_int" type="Integer" />
+   <aura:attribute name="radioGrpValue" type="String"/>   
+   <aura:attribute name="hoursLabel" type="String"/>
+   <aura:attribute name="minutesLabel" type="String"/>
+   <aura:attribute name="secondsLabel" type="String"/> 
+   <aura:attribute name="checkGrpValue" type="List"/>     
+   <aura:attribute name="allRadioAnswer" type="List" />  
+   <aura:attribute name="allCheckBoxAnswer" type="List" /> 
+   <aura:attribute name="submitAndStart" type="Boolean" default="false"/>  
+   <aura:attribute name="lstOfSubject" Type="List" />
+   <aura:attribute name="spinner" type="boolean" default="FALSE"/>
+   <aura:attribute name="isModalOpen1" type="boolean" default="false"/>
+   <aura:attribute name="lengthOfQuestion" type="Integer" default="0" />  
+   <aura:attribute name="totalCorrect" type="Integer" default="0" />  
+   <aura:attribute name="totalWorng" type="Integer" default="0" />  
+   <aura:attribute name="totalUnanswer" type="Integer" default="0" /> 
+   <aura:attribute name="moreTabs" type="aura.component[]" />
+   <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+   <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>  
+   <div class="marquee">
+                   
+        <!-- <h1>completed this task</h1>      -->
+        <p>
+                Welcome in question series test.
+            </p>
+        
+    </div>
+   <div>
+        <aura:if isTrue="{!v.spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading...</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        <lightning:card aura:id="insructionId"> 
+            <aura:set attribute="title">
+                <h1>Instructions:</h1>
+            </aura:set>
+            <div style="margin-left:1%">
+            <p> 1. {!v.instructionsLst.IntroLineFirst__c}. </p>   
+            <p> 2. Test Duration: {!v.instructionsLst.Total_Time_For_Question__c}.  </p>      
+            <p> 3. Number of questions:{!v.instructionsLst.Number_of_questions__c}  </p>
+            <p> 4. Marks of questions:{!v.instructionsLst.Single_Choose_Marks__c}  </p>
+            <p> 5. {!v.instructionsLst.IntroLineSecond__c}. </p>
+            <p> 6. {!v.instructionsLst.IntroLineThird__c}. </p>
+            </div>
+        </lightning:card>
+        <lightning:card aura:id="showScore">
+            <aura:set attribute="title">   
+                <h1>
+                    <pre> <label>Total question:{!v.instructionsLst.Number_of_questions__c}</label> </pre>
+                    <pre> <label>Correct Answer:{!v.totalCorrect}</label></pre>
+                    <pre> <label>Worng Answer:{!v.totalWorng}</label>  </pre>
+                    <pre> <label>Unread Question:{!v.totalUnanswer}</label> </pre>
+                       
+                    <!-- <label>Total question:{!v.instructionsLst.Number_of_questions__c}</label> -->
+                </h1>
+                <h1><center>
+                        <div style="height: 12%; width: 12%;" class="slds-align--absolute-center slds-action-overflow--touch__body">
+                            <img src="{!$Resource.cup}"/> 
+                        </div>
+                    </center></h1>
+            </aura:set>
+            <aura:if isTrue="{!v.questionsLst.RecordType.Name == 'Single Choose'}">
+            </aura:if>
+            <!-- <lightning:button  aura:Id="previousDisable" label="Previous" value="previous" onclick="{!c.previousButton}" />
+            <lightning:button  aura:Id="nextDisable" label="Next" value="next" onclick="{!c.nextButton}" />
+            <lightning:button  aura:Id="submitDisable" label="Submit" value="Submit" onclick="{!c.submitAllQuestion}"/> -->
+        </lightning:card>
+        <lightning:card aura:id="hideAccountData">
+            <aura:set attribute="title">
+                   
+                <h1>Please fill the form below to start the Practice Test:</h1>
+            </aura:set>
+            <div style="margin-left:1%">
+                <lightning:layout horizontalAlign="center" class="xx-large" >
+                    <lightning:layoutItem padding="around-small" >
+                        <lightning:input aura:id="input1" name="input1" label="First Name" placeholder="Enter First Name..." value="" required="true" />
+                    </lightning:layoutItem>
+                    <lightning:layoutItem padding="around-small">
+                        <lightning:input aura:id="input2" name="input2" label="Last Name" placeholder="Enter Last Name..." value="" required="true"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem padding="around-small">
+                        <lightning:input type="email" aura:id="input3" name="input3" label="Email" placeholder="Enter Email..." value="" required="true"/>
+                    </lightning:layoutItem>
+                    <lightning:layoutItem padding="around-small">
+                        <lightning:input type="tel" aura:id="input4" name="input4" label="Phone" placeholder="Enter Phone..." value="" required="true"/>
+                    </lightning:layoutItem>
+                </lightning:layout>
+                <lightning:layout horizontalAlign="center" class="xx-large" >
+                    <lightning:layoutItem padding="around-small">
+                        <lightning:button  aura:Id="subDisable" label="Submit / Start Test" value="submit" onclick="{!c.submitData}" /> 
+                    </lightning:layoutItem>
+                </lightning:layout>      
+            </div>
+        </lightning:card>
+
+        <aura:if isTrue="{!v.submitAndStart}">
+            <lightning:card aura:id="hideSubject">
+                <aura:set attribute="title">
+                    <h1> Selected the subject:</h1>
+                </aura:set>
+                <lightning:layout  horizontalAlign="center" class="x-large" >
+                    <lightning:layoutItem>
+                        <lightning:select aura:id="selectSub" name="selectSubject" label="Select Subject" onchange="{!c.selectOptionSubject}">
+                            <option value="Null">choose one...</option>
+                            <aura:iteration items="{!v.lstOfSubject}" var="lst_subject">
+                                <option value="{!lst_subject.Name}" >{!lst_subject.Name}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </lightning:card>
+        </aura:if>
+        <lightning:card aura:id="hideShowQuestion">
+            <aura:set attribute="title">   
+                <h1><center>
+                    <label id="hours">00</label><span class='bigger'>:</span>
+                    <label id="minutes">00</label><span class='bigger'>:</span>
+                    <label id="seconds">00</label>
+                </center></h1>
+                <button onclick="{!c.stop_timer}" class='button slds-button slds-button_neutral'>Pause</button> 
+                <lightning:button aura:id="allQuestionShowId" label="All question" value="All question" onclick="{!c.showAllQuestion}" />
+                <!-- <lightning:button variant="brand" label="Create Component" onclick="{! c.handleComponent }" /> -->
+               
+            </aura:set>
+            <aura:if isTrue="{!v.questionsLst.RecordType.Name == 'Single Choose'}">
+                <lightning:radioGroup name="RadioGroupRequired" aura:Id="disablebuttonid" class="slds-accordion__section"
+                                    label="{!v.questionsLst.Question_Number__c+' . '+v.questionsLst.Question_Text__c}"   
+                                    options="{!v.questionsLst.Answer1s__r}"
+                                    value="{!v.radioGrpValue}" 
+                                    onchange="{!c.selectRadioButton}"  
+                                    type="radio"  
+                                    required="true"
+                                    disabled="false"/>  
+                                    
+                <aura:set attribute="else">
+                    <lightning:checkboxGroup name="Checkbox Group Required" class="slds-accordion__section"
+                        label="{!v.questionsLst.Question_Number__c+' . '+v.questionsLst.Question_Text__c}"
+                        options="{!v.questionsLst.Answer1s__r}"
+                        value="{!v.checkGrpValue}"
+                        onchange="{!c.selectCheckBox}"
+                        required="true"/>
+                </aura:set>
+            </aura:if>
+            <lightning:button  aura:Id="previousDisable" label="Previous" value="previous" onclick="{!c.previousButton}" />
+            <lightning:button  aura:Id="nextDisable" label="Next" value="next" onclick="{!c.nextButton}" />
+            <lightning:button  aura:Id="submitDisable" label="Submit" value="Submit" onclick="{!c.submitAllQuestion}"/>
+        </lightning:card>
+
+        <aura:if isTrue="{!v.isModalOpen}">   
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Resume the Time for question</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div style="height: 12%; width: 12%;" class="slds-align--absolute-center slds-action-overflow--touch__body">
+                            <img src="{!$Resource.Clock1}"/> 
+                        </div>
+                        <div class="slds-align--absolute-center">
+                            <label><strong>{!v.hoursLabel}:{!v.minutesLabel}:{!v.secondsLabel}</strong></label>
+                            <button onclick="{!c.set_timer}" class="button slds-button slds-button_neutral slds-avatar--circle" style="margin-top: 18%; margin-left: -11%;">Resume</button>
+                        </div>  
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                        <h1 class="slds-accordion__summary-heading">NOTE:</h1>
+                        <p class="slds-app-launcher__tile">All test progress will be lost in case you close the browser without finishing the test. Please finish the test to access your results.</p>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        <lightning:card aura:id="hideShowAllQuestionAfterSubmit">
+            <aura:set attribute="title">   
+                <h1><center>
+                    <lightning:icon iconName="action:approval" alternativeText="Approved" />
+                    <label id="tstCom">Test completed</label>
+                </center></h1>
+            </aura:set>
+            <aura:set attribute="footer">
+                <lightning:tabset selectedTabId="four">                        
+                    <lightning:tab  id="one">
+                        <aura:set attribute="label">
+                            {! 'All question : ' + v.lengthOfQuestion}
+                        </aura:set>
+                        <aura:iteration items="{!v.questions1}" var="questionsLst1">
+                            <aura:if isTrue="{!questionsLst1.RecordType.Name == 'Single Choose'}">
+                                <lightning:radioGroup class="slds-accordion__section"
+                                                    label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"   
+                                                    options="{!questionsLst1.Answer1s__r}"
+                                                    value="{!questionsLst1.yourAnswer}" 
+                                                    type="radio"  
+                                                    required="true"
+                                                    disabled="true"/>                 
+                                <aura:set attribute="else">
+                                    <lightning:checkboxGroup name="Checkbox Group Required" class="slds-accordion__section"
+                                        label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"
+                                        options="{!questionsLst1.Answer1s__r}"
+                                        value="{!questionsLst1.yourAnswer}" 
+                                        disabled="true"
+                                        required="true"/>
+                                </aura:set> 
+                             </aura:if>
+                             <aura:if isTrue="{!and(questionsLst1.yourAnswer == questionsLst1.correctAnswer,questionsLst1.yourAnswer != '')}">
+                                <div class="slds-box sldsboxForRight">
+                                    <label>
+                                        This is Correct Answer
+                                    </label>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!questionsLst1.yourAnswer == ''}">
+                                <div class="slds-box sldsboxForNot">
+                                    <label>
+                                        Attendant this question
+                                    </label>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!and(questionsLst1.yourAnswer != questionsLst1.correctAnswer,questionsLst1.variable2 == false)}">
+                                <div class="slds-box sldsboxForWorng">  
+                                    <label>
+                                        Correct Answer is : {!questionsLst1.correctAnswer}
+                                    </label>
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!questionsLst1.variable2}">  
+                                <aura:if isTrue="{!and(questionsLst1.allChechboxTrue == 4)}"> 
+                                    <div class="slds-box sldsboxForRight">
+                                        <label>
+                                            This is  Correct Answer
+                                        </label>
+                                    </div>
+                                </aura:if>
+                                <aura:if isTrue="{!and(questionsLst1.allChechboxTrue != 4)}"> 
+                                    <div class="slds-box sldsboxForWorng">
+                                        <aura:iteration items="{!questionsLst1.correctAnswer}" var="questionsLst11">
+                                            <label>
+                                                Correct Answer is : {!questionsLst11}
+                                            </label>
+                                        </aura:iteration>
+                                    </div>  
+                                </aura:if>
+                            </aura:if>
+                        </aura:iteration>
+                    </lightning:tab>
+                    <lightning:tab id="two">
+                        <aura:set attribute="label">
+                            {!'Correct Answer : ' + v.totalCorrect}
+                        </aura:set>
+                        <aura:iteration items="{!v.questions1}" var="questionsLst1"> 
+                            <aura:if isTrue="{!or(and(questionsLst1.yourAnswer == questionsLst1.correctAnswer,questionsLst1.yourAnswer != ''),questionsLst1.allChechboxTrue == 4)}">
+                                <aura:if isTrue="{!questionsLst1.RecordType.Name == 'Single Choose'}">
+                                    <lightning:radioGroup class="slds-accordion__section"
+                                                        label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"   
+                                                        options="{!questionsLst1.Answer1s__r}"
+                                                        value="{!questionsLst1.yourAnswer}" 
+                                                        type="radio"  
+                                                        required="true"
+                                                        disabled="true"/>                 
+                                    <aura:set attribute="else">
+                                        <lightning:checkboxGroup name="Checkbox Group Required" class="slds-accordion__section"
+                                            label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"
+                                            options="{!questionsLst1.Answer1s__r}"
+                                            value="{!questionsLst1.yourAnswer}" 
+                                            disabled="true"
+                                            required="true"/>
+                                    </aura:set> 
+                                </aura:if> 
+                            </aura:if>
+                        </aura:iteration>
+                    </lightning:tab>
+                    <lightning:tab  id="three">
+                            <aura:set attribute="label">
+                                {!'Worng Answer : ' + v.totalWorng}
+                            </aura:set>
+                            <aura:iteration items="{!v.questions1}" var="questionsLst1"> 
+                                <aura:if isTrue="{!and(questionsLst1.yourAnswer != questionsLst1.correctAnswer,questionsLst1.allChechboxTrue != 4)}">
+                                    <aura:if isTrue="{!questionsLst1.RecordType.Name == 'Single Choose'}">
+                                        <lightning:radioGroup class="slds-accordion__section"
+                                                            label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"   
+                                                            options="{!questionsLst1.Answer1s__r}"
+                                                            value="{!questionsLst1.yourAnswer}" 
+                                                            type="radio"  
+                                                            required="true"
+                                                            disabled="true"/>                 
+                                        <aura:set attribute="else">
+                                            <lightning:checkboxGroup name="Checkbox Group Required" class="slds-accordion__section"
+                                                label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"
+                                                options="{!questionsLst1.Answer1s__r}"
+                                                value="{!questionsLst1.yourAnswer}" 
+                                                disabled="true"
+                                                required="true"/>
+                                        </aura:set> 
+                                    </aura:if>
+                                </aura:if>
+                            </aura:iteration>
+                    </lightning:tab>
+                    <lightning:tab id="threedd">
+                        <aura:set attribute="label">
+                            {!'Unread Answer : ' + v.totalUnanswer}
+                        </aura:set>
+                        <aura:iteration items="{!v.questions1}" var="questionsLst1"> 
+                            <aura:if isTrue="{!and(questionsLst1.yourAnswer == '',questionsLst1.allChechboxTrue != 4)}">
+                                <aura:if isTrue="{!questionsLst1.RecordType.Name == 'Single Choose'}">
+                                    <lightning:radioGroup class="slds-accordion__section"
+                                                        label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"   
+                                                        options="{!questionsLst1.Answer1s__r}"
+                                                        value="{!questionsLst1.yourAnswer}" 
+                                                        type="radio"  
+                                                        required="true"
+                                                        disabled="true"/>                 
+                                    <aura:set attribute="else">
+                                        <lightning:checkboxGroup name="Checkbox Group Required" class="slds-accordion__section"
+                                            label="{!questionsLst1.Question_Number__c+' . '+questionsLst1.Question_Text__c}"
+                                            options="{!questionsLst1.Answer1s__r}"
+                                            value="{!questionsLst1.yourAnswer}" 
+                                            disabled="true"
+                                            required="true"/>
+                                    </aura:set> 
+                                </aura:if>
+                            </aura:if>
+                        </aura:iteration>
+                    </lightning:tab>
+                    <lightning:tab label="Demo" id="four">
+
+                    </lightning:tab>
+                </lightning:tabset>
+            </aura:set>
+        </lightning:card>
+        <aura:if isTrue="{!v.isModalOpen1}">
+             
+            <!-- Modal/Popup Box starts here-->
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <!-- Modal/Popup Box Header Starts here-->
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Show all Question</h2>
+                    </header>
+                    <!--Modal/Popup Box Body Starts here-->
+                    <div class="slds-modal__content slds-p-around_medium slds-scrollable--y" id="modal-content-id-1">
+                        <lightning:tabset selectedTabId="one">
+                            <lightning:tab id="one">
+                                <aura:set attribute="label">
+                                    {! 'All question : ' + v.lengthOfQuestion}
+                                </aura:set>
+                                <aura:iteration items="{!v.questions1}" var="allQuestion" indexVar="index">
+                                    <li class="minli slds-app-launcher__tile"> 
+                                        <h3>
+                                            <a onclick="{!c.navigateToRecord}" style="width:100%;" data-index="{!index}">{!allQuestion.Question_Number__c+' . '+allQuestion.Question_Text__c}</a><br/>
+                                        </h3>
+                                    </li>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab  id="two"> 
+                                <aura:set attribute="label">
+                                    {! 'Unread question : ' }
+                                </aura:set>
+                                <aura:iteration items="{!v.questions1}" var="allQuestion" indexVar="index">
+                                    <aura:if isTrue="{!allQuestion.yourAnswer == ''}">
+                                        
+                                        <li class="minl slds-app-launcher__tile"> 
+                                            <h3>
+                                                <a onclick="{!c.navigateToRecord}" style="width:100%;" data-index="{!index}">{!allQuestion.Question_Number__c+' . '+allQuestion.Question_Text__c}</a><br/>
+                                            </h3>
+                                        </li>
+                                    </aura:if>
+                                </aura:iteration>
+                            </lightning:tab>
+                            <lightning:tab  id="three"> 
+                                <aura:set attribute="label">
+                                    {! 'Read question : ' }
+                                </aura:set>
+                                <aura:iteration items="{!v.questions1}" var="allQuestion" indexVar="index">
+                                    <aura:if isTrue="{!allQuestion.yourAnswer != ''}">
+                                        <li class="minl slds-app-launcher__tile"> 
+                                            <h3>
+                                                <a onclick="{!c.navigateToRecord}" style="width:100%;" data-index="{!index}">{!allQuestion.Question_Number__c+' . '+allQuestion.Question_Text__c}</a><br/>
+                                            </h3>
+                                        </li>
+                                    </aura:if>
+                                </aura:iteration>
+                            </lightning:tab>
+                        </lightning:tabset>
+                    </div>
+                    <!--Modal/Popup Box Footer Starts here-->
+                    <footer class="slds-modal__footer">
+                       
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </aura:if>
+        
+    </div>     
+ </aura:component>

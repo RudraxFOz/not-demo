@@ -1,0 +1,9 @@
+<aura:component controller="TestClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" >
+
+    <div>
+        <input type="file" class="file" aura:id="file" />
+        <ui:button label="Create Accounts" press="{!c.CreateRecord}"/>
+    </div>
+        
+
+</aura:component>

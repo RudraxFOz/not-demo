@@ -1,0 +1,70 @@
+<apex:page controller="objectController1" standardStylesheets="false"  showHeader="false" sidebar="false" > 
+     <head>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+    </head>
+           <apex:includeScript value="https://cdn.datatables.net/scroller/1.4.2/js/dataTables.scroller.min.js" />
+           <apex:includeScript value="https://cdn.datatables.net/scroller/1.4.2/css/scroller.dataTables.min.css"/>
+    <apex:form > 
+        <apex:pageBlock > 
+            <apex:pageBlockSection > 
+                <apex:pageBlockSectionItem > 
+                    <apex:outputlabel value="Object Names :"/> 
+                    <apex:actionRegion > 
+                        <apex:selectList value="{!selectedObject}" size="1"> 
+                            <apex:selectOptions value="{!ObjectNames}"/> 
+                            <apex:actionSupport event="onchange" rerender="myFields"/> 
+                        </apex:selectList> 
+                    </apex:actionRegion> 
+                </apex:pageBlockSectionItem> 
+                <apex:pageBlockSectionItem > 
+                    <apex:outputlabel value="Field Names :"/> 
+                    <apex:outputPanel id="myFields"> 
+                        <apex:actionRegion > 
+                            <apex:selectList value="{!selectedField}"  size="10" multiselect="true"> 
+                                <apex:selectOptions value="{!ObjectFields}"/> 
+                            </apex:selectList> 
+                        </apex:actionRegion> 
+                    </apex:outputPanel> 
+                </apex:pageBlockSectionItem> 
+                <Center>
+                    <apex:commandButton value="Fetch Fields" action="{!Fetch}"/>
+                </Center>
+            </apex:pageBlockSection> 
+        </apex:pageBlock> 
+           <apex:outputPanel layout="block" id="pbt1">
+                <apex:pageBlock >
+                
+                    <!--<apex:pageblockTable value="{!lstobj}"  var="querydata">
+                        <apex:repeat value="{!lstfields}" var="coldata">
+                        <apex:column value="{!querydata[coldata]}">
+                         </apex:column>
+                            </apex:repeat>
+                    </apex:pageblockTable>
+                    -->
+                    <table style="width: 100%;"  id="mytable"  border="1">
+                        <tr>
+                            <apex:repeat value="{!lstFields}" var="fields">
+                                <th>{!fields}</th>
+                            </apex:repeat>
+                        </tr>
+                        <apex:repeat value="{!datatoShow}" var="eachRecord">
+                            <tr>
+                                <apex:repeat value="{!fnlFields}" var="eachField">
+                                    <td>{!eachRecord[eachField]}</td>
+                                </apex:repeat>
+                            </tr>
+                        </apex:repeat>
+                    </table>
+                </apex:pageBlock>
+            </apex:outputPanel>  
+            <apex:outputpanel id="nav_btn" style="float:right" >
+               <apex:commandButton value="<<"  action="{!beginning}" disabled="{!DisablePrevious}" reRender="pbt1,nav_btn"/>
+                <apex:commandButton value="<" action="{!previous}" disabled="{!DisablePrevious}" reRender="pbt1,nav_btn" />
+                <apex:commandButton value=">" action="{!next}" disabled="{!DisableNext}" reRender="pbt1,nav_btn"/>
+                <apex:commandButton value=">>" action="{!last}" disabled="{!DisableNext}" reRender="pbt1,nav_btn"/>   
+            </apex:outputpanel>
+            <apex:selectList value="{!size}" multiselect="false" size="1" onchange="refreshPageSize();">
+           <apex:selectOptions value="{!paginationSizeOptions}"/>
+             </apex:selectList>
+    </apex:form> 
+</apex:page>

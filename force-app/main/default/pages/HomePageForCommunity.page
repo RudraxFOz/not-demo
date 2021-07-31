@@ -1,0 +1,70 @@
+<apex:page showheader="false" sidebar="false"  controller="ShowTheUserDetaisController"  action="{!check}" cache="false" contenttype="text/html"   standardStylesheets="false"   docType="html-5.0">
+	<html>
+		<head>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css" />     
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		    <apex:composition template="CommunityWelcomeTemplte" />
+		</head>
+		<body>		
+			<!-- {!currentuser[0].FirstName}
+			{!currentuser[0].LastName}
+			{!currentuser[0].Username} -->
+			<!-- <apex:composition template="CommunityWelcomeTemplte"/>	 -->
+			<apex:form >
+			<div class="container">  
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      	<label>First Name:</label>
+			        <apex:inputtext value="{!FirstNamef}" />
+			        <br/>
+			        <label>Last Name:</label>
+			        <apex:inputtext value="{!LastNamef}" />
+			        <br/>
+			        <label>new Password:</label>
+			        <apex:inputtext value="{!newPassword}" />
+			        <br/>
+			        <label>conferm new Password:</label>
+			        <apex:inputtext value="{!verifyNewPassword}" />
+			        <br/>
+			        <label>old Password:</label>
+			        <apex:inputtext value="{!oldpassword}" />
+			      	
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <apex:commandbutton value="save" action="{!ShowTheUserDetaisControllerF}" styleclass="btn btn-success" style="border-radius:0px;"/>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</apex:form>
+			<!-- <div class="container">  				
+					<apex:composition template="CommunityWelcomeTemplte"/>	
+			
+			</div> -->
+			
+			<div class="container">
+				<!-- <apex:composition template="CommunityWelcomeTemplte"/>	 -->
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+			 Edit Profile
+			 
+			</button>
+		</div>
+
+			<apex:image url="{!imageURL}"/>
+		</body>
+	</html>
+</apex:page>

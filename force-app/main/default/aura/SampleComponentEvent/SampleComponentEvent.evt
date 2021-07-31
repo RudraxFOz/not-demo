@@ -1,0 +1,4 @@
+<aura:event type="application" description="Event template">
+    <aura:attribute name="simpleMessage" type="String" default="Hello msg"/>
+    <aura:attribute name="simpleMessageForParent" type="String" default="Hello msg Parent"/>
+</aura:event>

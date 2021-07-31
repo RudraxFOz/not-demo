@@ -1,0 +1,61 @@
+<aura:component controller="ObjectAuraController">
+    <aura:attribute name="ShowModule" type="boolean" default="false"/>   
+    <aura:attribute name="newAccount" type="Account" default="{ 'sobjectType': 'Account', 'Name': '', }"/>
+    <aura:registerEvent name="loadCheackConditionEvent" type="c:PassValueHeaderToPaginantionEvent" />
+    <div style="position:relative;height:100px">
+        <div class="slds-builder-header_container">
+            <header class="slds-builder-header">
+                <div class="slds-builder-header__item">
+                    <div class="slds-builder-header__item-label slds-media slds-media_center">
+                        <div class="slds-media__body">
+                                <!-- <lightning:icon iconName="standard:account" size="small" alternativeText="Indicates approval" label="new account"/> -->
+                            <lightning:button variant="brand" iconName="standard:account" label="New Account" title="Add New Account"    onclick="{!c.ShowModuleBox}" />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-builder-header__item">
+                    <div class="slds-builder-header__item-label slds-media slds-media_center">
+                        <div class="slds-media__body">
+                            <lightning:button variant="brand" label="" title="Add New Account"   iconName="standard:account"  />
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-builder-header__item">
+                    <div class="slds-builder-header__item-label slds-media slds-media_center">
+                        <div class="slds-media__body">
+                            <lightning:button variant="brand" label="" title="Add New Account"   iconName="standard:account"  />
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+    </div>
+    <aura:if isTrue="{!v.ShowModule}">   
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close" variant="bare" onclick="{! c.HideMe }" 
+                                                alternativeText="Close" class="slds-modal__close" />
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">New Account</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div class="slds-p-bottom_large slds-p-left_large" style="width:500px">
+                            <lightning:recordEditForm aura:id="recordViewForm" objectApiName="Account">
+                                <lightning:messages />
+                                <lightning:inputField fieldName="Name" aura:id="AccountName"  value="{!v.newAccount.Name}"/>
+                                <lightning:inputField fieldName="Phone" value="{!v.newAccount.Phone}"/>
+                                <lightning:inputField fieldName="Type" value="{!v.newAccount.Type}"/>
+                            </lightning:recordEditForm>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer"> 
+                        <lightning:button variant="neutral" label="Cancel" title="Cancel the new account" onclick="{!c.HideMe }"/>
+                        <lightning:button variant="brand" label="Save" title="Save the new account" onclick="{!c.createAccount}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>   
+</aura:component>

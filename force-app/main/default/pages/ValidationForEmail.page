@@ -1,0 +1,43 @@
+<apex:page standardController="Contact"  sidebar="false" docType="html-5.0">
+  <apex:form >
+    <apex:pageBlock title="Edit Contact">
+      <apex:pageBlockSection columns="1">
+         <apex:inputField value="{!Contact.FirstName}"/>
+         <apex:inputField id="lastname" value="{!Contact.LastName}" onchange="allLetter();" />
+         <div id="err2" style="margin-left: 450px;margin-top: -28px;" ></div>
+         <script type="text/javascript">
+            function allLetter()  
+             {                
+                var letters = /^[A-Za-z]+$/;  
+                var inputtxt=document.getElementById("j_id0:j_id1:j_id2:j_id3:lastname").value;
+                if(!inputtxt.match(letters))  
+                {  
+                  document.getElementById("err2").innerHTML="Last Name must be text only";
+                }else{
+                  document.getElementById("err2").innerHTML="Valid Name";
+                }                
+              }  
+         </script>
+         <apex:inputField id="email" value="{!Contact.Email}" onchange="checkEmail();"/>
+         <apex:inputField value="{!Contact.Birthdate}"/>
+         <apex:inputField id="phone" value="{!Contact.Phone}" onchange="checkPhone();" />
+         <div id="err1"></div>
+          <script type="text/javascript">
+              
+              function checkEmail(){                 
+                     var email =document.getElementById("j_id0:j_id1:j_id2:j_id3:email").value;
+                  	 alert(email);
+                     var letters = "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/";
+                     if(!email.match(letters))
+                        document.getElementById("err1").innerHTML="please vlida email.";
+                     else
+                        document.getElementById("err1").innerHTML="Valid Phone ssNumber";
+                  }
+          </script>        
+      </apex:pageBlockSection>      
+    <apex:pageBlockButtons >
+         <apex:commandButton action="{!save}" value="Save"/>
+    </apex:pageBlockButtons>   
+    </apex:pageBlock>  
+   </apex:form>   
+</apex:page>

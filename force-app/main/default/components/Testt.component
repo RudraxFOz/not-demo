@@ -1,0 +1,20 @@
+<apex:component access="global">
+    <html>
+        
+  
+   <body>
+       <button  id="yesId">Maybe</button> 
+        </body>
+    
+       
+     	  
+        
+       
+          </html>
+    <script type="text/javascript">
+       document.getElementById("yesId").addEventListener("click", myFunction);
+ 		function myFunction() {
+         console.log('===come inside==");
+            }
+    </script>
+</apex:component>

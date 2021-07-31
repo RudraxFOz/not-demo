@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:lightningQuickAction,forceCommunity:availableForAllPageTypes">
+    <aura:attribute name="eventMessage" type="String" />
+    <aura:handler  event="c:SampleComponentEvent" action="{!c.parentEventFun}" />
+    <aura:registerEvent name="SmapleCmdEventFromParent" type="c:SampleComponentEvent" />
+    <c:ChildCmdForTest aura:id="childCmp"/>
+    <lightning:button label="Click to fire event Feo Parent" variant="brand" onclick="{!c.childCmdEventFunParent}" />
+    <lightning:button variant="brand" label="Call Aura Method"
+                          onclick="{!c.callAuraMethod}" />
+   
+    <p>{!v.eventMessage}</p>
+</aura:component>

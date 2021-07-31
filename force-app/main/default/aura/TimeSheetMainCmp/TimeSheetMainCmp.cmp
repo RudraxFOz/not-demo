@@ -1,0 +1,150 @@
+<aura:component controller="TimeSheetMainController" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="dataInValue" type="Date"/>
+    <aura:attribute name="dataEndValue" type="Date"/>
+    <aura:attribute name="showChildObj" type="Boolean" default="false"/>
+    <aura:attribute name="storeValueOnNewRow" type="Boolean" default="false"/>
+    <aura:attribute name="showFirstRecOnLine" type="Boolean" default="false"/>
+    <aura:attribute name="timeSheetId" type="String" />
+    <aura:attribute name="totalOfColumnMo" type="Integer" default="0"/>
+    <aura:attribute name="totalOfColumnTu" type="Integer" default="0"/>
+    <aura:attribute name="totalOfColumnWe" type="Integer" default="0"/>
+    <aura:attribute name="totalOfColumnTh" type="Integer" default="0"/>
+    <aura:attribute name="totalOfColumnFr" type="Integer" default="0"/>
+    <aura:attribute name="totalOfColumnSa" type="Integer" default="0"/>
+    <aura:attribute name="totalOfColumnSu" type="Integer" default="0"/>
+    <aura:attribute name="totalOfRow" type="Integer" default="0"/>
+    <aura:attribute name="storeTotalOfRow" type="Integer" default="0"/>
+    <aura:attribute name="timeSheetItemList" type="Timesheet_Line_items__c[]"/> 
+    <aura:handler name="DeleteRowEvt" event="c:DeleteRowEvt" action="{!c.removeDeletedRow}"/>
+    <aura:handler name="AddRowEvt" event="c:AddNewRowEvt" action="{!c.addNewRow}"/>  
+
+    <aura:handler name="ShowColumnTotalMo" event="c:DeleteRowEvt" action="{!c.showColumnValue}"/> 
+    <aura:handler name="ShowColumnTotalTu" event="c:DeleteRowEvt" action="{!c.showColumnValueTu}"/> 
+    <aura:handler name="ShowColumnTotalWe" event="c:DeleteRowEvt" action="{!c.showColumnValueWe}"/> 
+    <aura:handler name="ShowColumnTotalTh" event="c:DeleteRowEvt" action="{!c.showColumnValueTh}"/> 
+    <aura:handler name="ShowColumnTotalFr" event="c:DeleteRowEvt" action="{!c.showColumnValueFr}"/> 
+    <aura:handler name="ShowColumnTotalSa" event="c:DeleteRowEvt" action="{!c.showColumnValueSa}"/> 
+    <aura:handler name="ShowColumnTotalSu" event="c:DeleteRowEvt" action="{!c.showColumnValueSu}"/> 
+    <aura:handler name="ShowColumnTotal" event="c:DeleteRowEvt" action="{!c.showColumnTotalValue}"/>  
+    <aura:registerEvent name="ShowColumnTotalValidation" type="c:DeleteRowEvt"/> 
+
+    <aura:attribute name="preNumberLen" type="Integer" default="0"/>
+    <aura:attribute name="preNumberValue" type="Integer" default="0"/>
+
+    <aura:attribute name="preNumberColLen" type="Integer" default="0"/>
+    <aura:attribute name="preNumberColValue" type="Integer" default="0"/>
+
+    <aura:handler name="ShowRowTotal" event="c:DeleteRowEvt" action="{!c.showRowValue}"/> 
+    
+
+    <div class="c-container">
+        <div class="slds-align_absolute-center"><b>TimeSheet</b></div>
+        <lightning:layout >
+            <lightning:layoutItem size="12" class="border" largeDeviceSize="6" mediumDeviceSize="6" smallDeviceSize="6" padding="around-small">
+                <div class="header-column">
+                    <label class="slds-form-element__label" >Start Date</label>
+                    <lightning:helptext content="Please enter timesheet start date" class="customIcon"/> 
+                    <lightning:input type="Date"
+                                    name="sDate"
+                                    label="Start Date"
+                                    value="{!v.dataInValue}"
+                                    onchange="{!c.validDate}"
+                                    variant="label-hidden"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem size="12" class="border" largeDeviceSize="6" mediumDeviceSize="6" smallDeviceSize="6" padding="around-small">
+                <div class="header-column">
+                    <label class="slds-form-element__label" >End Date</label>
+                    <lightning:helptext content="Please enter timesheet end date" class="customIcon"/> 
+                    <lightning:input type="Date"
+                                    name="eDate"
+                                    label="End Date"
+                                    value="{!v.dataEndValue}"
+                                    onchange="{!c.validDate}"
+                                    variant="label-hidden"/>
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <lightning:layout >
+            <lightning:layoutItem size="12" class="border" largeDeviceSize="12" mediumDeviceSize="12" smallDeviceSize="12" padding="around-small">
+                <aura:if isTrue="{!v.showChildObj}">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer"> 
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate">Project Name</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Monday">Monday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Tuesday">Tuesday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Wednesday">Wednesday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Thursday">Thursday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Friday">Friday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Saturday">Saturday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Sunday">Sunday(Hr)</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Add/Remove">Add/Remove</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Total Hrs(Row)">Total Hrs(Row)</div>
+                                </th>
+                            </tr>
+                        </thead>   
+                        <tbody>        
+                            <aura:iteration items="{!v.timeSheetItemList}" var="item" indexVar="index">
+                                <c:TimeSheetLineItemCmd timeSheetItemInstance="{!item}" rowIndex="{!index}" />
+                            </aura:iteration>
+                            <tr>
+                                <td>
+                                    <p>Total Hrs(Column)</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnMo}</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnTu}</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnWe}</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnTh}</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnFr}</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnSa}</p>
+                                </td>
+                                <td>
+                                    <p>{!v.totalOfColumnSu}</p>
+                                </td>
+                                <td>
+                                    <p></p>
+                                </td>
+                                <td>
+                                    <p>Final Total(Hrs): {!v.totalOfRow}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="slds-button slds-button_brand" onclick="{!c.Save}">Save</button>
+                </aura:if>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

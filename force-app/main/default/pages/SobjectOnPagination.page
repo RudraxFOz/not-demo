@@ -1,0 +1,73 @@
+<apex:page showHeader="false" standardStylesheets="false"   lightningStylesheets="true" sidebar="false"  applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="SobjectAndItsFields">
+  	<html  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+  	<apex:form id="for">
+    	<head>
+    		<apex:slds />
+      		<meta charset="utf-8" />
+      		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+      		<title>Salesforce Lightning Design System Trailhead Module</title>
+      		<meta name="viewport" content="width=device-width, initial-scale=1" />
+      		<apex:slds />
+      		<apex:actionFunction name="objectListChanged" action="{!changedObject}" />
+       		<apex:actionFunction name="fatchFromLeftList" action="{!addFromLetToRight}"/>
+       		<apex:actionFunction name="fatchFromRightList" action="{!addFromRightToLeft}"/>
+    	</head>
+ 		<body >
+      		<div class="slds-scope">
+				<div class="slds-grid slds-grid--align-spread">
+              		<div class="slds-col slds-size--1-of-1 slds-small-size--1-of-2 slds-medium-size--1-of-4">
+                		<div class="slds-box slds-box_x-small slds-text-align_center slds-m-around--x-small">
+                			<div class="slds-form-element__control">
+             					<div class="slds-select_container">
+                					<apex:selectList value="{!selectedObject}" size="1" onchange="objectListChanged();" styleClass="slds-select">
+                						<apex:selectOptions value="{!listOfSObject}" />
+             						</apex:selectList>
+             			    	</div>
+             		        </div>
+                		</div>
+              		</div>
+              	</div>
+              
+                <apex:outputPanel rendered="{!IF( selectedObject != '', true, false )}">
+	                <div class="slds-grid slds-gutters slds-m-left_medium" >                	
+	                	<apex:selectList value="{!leftSelected}" multiselect="true" style="width:200px" size="1" styleClass="slds-select slds-m-top_smal">
+	              			<apex:selectOptions value="{!allFields}" />
+	            		</apex:selectList>      	            		
+	        			<button class="slds-button slds-button_icon slds-button_icon-container" title="Move Available Fields List to Selected Fields" onclick="fatchFromLeftList();return false;">
+	         			 <svg class="slds-button__icon" aria-hidden="true">
+	            			<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#right')}"></use>
+	         			 </svg>
+	       				</button>
+			   			
+	            		<apex:selectList value="{!rightSelected}" multiselect="true" style="width:200px" size="5" styleClass="slds-m-left_large slds-select slds-m-top_sma">
+	               			<apex:selectOptions value="{!rightOptionList}" />
+	           			</apex:selectList>	
+	           		</div>
+	           		
+	           		    <button class="slds-button slds-button_icon slds-button_icon-container" style="height:28px;width:40px;margin-left:218px;margin-top:-88px;"  title="Move Selectited Field to Available Field" onclick="fatchFromRightList();return false;">
+	          				<svg class="slds-button__icon">
+	            				<use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#left')}"></use>
+	          				</svg>
+	        			</button>
+	        	
+
+	           		<div class="slds-grid slds-grid--align-spread slds-m-left_medium slds-m-bottom_x-large">
+	            		<button class="slds-button slds-button_success" onclick="showRecordByQuery();return false;" rendered="table" >Show Record
+	            		</button>
+	            	</div>
+  
+ 
+            	</apex:outputPanel>
+            </div>
+
+           <!--  <apex:outputPanel rendered="{!and(selectedObject != '', rightOptionList.size = 0)}">
+            	No Record Found
+            </apex:outputPanel> -->
+
+        	<apex:outputPanel >
+ 				<c:ShowRecordByQuery selectedObj="{!selectedObject}" selectedFields="{!rightOptionList}" showThenTrue="{!condition}"/>
+ 			</apex:outputPanel>  		  
+    	</body>
+    </apex:form>
+  </html>
+</apex:page>

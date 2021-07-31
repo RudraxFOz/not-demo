@@ -1,0 +1,24 @@
+<template>
+    <tr>  
+        <th scope="row" class="slds-text-align_right" style="width:3.25rem;">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <label class="slds-checkbox">
+                        <lightning-input type="checkbox"  aura:id="selectAllId"  onchange={selectAllCheckbox} checked={masterCheckBox} style="margin-left: 10%;"></lightning-input>
+                        <!-- <ui-inputCheckbox text="{!rec.id}"
+                                            value="{!rec.isSelected}"
+                                            change="{!c.checkboxSelect}"/> -->
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-form-element__label text"></span>
+                    </label>
+                </div>
+            </div>
+        </th>
+        =={getDataRec.rec}===
+      
+                 <!-- <td >
+                    {getDataRec}
+                </td>  -->
+       
+    </tr>
+</template>

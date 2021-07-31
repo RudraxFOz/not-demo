@@ -1,0 +1,50 @@
+<template>
+
+    <table>
+    
+        <tr>  
+            <template for:each={stage} for:item="rowData1"> 
+                <td key={rowData1}>{rowData1}</td>  
+            </template>
+        </tr>  
+     
+        <template if:true={records} for:each={records} for:item= "chRec" for:index="index"> 
+            <!-- <div key={chRec.Id} id={chRec.Id} > -->
+                <!-- <ul key={chRec.Id}  class="slds-has-dividers_around-space dropZone list2" > -->
+            <tr key={chRec.Id} style="border: 1px solid black;"  id={chRec.Id} draggable="true" data-item={index} ondragstart={drag}   ondragover={allowDrop} ondrop={drop} value={index} data-produto="list2">   
+                    <template if:true={chRec.uiRec2} for:each={chRec.uiRec2} for:item= "mainChRec" for:index="index1"> 
+                        <td key={chRec.Id} style="padding-left: 0.5%;padding-right: 0.5%;">
+                            <div id={chRec.Id}  data-item={chRec.Id}   >
+                                <div key={chRec.Id} id={chRec.Id} data-item={index}   >
+                                    {mainChRec} 
+                                </div>  
+                            </div>
+                        </td> 
+                    </template>  
+                    <td>
+    
+                    </td>
+               
+                <!-- <div if:false={chRec.uiRec2} key={chRec.Id} data-item={index} class="slds-alignabsolute-center" style="border: solid 1px;width: 85%;">                          
+                    Please drop here
+                </div> -->
+            </tr>
+        <!-- </div> -->
+        <tr key={chRec.Id} ondragover={allowDrop} ondrop={drop} class="completed">
+            <td >
+
+            </td>
+        </tr>
+   
+        </template>  
+        <!-- <template if:false={records} > 
+            <tr ondragover={allowDrop} ondrop={drop}> 
+                <td>
+    
+                </td> 
+            </tr>  
+    
+        </template>   -->
+    
+    </table>
+</template>

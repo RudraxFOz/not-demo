@@ -1,0 +1,148 @@
+<aura:component controller="OnlineExamTestingClass" implements="force:appHostable"> 
+    <aura:attribute name="Questions" type="List"/> 
+    <aura:attribute name="radioGrpValue" type="String"/>
+    <aura:attribute name="lstOfOnlySingleQuestion" Type="List" />
+    <aura:attribute name="lstOfSingleQuestion" Type="List" />
+    <aura:attribute name="lstOfMutipleQuestion" Type="List" />
+    <aura:attribute name="lstOfQuestion" Type="List" />
+    <aura:attribute name="lstOfSubject" Type="List" />
+    <aura:handler name="init" value="{!this}" action="c.doInit"/>
+    <div>
+        <lightning:layout  verticalAlign="center" class="x-large">
+            <lightning:layoutItem >
+                <lightning:select aura:id="selectSub" name="selectSubject" label="Select Subject" onchange="{!c.selectOptionSubject}">
+                    <option value="">choose one...</option>
+                    <aura:iteration items="{!v.lstOfSubject}" var="lst_subject">
+                        <option value="{!lst_subject.Name}" >{!lst_subject.Name}</option>
+                        <!-- <option value="2">two</option> -->
+                    </aura:iteration>
+                </lightning:select>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <lightning:layout  verticalAlign="center" class="x-large">
+            <lightning:layoutItem >
+                <div>
+
+                        <aura:iteration items="{!v.Questions}" var="ques">  
+                                <lightning:radioGroup name="suresh"  
+                                                      label="{!ques.Question__r.AskQuestion__c}"   
+                                                      options="{!ques.OptionForAnswer__r}"  
+                                                      value="{!v.radioGrpValue}"  
+                                                      type="radio"  
+                                                      required="true"/>  
+                              </aura:iteration>  
+                    <!-- <aura:if isTrue="{!not(empty(v.lstOfSingleQuestion))}"> 
+                        <aura:iteration items="{!v.lstOfSingleQuestion}" var="lst_Single_question"> -->
+
+                      
+                            <!-- <div>
+                                {!lst_Single_question.Question_Number__c} . {!lst_Single_question.AskQuestion__c}
+                            </div> -->
+                            <!-- <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12"> -->
+                                        <!-- <lightning:radioGroup name="radioGroup"
+                                            label="{!lst_Single_question.AskQuestion__c}"
+                                            options="{!lst_Single_question.AnswerParent__r}"
+                                            value="{!lst_Single_question.AnswerParent__r }"
+                                            type="radio"/> -->
+                                            <!-- <label> {!lst_Single_question.Question_Number__c} . {!lst_Single_question.AskQuestion__c}</label>
+                                            <lightning:input type="radio" label="{!lst_Single_question.AnswerParent__r.A__c}" name="options" value="1"/>
+                                            <lightning:input type="radio" label="{!lst_Single_question.AnswerParent__r.B__c}" name="options" value="2" checked="true" />
+                                            <lightning:input type="radio" label="{!lst_Single_question.AnswerParent__r.C__c}" name="options" value="2"  />
+                                            <lightning:input type="radio" label="{!lst_Single_question.AnswerParent__r.D__c}" name="options" value="3"  /> -->
+                                    <!-- <span>A)<lightning:button value="{!lst_Single_question.AnswerParent__r.A__c}" variant="Neutral" label="{!lst_Single_question.AnswerParent__r.A__c}" /></span> -->
+                                <!-- </div>
+                            </div> -->
+                            
+                            <!-- <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> B)<lightning:button value="{!lst_Single_question.AnswerParent__r.B__c}" variant="Neutral" label="{!lst_Single_question.AnswerParent__r.B__c}" /></span>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> C)<lightning:button value="{!lst_Single_question.AnswerParent__r.C__c}" variant="Neutral" label="{!lst_Single_question.AnswerParent__r.C__c}" /></span>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> D)<lightning:button value="{!lst_Single_question.AnswerParent__r.D__c}" variant="Neutral" label="{!lst_Single_question.AnswerParent__r.D__c}" /></span>
+                                </div>
+                            </div>  -->
+                        <!-- </aura:iteration>
+                    </aura:if>
+                    <aura:if isTrue="{!not(empty(v.lstOfOnlySingleQuestion))}">  
+                        <aura:iteration items="{!v.lstOfOnlySingleQuestion}" var="lst_Only_Single_question">  
+                            <div>
+                                {!lst_Only_Single_question.Question_Number__c} . {!lst_Only_Single_question.AskQuestion__c}
+                            </div>
+                           
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                  
+                                    <span>A)<lightning:button value="{!lst_Only_Single_question.Only_Single_Object__r.A__c}" variant="Neutral" label="{!lst_Only_Single_question.Only_Single_Object__r.A__c}" /></span>
+                                </div>
+                            </div>
+                                
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> B)<lightning:button value="{!lst_Only_Single_question.Only_Single_Object__r.B__c}" variant="Neutral" label="{!lst_Only_Single_question.Only_Single_Object__r.B__c}" /></span>
+                                </div>
+                            </div>
+                        </aura:iteration>
+                    </aura:if>
+                    <aura:if isTrue="{!not(empty(v.lstOfMutipleQuestion))}"> 
+                        <aura:iteration items="{!v.lstOfMutipleQuestion}" var="lst_Multiple_question">
+                            <div>
+                                {!lst_Multiple_question.Question_Number__c} . {!lst_Multiple_question.AskQuestion__c} (This is multiple choose)
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span>A)<lightning:button value="{!lst_Multiple_question.Multi_Answer__r.A__c}" variant="Neutral" label="{!lst_Multiple_question.Multi_Answer__r.A__c}" /></span>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> B)<lightning:button value="{!lst_Multiple_question.Multi_Answer__r.B__c}" variant="Neutral" label="{!lst_Multiple_question.Multi_Answer__r.B__c}" /></span>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> C)<lightning:button value="{!lst_Multiple_question.Multi_Answer__r.C__c}" variant="Neutral" label="{!lst_Multiple_question.Multi_Answer__r.C__c}" /></span>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> D)<lightning:button value="{!lst_Multiple_question.Multi_Answer__r.D__c}" variant="Neutral" label="{!lst_Multiple_question.Multi_Answer__r.D__c}" /></span>
+                                </div>
+                            </div> 
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_12-of-12">
+                                    <span> E)<lightning:button value="{!lst_Multiple_question.Multi_Answer__r.E__c}" variant="Neutral" label="{!lst_Multiple_question.Multi_Answer__r.E__c}" /></span>
+                                </div>
+                            </div> 
+                        </aura:iteration>
+                    </aura:if> -->
+                <!--<div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <span>A)<lightning:button value="{!lst_question.AnswerParent__r.A__c}" variant="Neutral" label="{!lst_question.AnswerParent__r.A__c}" /></span>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_12-of-12">
+                            <span> B)<lightning:button value="{!lst_question.AnswerParent__r.B__c}" variant="Neutral" label="{!lst_question.AnswerParent__r.B__c}" /></span>
+                        </div>
+                    </div> -->
+                </div>
+                
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

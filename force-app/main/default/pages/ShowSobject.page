@@ -1,0 +1,35 @@
+<apex:page controller="SobjectAndItsFields" docType="html-5.0"  >
+    <!-- <apex:form id="for">
+       <apex:actionFunction name="objectListChanged" action="{!changedObject}" />
+       <apex:actionFunction name="fatchFromLeftList" action="{!addFromLetToRight}"/>
+       <apex:actionFunction name="fatchFromRightList" action="{!addFromRightToLeft}"/>
+       <apex:actionFunction name="callShowData" action="{!showData}" reRender="for"/>
+       <apex:pageBlock title="Select Object and Fields">
+         <apex:pageBlockSection title="Select an Object" collapsible="false" columns="2">
+          <apex:pageBlockSectionItem >
+             <apex:outputLabel value="Select an object:"></apex:outputLabel>
+             <apex:selectList value="{!selectedObject}" size="1" onchange="objectListChanged();" >
+                <apex:selectOptions value="{!listOfSObject}" />
+             </apex:selectList>
+          </apex:pageBlockSectionItem>
+         </apex:pageBlockSection>
+       </apex:pageBlock>
+        <apex:panelGrid id="abcd" columns="3" rendered="{!IF( selectedObject != '', true, false )}" >
+            <apex:selectList value="{!leftSelected}" multiselect="true" style="width:200px" size="5">
+               <apex:selectOptions value="{!allFields}" />
+            </apex:selectList>
+            <apex:panelGroup >
+            <br/>
+               <apex:image styleClass="picklistArrowRight" value="/s.gif" onclick="fatchFromLeftList();"/>
+               <br/><br/>
+               <apex:image styleClass="picklistArrowLeft" value="/s.gif" onclick="fatchFromRightList();"/>
+            </apex:panelGroup>
+           <apex:selectList value="{!rightSelected}" multiselect="true" style="width:200px" size="5">
+               <apex:selectOptions value="{!rightOptionList}" />
+           </apex:selectList>
+           <apex:commandButton value="Show Record" onComplete="showRecordByQuery();" reRender="Object"/>
+
+        </apex:panelGrid>
+         <c:ShowRecordByQuery selectedObj="{!selectedObject}" selectedFields="{!rightOptionList}" />   
+    </apex:form> -->
+</apex:page>

@@ -1,0 +1,180 @@
+<apex:component controller="SobjectAndFieldsComponentController">			
+ 	<script type="text/javascript">
+ 	var forCheckDoubleId = [];
+ 		function myFunction() {
+ 			var myLength = $("#tagss").val().length;
+ 			console.log(myLength);
+ 			if ( myLength > 1 ) {
+ 				console.log("hello lenght");
+	  			var enterValueInText = $( "#tagss" ).val();  	
+	  			if (enterValueInText!=null || enterValueInText!='') {
+	  				$('[id$=forDesable]').show();
+	  			} else {
+	  				$('[id$=forDesable]').hide();
+	  			}
+	  			var selectFields = $( "#sobjectFields" ).val();	
+	   	    	var sobjectOptionList = document.getElementsByClassName("chartBlock")[0];
+				var selectedObject = sobjectOptionList.options[sobjectOptionList.selectedIndex].value;	
+	   	    	Visualforce.remoting.Manager.invokeAction(
+	                '{!$RemoteAction.SobjectAndFieldsComponentController.queryForRecord}',
+	                selectFields,selectedObject,enterValueInText,
+	                function(result){   
+	                	if(result && result.length) {
+	                	    $('[id$=forDesable]').prop('disabled',false);
+	                      	availableTags = result ;
+	                      	console.log("=="+availableTags);
+	                      	$( "#tagss" ).autocomplete({
+			     				 source: availableTags
+			    			});
+			    		}else {
+			    			$('[id$=forDesable]').prop('disabled',true);
+			    		}
+			    		//$.unblockUI();
+	                }, 
+	                {escape: false});
+   	    	}
+		}
+
+    	function cheackTheSelectedFields() {
+    		var sobjectOptionLists = document.getElementsByClassName("forFieldsStyle")[0];
+			var ifSelectedNoneInFields = sobjectOptionLists.options[sobjectOptionLists.selectedIndex].value;	
+    		//var ifSelectedNoneInFields = $( ".chartBl" ).();
+    		console.log( ifSelectedNoneInFields ) ;
+    		console.log( ifSelectedNoneInFields == '' ) ;
+    		if ( ifSelectedNoneInFields == '') {
+    			console.log("first line");
+    			$( "#tagss" ).hide();
+    			$('[id$=tagss]').prop('disabled',true);
+    			console.log("2 line");
+    			$('[id$=forDesable]').prop('disabled',true);
+    			console.log("3 line");
+    		} else {
+    			$('[id$=tagss]').prop('disabled',false);
+    			$('[id$=forDesable]').prop('disabled',false);
+
+    		}
+    		$( ".forLeftH2" ).show();
+	   		$( "#tagss" ).show();
+	   		$( "#forDesable" ).show();
+   	    	$("table tbody").html("");
+   	    	$( "#tagss" ).val('');
+   	    	$('[id$=forDesableEdit]').hide();
+	       	$('[id$=forDesableSave]').hide();
+	       	$('[id$=forDesable]').hide();
+   	    }
+
+   	    function showTheRecordByJs() {
+   	    	$.blockUI({ message: '<h1><img src="https://suresh1999-dev-ed--c.visualforce.com/resource/1553686219000/AutomaticUiBlock" /> Just a moment...</h1>' }); 
+	  		var selectFields = $( "#sobjectFields" ).val();     	    	
+   	    	var sobjectOptionList = document.getElementsByClassName("chartBlock")[0];
+			var selectedObject = sobjectOptionList.options[sobjectOptionList.selectedIndex].value;				
+			var selectRecord = $( "#tagss" ).val(); 
+			console.log(selectRecord);
+			var checkSameId = $( "#forId" ).text();
+			console.log("==table==="+  checkSameId );
+   	    	Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.SobjectAndFieldsComponentController.showTheRecord}',
+                selectFields,selectedObject,selectRecord,
+                function(result) {
+                	console.log(result.Id);
+                    if( result && result.length ) {
+                    	$('[id$=table1]').show();	
+	                    for(var i = 0; i< result.length; i++) {
+	                    	if ( checkSameId != result[i].Id ) {
+				                var jtable = "<table><tr><td><input type='checkbox' id='chkDelete' onclick='changeCheckboxColor(this);' name='record'></td><td id='forId'>" + result[i].Id + "</td><td>" + result[i][selectFields]+ "</td></tr></table>";
+				               /* var jtable = "<table>"+"<tr><th>"+"Select"+"</th><th>"+"Id"+"</th><th>"+"Fields"+"</th></tr>"+"<tr><td><input type='checkbox' id='chkDelete' onclick='changeCheckboxColor(this);' name='record'></td><td id='forId'>" + result[i].Id + "</td><td>" + result[i][selectFields]+ "</td></tr>"+"</table>";*/
+		        				$("#table1").append(jtable);
+		        			} else {
+		        				alert("This record is alread in table So Please Selected another Record");
+		        				//$("#table1").html("No Records Found");
+		        			}
+			            }
+			        }   
+			        $( "#tagss" ).val('');
+		            $.unblockUI();
+		            if (result && result.length) {
+		            	$('[id$=forDesableEdit]').show();
+		            	$('[id$=forDesableEdit]').prop('disabled',false);
+		            }
+		            $( "#forDesable" ).hide();
+		            $( "#forDesableEdit" ).hide();
+
+
+                }, 
+                {escape: false});
+	  	}
+
+	  	function changeCheckboxColor(obj) {
+	  		//for(var i = 0; i< table1.length; i++) {
+	  			var selectFields1 = $( "#table1" ).html();    
+	  			//console.log(selectFields1) ;
+	  			for(var i = 0; i< selectFields1.length; i++) {
+	  				console.log($('[id$=chkDelete]').prop("checked") == true);
+		            if($('[id$=chkDelete]').prop("checked") == true) {
+		            	$( "#forDesableEdit" ).show();
+		           	} else {
+		           		$( "#forDesableEdit" ).hide();
+		           	}
+	        	}
+			var tr = obj.parentNode.parentNode.parentNode ; 
+			console.log( '====trr====' + tr ) ;
+			tr.style.backgroundColor = ( obj.checked )? 'pink' : 'white';
+		}
+
+	  	function forTheEditRecordBySelectedCheakbox() {
+	  		$('[id$=table2]').show();
+	  		$('[id$=forDesableSave]').prop('disabled',false);
+	  		$("#table2").html("");
+	  		$.blockUI({ message: '<h1><img src="https://suresh1999-dev-ed--c.visualforce.com/resource/1553686219000/AutomaticUiBlock" /> Just a moment...</h1>' }); 
+            $.unblockUI();
+           // if($('[id$=chkDelete]').prop("checked") == true) {
+				$("input[name='record']:checked").each(function () { 
+	       			 var selectedId = $(this).closest('tr').find('td:eq(1)').text();
+	       			 var selectedFiel =$(this).closest('tr').find('td:eq(2)').text();
+	       			 $("#table2").append("<table><tr><td>" + selectedId + "</td><td><input type=text id='updateValue' value = '" + selectedFiel + "'/></td></tr></table>");
+	       			 $('[id$=forDesableSave]').show();
+	   			});	
+			/*} else {
+				alert("Please Selected The Any checkbox:")
+			}	*/	
+	  	}
+
+	  	function forEditTableSave() {
+	  		$( "#showSuccessfulMsg" ).text('');
+	  		$.blockUI({ message: '<h1><img src="https://suresh1999-dev-ed--c.visualforce.com/resource/1553686219000/AutomaticUiBlock" /> Just a moment...</h1>' }); 
+            var selectFields = $( "#sobjectFields" ).val();  	
+   	    	var sobjectOptionList = document.getElementsByClassName("chartBlock")[0];
+			var selectedObject = sobjectOptionList.options[sobjectOptionList.selectedIndex].value;				
+			var jsonStringOfRecord = '';
+			var arrayForJson =[];
+	  		$("#table2 tr").each(function ()  {
+       			 var allDataOfTr = $(this);
+        		 var selectedId = $.trim(allDataOfTr.find('td:eq(0)').html());
+       			 var selectedFielRec = $.trim(allDataOfTr.find('td:eq(1) input').val());
+       			 objForJson = {};
+   				 objForJson['Id'] = selectedId;
+       			 objForJson[selectFields] = selectedFielRec;
+       			 arrayForJson.push(objForJson);
+       		});
+       		jsonStringOfRecord = JSON.stringify(arrayForJson);
+       		Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.SobjectAndFieldsComponentController.saveTheRecordAfterEdit}',selectedObject,jsonStringOfRecord,
+                function(result){
+                	$.unblockUI();
+                	$( "#showSuccessfulMsg" ).show();
+                	$('[id$=table2]').hide();
+                	$('[id$=table1]').hide();
+                	$( "#showSuccessfulMsg" ).append( "<li>Successful Update Record!</li>" );
+                	$('[id$=forDesableSave]').prop('disabled',true);
+                	$('[id$=forDesableEdit]').prop('disabled',true);  
+                	$('[id$=forDesableSave]').hide();
+                	$('[id$=forDesableEdit]').hide(); 	
+                	$( "#tagss" ).val('');
+                	$("#table1").html("");
+                	setTimeout(function() { $("#showSuccessfulMsg").hide(); }, 3000);
+                }, 
+                {escape: false});
+	  	} 
+    </script>
+    <div id='table2'>	
+	</div>							
+</apex:component>

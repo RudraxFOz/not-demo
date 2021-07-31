@@ -1,0 +1,44 @@
+<aura:component implements="lightning:isUrlAddressable" controller="ProductHomeController1">
+	<aura:attribute name="parentProductId" type="String" default="01t6F00000BLHiPQAX"/>
+	<aura:attribute name="parentProductName" type="String" default="T-Shrit"/>
+    <aura:attribute name ="allFetchedRecords" type="List"/>
+	<aura:attribute name="productAttributes" type="List"/>
+    <aura:attribute name="previousAttribute" type="String" default=''/>
+    <aura:attribute name="selectedValues" type="Object"/>
+    <aura:attribute name="remainingParentRecords" type="List"/>
+    <aura:attribute name="result" type="String"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<lightning:layout class="slds-align_absolute-center">
+		<lightning:layoutItem size="12" class="slds-card design" largeDeviceSize="8" mediumDeviceSize="4" smallDeviceSize="6" padding="around-small">
+            <lightning:card> 
+                <div class="slds-align_absolute-center imgWidth">
+                    <aura:if isTrue="{!v.parentProductName == 'Bulb'}">
+                        <img src="{!$Resource.BulbImg}" />
+                    </aura:if>
+                    <aura:if isTrue="{!v.parentProductName == 'Shoes'}">
+                        <img src="{!$Resource.ShoesImg}" />
+                    </aura:if>
+                    <aura:if isTrue="{!v.parentProductName == 'T-Shrit'}">
+                        <img src="{!$Resource.TshirtImg1}" />
+                    </aura:if>
+                </div>
+                <div class="headerLabel">SELECT ATTRIBUTES : </div>
+                <aura:iteration items="{!v.productAttributes}" var="attribute">
+                    <div class="productName">
+                        {!attribute.ProductAttributeName}
+                        <div class="productButton">
+                            <aura:iteration items="{!attribute.values}" var="attr_value">
+                                <lightning:button variant="neutral" label="{!attr_value}" name="{!attribute.ProductAttributeName}" aura:id="ltng-btn" onclick="{!c.handleclick}"/>
+                            </aura:iteration> 
+                        </div>
+                    </div>
+                </aura:iteration>
+                <div style="padding-top:9px;">
+                    <lightning:button variant="neutral" label="Show Product" onclick="{!c.showProductId}"/>
+                    <lightning:button variant="neutral" label="Reset" onclick="{!c.resetValues}"/>
+                    <span class="resultLabel">{!v.result} </span>
+                </div>
+            </lightning:card>
+		</lightning:layoutItem>
+	</lightning:layout>
+</aura:component>

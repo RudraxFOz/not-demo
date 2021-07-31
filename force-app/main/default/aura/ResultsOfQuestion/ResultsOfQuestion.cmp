@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="moretabs" type="Aura.Component[]"/>
+    <lightning:tabset variant="scoped">
+        <lightning:tab label="Item One">
+            Some content here
+        </lightning:tab>
+        <aura:iteration items="{!v.moretabs}" var="obj">
+            {!obj}
+        </aura:iteration>
+        
+    </lightning:tabset>
+    <lightning:button label="Add tab" onclick="{!c.addTab}"/>
+</aura:component>

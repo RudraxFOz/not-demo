@@ -1,0 +1,25 @@
+<apex:page extensions="AllInOneControl" standardController="AllInOne__c">
+ <apex:form >
+     <apex:pageBlock >
+     <apex:pageBlockButtons >
+                <apex:commandButton action="{!showrec}" value="show"/>
+            </apex:pageBlockButtons>
+     <apex:pageBlockTable value="{!samepage}" var="c">
+          <apex:column headerValue="First Name">
+          <apex:outputField value="{!c.First_Name__c}"/>
+          </apex:column>
+          
+          <apex:column headerValue="Last Name">
+          <apex:outputField value="{!c.Last_Name__c}"/>
+          </apex:column>
+          
+          <apex:column headerValue="Email">
+          <apex:outputField value="{!c.EmailId__c}"/>
+          </apex:column>
+          <apex:column headerValue="Phone">
+          <apex:outputField value="{!c.Phone_No__c}"/>
+          </apex:column>
+     </apex:pageBlockTable>
+     </apex:pageBlock>    
+ </apex:form>
+</apex:page>

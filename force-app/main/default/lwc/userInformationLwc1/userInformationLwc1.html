@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="GetUserDetail" icon-name="custome:custome19">
+        <div class="slds-m-around_medium">
+            <p>User Id:</p>
+            {userId}
+        </div>
+        <lightning-record-view-form record-id={userId} object-api-name="User">
+            <div class="slds-box">
+                <lightning-output-field field-name="Name"></lightning-output-field>
+                <lightning-output-field field-name="Username"></lightning-output-field>
+                <lightning-output-field field-name="Email"></lightning-output-field>
+                <lightning-output-field field-name="CompanyName"></lightning-output-field>
+            </div>
+        </lightning-record-view-form>
+    </lightning-card>
+</template>

@@ -1,0 +1,11 @@
+<apex:page controller="Sample">
+    <apex:form id="form">
+        <apex:selectRadio value="{!selectedOption}">
+            <apex:actionSupport event="onchange" rerender="form" />
+            <apex:selectOption itemValue="Yes2" itemLabel="Yes1" />
+            <apex:selectOption itemValue="No2" itemLabel="No1" />
+        </apex:selectRadio>
+        =={!selectedOption}===
+        <apex:inputText rendered="{!selectedOption='Yes'}" />
+    </apex:form>
+</apex:page>

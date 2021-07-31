@@ -1,0 +1,5 @@
+<apex:page >
+  <c:FirstComponet myValue="My value" textColor="red" />
+    <c:FirstComponet myValue="My value"  textColor="yellow"/>
+
+</apex:page>

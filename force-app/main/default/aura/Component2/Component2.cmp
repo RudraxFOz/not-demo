@@ -1,0 +1,4 @@
+<aura:component >
+   <aura:attribute name="res" type="String" />
+   The result is {!v.res}
+</aura:component>

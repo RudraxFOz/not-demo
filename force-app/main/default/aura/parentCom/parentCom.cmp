@@ -1,0 +1,7 @@
+<aura:component >
+    <aura:attribute name="parentAtt"  type="String" default="parent attribute"/>
+    <aura:handler name="change" value="{!v.parentAttr}" action="{!c.onParentAttrChange}"/>
+        <p>parentExpr parentAttr: {!v.parentAtt}</p>
+    <p><lightning:button label="Update parentAttr"
+          onclick="{!c.updateParentAttr}"/></p>
+</aura:component>

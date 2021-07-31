@@ -1,0 +1,13 @@
+<aura:event type="application" description="Event to remove Row" >
+    <aura:attribute name="indexVar" type="Integer" description="Use For Delete Row" />
+    <aura:attribute name="columnTotalMo" type="Integer" description="Use for Show Money Column total on parent from child" />
+    <aura:attribute name="columnTotalTu" type="Integer" description="Use for Show Tuesday Column total on parent from child" />
+    <aura:attribute name="columnTotalWe" type="Integer" description="Use for Show Wednesday Column total on parent from child" />
+    <aura:attribute name="columnTotalTh" type="Integer" description="Use for Show Thursday Column total on parent from child" />
+    <aura:attribute name="columnTotalFr" type="Integer" description="Use for Show Friday Column total on parent from child" />
+    <aura:attribute name="columnTotalSa" type="Integer" description="Use for Show Saturday Column total on parent from child" />
+    <aura:attribute name="columnTotalSu" type="Integer" description="Use for Show Sunday Column total on parent from child" />
+    <aura:attribute name="columnTotal" type="Integer" description="Use for Show Column total on parent from child" />
+    <aura:attribute name="rowTotal" type="Integer" description="Use for Show row total on parent from child" />
+    <aura:attribute name="rowTotalValidation" type="Integer" description="Use for Show row total on parent from child" />
+</aura:event>

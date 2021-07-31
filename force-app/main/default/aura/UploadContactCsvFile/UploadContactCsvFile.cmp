@@ -1,0 +1,27 @@
+<aura:component controller="UploadContactCsvFileClass">
+    
+    <aura:attribute name ="listOfCamaignStatus" type="List" />
+    <aura:attribute name="selectedValue" type="String" default="Red"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+        <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+        </div>
+    </aura:if>
+    <input type="file" name="uploadDataForContact"  aura:id="file" />
+    <lightning:input type="text" label="campaignName"  aura:id="inputText" name="campaignName" />
+    <lightning:select label="Choose Status" name="status" aura:id="status" value="{!v.selectedValue}"> 
+        <aura:iteration items="{!v.listOfCamaignStatus}" var="lstStatus">
+            <option text="{!lstStatus.label}" value="{!lstStatus.value}" />
+        </aura:iteration>
+    </lightning:select>
+    <lightning:button label="Create Contact" onclick="{!c.createRecord}"/>
+</aura:component>

@@ -1,0 +1,143 @@
+<apex:page showHeader="true" sidebar="true" controller="GoogleDriveIntgrationController"  action="{!driveAuth}" standardStylesheets="false">
+	<html >
+	  <apex:form >
+		<head>			
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+			<apex:actionFunction name="bedkarma" action="{!breadKarmAddFuction}" />
+			<apex:actionFunction name="deleteFolderAndFile" action="{!deleteFolderAndFileFuction}" />
+			<apex:actionFunction name="createFold" action="{!createFolderAndFile}" />
+		</head>
+		<script type="text/javascript">
+			/*$(document).ready(function(){
+				$('.launch-modal').click(function(){
+					$('#myModal').modal({
+						backdrop: 'static'
+					});
+				}); 
+			});*/
+		</script>
+		<body>
+			 <apex:actionRegion >
+			<div class="container">  
+			  <div class="row">
+    			<div class="col-sm">
+                    <div class="breadcrumb breadcrumb-item badge badge-secondary">
+                        <apex:repeat value="{!bedkarm}" var="karm"  >               
+                            <apex:commandLink action="{!breadKarmRemoveFuction}" value="{!karm.name}"  >
+                                <apex:param value="{!karm.name}" name="nameOfSeletedGreadKarm"  assignTo="{!nameOfGridKarmFolder}"/> 
+                                <apex:param value="{!karm.id}" name="nameOfF"  assignTo="{!folderId}"/> 
+                                <apex:param value="{!karm.id}" name="idOfGread"  assignTo="{!idOfFolderOnGread}"/>             
+                            </apex:commandLink>
+                          	<h4>></h4> 
+                        </apex:repeat>    
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+    			<div class="col-sm">
+    				<div class="form-group">
+  						<label for="usr">Create Folder</label>
+ 						<!-- <input type="text" class="form-control" id="usr" value="{!nameOfCreateFolder}"/> -->
+ 						<apex:inputText value="{!nameOfCreateFolder}" styleclass="form-control"/>
+ 						<!-- <button type="button" class="btn btn-success" onclick="createFold(); return false;">Create Folder</button> -->
+ 						<apex:commandButton styleclass="btn btn-success" onclick="createFold(); return false;" value="Create Folder"/>
+					</div>
+    			</div>
+    		  </div>
+			  <div class="table-responsive">   
+				  <table class="table">
+					   <thead>
+					      <tr>
+					        <th>Folder Name</th>
+					        <th>Action</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    	<apex:repeat value="{!listOfFolder}" var="listOfFol" >
+						      <tr>
+						        <td>
+						      		<apex:commandLink action="{!folderAndFiles}" value="{!listOfFol.name}" oncomplete="bedkarma();">   
+                                        <apex:param value="{!listOfFol.name}" name="nameOfFolder"  assignTo="{!nameOfSelectedFolder}"/> 
+                                        <apex:param value="{!listOfFol.id}" name="nameOfId"  assignTo="{!idOfTheFolder}"/>  
+                                        <apex:param value="{!listOfFol.id}" name="nameOfIdForMain"  assignTo="{!folderId}"/> 
+                                    </apex:commandLink>  	
+						        </td>
+						        <td>
+						        	
+						        	 <apex:commandLink status="status" value=""  onclick="return confirm('Are you sure you want to delete ' + '{!listOfFol.name}');"  action="{!deleteFolderAndFileFuction}">
+						        	 <!-- <i class="fa fa-trash"></i> -->
+						        	 <span class="glyphicon glyphicon-trash launch-modal"></span>
+						        		  
+                                      	<apex:param value="{!listOfFol.id}" name="idForDelete"  assignTo="{!folderId}"/>                            
+                                     </apex:commandLink>
+						        </td>
+						      </tr>
+						    </apex:repeat>
+					    </tbody>
+			  	  </table>
+			  </div>
+			  <div class="table-responsive">          
+				  <table class="table">
+					   <thead>
+					      <tr>
+					        <th>File Name</th>
+					        <th>Action</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    	 <apex:repeat value="{!listOfFile}" var="listOfFil" >
+						      <tr>
+						        <td>{!listOfFil.name}</td>
+						        <td>
+						        	 <apex:commandLink onclick="return confirm('Are you sure you want to delete ' + '{!listOfFil.name}');" action="{!deleteFolderAndFileFuction}" status="status" value="">
+						        	 <!-- <i class="fa fa-trash"></i> -->
+						        	 <span class="glyphicon glyphicon-trash"></span>
+                                      	<apex:param value="{!listOfFil.id}" name="idForDelete"  assignTo="{!folderId}"/>                            
+                                     </apex:commandLink>
+						        </td>
+						      </tr>
+						     </apex:repeat>
+					    </tbody>
+			  	  </table>
+			  </div>
+
+			  <div class="row">
+    			<div class="col-sm">
+			  		<apex:inputFile value="{!file}" filename="{!nameOfFile}" />
+                    <apex:commandButton value="Upload" action="{!uploadFileFuction}"/>
+                </div>
+               </div>
+ 				
+			</div>
+			
+			 </apex:actionRegion>
+
+			 <!--  <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to save changes you made to document before closing?</p>
+                    <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
+                    <p class="text-info"><small><strong>Note:</strong> Press Tab key on the keyboard to enter inside the modal window after that press the Esc key. By default keyboard option is true that means modal hide on the press of escape key.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+			
+
+		</body>
+	  </apex:form>
+	</html>
+</apex:page>

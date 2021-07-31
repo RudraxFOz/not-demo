@@ -1,0 +1,79 @@
+<apex:component controller="InvitationController" access="global">
+  
+    <apex:attribute name="InvId" type="Id" description="Id of the Invitation" assignTo="{!invitationId}"/>
+
+    <apex:repeat value="{!InvitationList}" var="inv">
+        <table style="border-collapse:collapse;border-spacing:0;table-layout:fixed;width:100%">
+            <tbody>
+                <tr>
+                    <td style="padding:0;vertical-align:top;padding-left:32px;padding-right:32px;word-break:break-word;word-wrap:break-word">
+                        <p style="margin:1em 0;margin-top:0;font-size:16px;color:#565656;line-height:24px;margin-bottom:24px">
+
+                            <br/> Invitation Name : {!inv.Name}
+                            
+                            <br/> Event Start date : {!inv.Event__r.Start_Date__c}
+                            
+                            <br/> Event End date : {!inv.Event__r.End_Date__c}
+                            
+                            <br/> Event Description : {!inv.Event__r.Description__c}
+                            
+                        </p>
+                    </td>
+                </tr>  
+            </tbody>
+        </table>       
+     </apex:repeat>
+    <H4>
+        Please gievn the Decision for Event :-
+    </H4>
+      
+<html>
+       <form target="_blank">
+    <head>
+        <script src="script.js"></script>
+     
+    </head>
+    <body onload="main();">
+     
+
+        <button  id="yesId">Yes</button>
+        
+            <button class="slds-button slds-button_neutral" onclick="myFunction()">No</button>
+    <button class="slds-button slds-button_neutral" onclick="myFunction()">Maybe</button>
+    
+              
+    </body>
+    
+        </form>
+        <script>
+             document.getElementById("yesId").addEventListener("click", myFunction);
+        window.addEventListener('load', loadHandler);
+        //
+
+
+function myFunction() {
+    //CallApexMethod();
+     console.log('asd');
+    //alert('come==');
+    var valueOfYesId = document.getElementById('yesId').value;
+    console.log('==valueOfYesId=='+valueOfYesId);
+    //document.getElementById("demo").innerHTML = "Hello World";
+    Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.InvitationController.sayHello}', 
+            function(result, event){
+                 console.log('==result@@=='+result);
+                if (event.status) {
+                    //alert('come==@@'+result);
+                    console.log('==result=='+result);
+                }
+            }, 
+            {escape: true}
+        );
+}
+        function main() {
+        // Initialization work goes here.
+            console.log('asd@@@');
+    }
+</script>
+  </html>
+</apex:component>

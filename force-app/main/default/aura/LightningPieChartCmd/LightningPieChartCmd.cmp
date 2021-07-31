@@ -1,0 +1,79 @@
+<aura:component controller="LightningPieChartCls1">
+    <ltng:require scripts="{!join(',',$Resource.highcharts,
+                           $Resource.export,
+                           $Resource.exportdata
+                           )}" afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    
+  
+    <aura:attribute name="chartType" type="string"/>  
+    <aura:attribute name="dynamicChildLst" type="List" />
+    <aura:attribute name="chartTitle" type="string" default="Object by childObj"/>
+    <aura:attribute name="chartSubTitle" type="string" default="Display Childobject "/>
+    <aura:attribute name="xAxisCategories" type="string[]" default="['Qualification','Negotiation/Review','Closed Won','Id. Decision Makers','Proposal/Price Quote','Proposition','Prospecting','Perception Analysis','Needs Analysis']"/>
+    <aura:attribute name="yAxisParameter" type="string" default="No. of Opportunity"/>
+    <aura:attribute name="data" type="string"/>
+
+
+    <aura:attribute name="PageHeading" type="String" default="Schema Class In Lightning to Query all Objects"/>
+    <aura:attribute name="mydata" type="sObject"/>
+    <aura:attribute name="pickl" type="List" />
+    <aura:attribute name="selectedValue" type="String" />
+   
+
+    <div class="slds-m-top--xx-large">
+    	<div class="slds-page-header">
+    		<div class="slds-align--absolute-center">
+        		<div class="slds-text-heading--large">       
+    				{!v.PageHeading}
+                </div>
+        	</div>
+    	</div>
+    </div>
+    <br/> <br/>
+     
+    <div class = "slds-size--3-of-8">
+    	<lightning:select aura:id="selectid" label="Select Object" name="obj" value="{!v.selectedValue}">
+            <option value="" text="- None -" />
+            <aura:iteration items="{!v.pickl}" var="per">
+            	<option value="{!per}" text="{!per}" />  
+        	</aura:iteration>
+        </lightning:select>
+        <br/>
+        <lightning:button label="Search" onclick="{!c.doSearch}"/>
+    </div>
+    <br/>
+    
+    <!-- <div class="slds">
+        <table data-reactroot="" class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps">
+                    <th scope="col">
+            			<div class="slds-truncate" title="Fields Name">Fields Name</div>
+          			</th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.mydata}" var="row">
+                    <tr>
+                        {!row.Contacts.length}
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div> -->
+    
+    
+   
+    <div class="slds-card">
+        <br/>
+        <center><b><h1 class="slds-page-header__title slds-truncate slds-align-middle">
+            Graphical Representaion of Object And Its Child Object</h1></b></center>
+        <br/>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--2-of-6 slds-large-size--4-of-12 cusdiv">
+                <div aura:id="chart" style="height: 400px"></div>
+            </div>
+           
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,59 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global" 
+                controller="KanBanViewController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="PaginationList" type="Object"/> 
+    <aura:attribute name="selectedCount" type="Integer" default="0"
+                    description="selected Records Count"/>
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer"/>
+    <aura:attribute name="totalRecordsCount" type="Integer"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"
+                    description="number of records to be display on per page"/>
+    <aura:attribute name="currentPage" type="integer" default="1"/>
+    <aura:attribute name="totalPagesCount" type="integer"/>
+    <aura:attribute name="lastId" type="String"/>
+    <aura:attribute name="firstId" type="String"/>
+    <aura:attribute name="bNoRecordsFound" type="boolean"/>
+    <aura:attribute type="Boolean" name="sortAsc" />
+    
+    
+    <aura:attribute name="allObject" type="object" />
+   
+    <aura:attribute name="objInfo" type="account" default="{sobjectType : 'Account'}" />
+	<aura:attribute name="listSkillsOptions" type="List" default="[]"/>
+    <aura:attribute name="selectedSkillsItems" type="List" default="[]"/>
+    <aura:attribute name="tableHeader" type="List" default="[]"/>
+    <aura:attribute name="disablePrevious" type="Boolean" default="true"/>
+    <aura:attribute name="disableNext" type="Boolean" default="true"/>  
+    <aura:attribute name="manageCheackBoxState" type="List" default="[]"/>
+    <aura:attribute name="sortField" type="String" default="id"/>
+    <aura:attribute name="sortDirection" type="String" default="ASC"/> 
+    <aura:attribute name="masterCheckBox" type="boolean" default="false"/> 
+    <aura:attribute name="showModelForKanbag" type="boolean" default="false"/>  
+    <aura:attribute name="selectObject" type="String"/> 
+
+    <lightning:select aura:id="selectObject" name="selectObject" label="Select a Object" onchange="{!c.onSelectObj}">
+        <option value="Choose the Obj..">Choose the Obj..</option>
+        <aura:iteration  items="{!v.allObject}" var="obj">
+            <option value="{!obj}">{!obj}</option>
+        </aura:iteration>
+    </lightning:select>
+
+    
+  
+   <!-- lightning dualListbox component -->
+    <lightning:dualListbox aura:id="selectOptions"
+                           name="Fields"
+                           label= "Select Fields" 
+                           sourceLabel="Available Options" 
+                           selectedLabel="Selected Options" 
+                           options="{!v.listSkillsOptions }"
+                           value="{!v.selectedSkillsItems}"
+                           onchange="{!c.handleDualList}"
+                          />
+    <aura:if isTrue="{!v.showModelForKanbag}">   
+        <c:dragAndDrop objName="{!v.selectObject}" objFields="['Name', 'AccountNumber', 'CreatedDate', 'Status__c']" kanbanPicklistField="Status__c" />
+    </aura:if> 
+
+</aura:component>

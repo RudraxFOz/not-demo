@@ -1,0 +1,43 @@
+<apex:page id="thePage" showHeader="false">
+
+
+  <script type="text/javascript">
+    window.onload = function() {
+   var next_time_draw = new Date('July 25, 2019 13:47:00').getTime();
+	var minutes, seconds;
+	var countdown = document.getElementById('clock');
+
+    setInterval(function () {
+        var current_date = new Date().getTime();
+        var seconds_left = (next_time_draw - current_date) / 1000;
+        console.log('==seconds_left=',seconds_left);
+        minutes = parseInt(seconds_left / 60);
+        seconds = parseInt(seconds_left % 60);
+        countdown.innerHTML = minutes + ":" + seconds;
+        if (minutes <= "0" && seconds <= "0") {
+            // Here is Action effect and reload objects
+           /* $.ajax({
+                            url: 'run_action_script.php?' + Math.random(),
+                            type: 'GET',
+                            cache: false,
+                            data: '',
+                            success: function (data) {
+                                $('#showinfo').html(data);
+                                $('#something').load('something.php?' + Math.random());
+                                return false;
+                            }
+                        }); */
+        }
+    }, 1000);
+
+}
+    /*window.onload = function() {
+      customClock('05:57:50');
+}*/
+
+</script>
+<div align="right">
+<button onclick="window.clearInterval();" id="stop">Stop Clock</button>
+</div>
+<div id="clock"></div>
+</apex:page>

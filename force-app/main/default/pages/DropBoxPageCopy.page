@@ -1,0 +1,189 @@
+<apex:page showHeader="true" sidebar="true" controller="DropboxController" docType="html-5.0"  standardStylesheets="false"   lightningStylesheets="true"   applyHtmlTag="true" applyBodyTag="false">
+<apex:slds />
+<html  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+  <apex:form >
+    <apex:actionStatus id="status">
+              <apex:facet name="start">
+              <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.75; z-index: 1000; background-color: black;">
+                  &nbsp;
+              </div>
+              <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 30% 50%">
+                  <img src="http://upload.wikimedia.org/wikipedia/commons/e/ed/Cursor_Windows_Vistgif" />
+              </div>
+              </apex:facet>
+    </apex:actionStatus>
+    <script type="text/javascript">
+      function createFolderJavaSfuction() {
+        if (confirm('Are you sure you want to create Folder?')) {
+            // Save it!
+             createFloderFuction();
+        } else {
+            // Do nothing!
+        }
+       
+      }
+    </script>
+    <style type="text/css">
+      .forCreateFolder{
+        margin-left: 70rem;
+        width: 14rem;
+      }
+
+      .forCreateFolderButton{
+        margin-left: 70rem;
+      }
+
+
+    </style>
+    <head>        
+      <meta charset="utf-8" />
+      <meta http-equiv="x-ua-compatible" content="ie=edge" />
+      <title>Salesforce Lightning Design System Trailhead Module</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <apex:actionFunction name="createFold" action="{!createFloderFuction}" />
+    </head>
+    <div class="slds-scope">
+      <div class="slds-grid slds-gutters">
+        <div class="slds-col">
+        <span>1</span>
+      </div>
+      <div class="slds-col">
+        <span>2</span>
+      </div>
+      <div class="slds-col">
+        <span>3</span>
+      </div>
+    </div>
+      <div class="slds-box">
+        <!-- <apex:image url="{!imageURL}"/> -->
+        <img id="theImage" src="https://suresh1999-dev-ed--c.visualforce.com/resource/1550208016000/ShowDropboxImg?" width="30" height="15"/>
+        <p align="left">Dropbox</p>
+        <p align="right">User : Suresh Kumar</p>
+      </div>
+     
+    </div>
+     <div class="slds-form-element slds-scope forCreateFolder" >
+  <label class="slds-form-element__label slds-grid_align-right" for="text-input-id-1" >Create Folder:</label>
+  <div class="slds-form-element__control slds-m-bottom_medium"  >
+    <input id="text-input-id-1" placeholder="Write name of folder for create"  class="slds-input" type="text" value="{!nameOfCreateFolder}"  />
+  </div>
+</div>
+<div class="slds-scope forCreateFolderButton">
+    <button class="slds-button slds-button_neutral " onclick="createFolderJavaSfuction();return false;" >Create Folder</button>
+
+</div>
+
+    <!-- <apex:actionFunction name="author" value={!callAuthCode} /> -->
+    
+    <apex:actionFunction name="bedkarma" action="{!breadKarmAddFuction}" />
+    <apex:commandButton value="Connect" action="{!callAuthCode}" status="status" />
+    <!--  <Apex:actionRegion >
+      <apex:outputText value="Create The Folder:" />
+        <apex:input type="text"  value="{!nameOfCreateFolder}"  onchange="createFold();" />
+     
+     </Apex:actionRegion> -->
+     
+      <apex:pageBlock id="ii" >
+
+       <apex:repeat value="{!bedkarm}" var="karm"  > 
+
+        <apex:commandLink action="{!breadKarmRemoveFuction}" value="{!karm.name}"  >
+
+                <apex:param value="{!karm.name}" name="nameOfSeletedGreadKarm"  assignTo="{!nameOfGridKarmFolder}"/> 
+                <apex:param value="{!karm.path_lower}" name="nameOfF"  assignTo="{!mainVarForPath}"/> 
+                <apex:param value="{!karm.id}" name="idOfGread"  assignTo="{!idOfFolderOnGread}"/> 
+                
+        </apex:commandLink>
+       <!--  <apex:outputText value="->" style="color: blue;"/> -->
+        
+        <div class="slds-form-element slds-scope">
+            <span class="slds-form-element__label">></span>
+        </div>
+
+        <!-- <div class="slds-form-element__control slds-has-divider--bottom">
+        
+        </div> -->
+        
+      
+       </apex:repeat>
+       <div class="slds-scope">
+        <apex:repeat value="{!listOfFolder}" var="listOfFol" >
+           <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+              <thead>
+                <tr class="slds-line-height_reset">
+                 <th class="" scope="col">
+                    <div class="slds-truncate" title="Opportunity Name">listOfFol.name</div>
+                 </th>
+                </tr>
+              </thead>
+            </table>
+          </apex:repeat>
+        </div>
+   </apex:pageBlock>
+     <Apex:actionRegion >
+      <div class="slds-box">
+
+         <label class="slds-form-element__label slds-grid_align-right" for="text-input-id-1" >List Of Folder</label>
+      </div>
+     <apex:pageBlock title="List Of Folder" id="pblock" >
+     <apex:pageBlockTable value="{!listOfFolder}" var="listOfFol" styleClass="slds-table slds-table--bordered slds-table--striped">
+    
+      <apex:column headerValue="Folder" >
+        
+              <apex:commandLink action="{!showFolderandFiles}" value="{!listOfFol.name}"  oncomplete="bedkarma();">   
+                  <apex:param value="{!listOfFol.path_lower}" name="lowerPath"  assignTo="{!mainVarForPath}"/> 
+                  <apex:param value="{!listOfFol.name}" name="nameOfFolder"  assignTo="{!nameOfSelectedFolder}"/> 
+                  <apex:param value="{!listOfFol.id}" name="nameOfId"  assignTo="{!idOfTheFolder}"/>   
+              </apex:commandLink>
+      </apex:column>
+      <apex:column headerValue="Delete" >
+        <apex:commandLink action="{!deleteFolderAndFileFuction}" value="Delete"  reRender="pblock" status="status">
+
+                  <apex:param value="{!listOfFol.name}" name="sss"  assignTo="{!nameOfDeleteFolder}"/> 
+                  
+              </apex:commandLink>
+      </apex:column>
+      <apex:outputPanel rendered="{!If(listOfFolder.size==0,true,false)}">
+            <h1>
+                No Folder
+            </h1>
+      </apex:outputPanel>
+    
+        
+        </apex:pageBlockTable>
+   </apex:pageBlock>
+  </Apex:actionRegion>
+  <Apex:actionRegion >
+
+  
+   <apex:pageBlock title="List Of Files" id="fileTable">
+   <apex:pageBlockTable value="{!listOfFile}" var="listOfFil" styleClass="slds-table slds-table--bordered slds-table--striped">
+    <apex:column headerValue="File" >
+    <apex:commandLink action="{!showFolderandFiles}" value="{!listOfFil.name}"  >
+                  
+     </apex:commandLink>
+   </apex:column>
+   <apex:column headerValue="Delete" >
+    <apex:commandLink action="{!deleteFolderAndFileFuction}" value="Delete"  status="status" reRender="fileTable">
+
+                  <apex:param value="{!listOfFil.name}" name="sss"  assignTo="{!nameOfDeleteFolder}"/> 
+                  
+                </apex:commandLink>
+    </apex:column>
+    <apex:outputPanel rendered="{!If(listOfFile.size==0,true,false)}">
+            <h1>
+                No File
+            </h1>
+          </apex:outputPanel>
+      </apex:pageBlockTable>
+    
+   </apex:pageBlock>
+  </Apex:actionRegion>
+  <Apex:actionRegion >
+    <apex:inputFile value="{!file}" filename="{!nameOfFile}"/>
+    <apex:commandButton value="Upload" action="{!uploadFileFuction}" />
+  </Apex:actionRegion>
+  
+  </apex:form>
+</html>
+</apex:page>

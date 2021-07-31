@@ -1,0 +1,145 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes"
+                access="global" controller="ServerSidePagiCmdController">
+    
+    <!-- ATTRIBUTES -->
+    <aura:attribute name="SObjects" type="List"/>
+    <aura:attribute name="fields" type="List"/>
+    <aura:attribute name="selectedSObject" type="String"/>
+    <aura:attribute name="selectedFields" type="List"/>
+    <aura:attribute name="fieldsToShow" type="List"/>
+    <aura:attribute name="records" type="List"/>
+    <aura:attribute name="totalRecords" type="Integer" default="0"/>
+    <aura:attribute name="hasPrevious" type="Boolean" default="true"/>
+    <aura:attribute name="hasNext" type="Boolean" default="true"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="totalPages" type="Integer" default="1"/>
+    <aura:attribute name="currentRecordSetFirstRecordId" type="String" default=""/>
+    <aura:attribute name="currentRecordSetLastRecordId" type="String" default=""/>
+    <aura:attribute name="baseQuery" type="String" default=""/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name="sortField" type="String" default="id"/>
+    <aura:attribute name="sortDirection" type="String" default="ASC"/>
+    <aura:attribute name="isReversedList" type="Boolean" default="false"/>
+    <aura:attribute name="nameField" type="String"/>
+    <aura:attribute name="masterCheckBox" type="boolean" default="false"/>
+    <aura:attribute name="mapToHoldState" type="List" default="[]"/>
+
+    <!-- SPINNER -->
+    <lightning:spinner aura:id="mySpinner" class="slds-show"/>
+    
+    <!-- INIT HANDLER -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- MARKUP -->
+    <div style="display: flex;">
+        <!-- COMBOBOX TO SELECT OBJECT -->
+        <div style="width: 27.4%; margin-left:2%;">
+            <lightning:combobox name="" label="Select SObject" value="{!v.selectedSObject}" placeholder="Select SObject" options="{! v.SObjects }" onchange="{! c.getFields }"/>
+        </div>
+        <!-- DUAL SELECT LIST TO SELECT FIELDS -->
+        <div style="margin-left: 10%; width: 100%;">
+            <aura:if isTrue="{!v.selectedSObject != 'none'}">
+                <lightning:dualListbox  value = "{!v.selectedFields}"
+                                        label= "Select Fields" 
+                                        sourceLabel="Available" 
+                                        selectedLabel="Selected" 
+                                        fieldLevelHelp="This is a dual listbox" 
+                                        options="{!v.fields}" 
+                                        onchange="{! c.getRecordsFirstTime }"/>
+            </aura:if>
+        </div>
+    </div>
+    <div>
+        <aura:if isTrue="{! v.selectedFields.length != 0 }">
+            <div style="border: 1px solid; margin: 1%;">
+                <aura:if isTrue="{! v.records.length != 0 }">
+                    <h1 style="text-align: center; font-size: 25px; font-weight: bold; margin-top: 0.2%;">SERVER-SIDE PAGINATION</h1>
+                    <h1 style="margin-left: 1%; font-size: 16px; font-weight: 500;">{!'Total ' + v.totalRecords + ' Records'}</h1>
+                    <div  style="margin: 2%; width: 96%; height:250px; overflow:scroll;">
+                        <!-- SLDS TABLE -->
+                        <table class="slds-table slds-table_bordered" style="margin-top: -1%; margin-bottom: -1%;">
+                            <thead>
+                                <!-- MASTER CHECK BOX -->
+                                <tr>
+                                    <th style="width:3.25rem">
+                                        <lightning:input type="checkbox" id="mcb" onchange="{! c.updateCheckBoxes }" checked="{!v.masterCheckBox}" style="margin-left: 10%;"/>
+                                    </th>
+                                    <!-- FIELDS (HEADERS) -->
+                                    <aura:iteration items="{!v.fieldsToShow}" var="fieldToShow">
+                                        <th>
+                                            <a class="slds-th__action slds-text-link_reset" onclick="{!c.sort}" data-field="{!fieldToShow.value}">
+                                                <div>
+                                                    {!fieldToShow.label}
+                                                    <aura:if isTrue="{! and(v.sortDirection == 'ASC', v.sortField == fieldToShow.value) }">
+                                                        <div class="slds-icon_container">  
+                                                            <lightning:icon iconName="utility:arrowup" size="xx-small" alternativeText="sort arrow up"/>  
+                                                        </div>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{! and(v.sortDirection == 'DESC', v.sortField == fieldToShow.value) }">
+                                                        <div class="slds-icon_container">  
+                                                            <lightning:icon iconName="utility:arrowdown" size="xx-small" alternativeText="sort arrow down"/>  
+                                                        </div>
+                                                    </aura:if> 
+                                                </div>
+                                            </a>
+                                        </th>
+                                    </aura:iteration>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- FIELDVALUES -->
+                                <aura:iteration items="{!v.records}" var="record">
+                                    <tr>
+                                        <td class="slds-text-align_right">
+                                            <lightning:input type="checkbox" checked="{!record.isSelected}" id="{!record.id}" onchange="{!c.updateMasterCheckBox}" class="cb"/>
+                                        </td>
+                                        <aura:iteration items="{!record.fieldValues}" var="fieldValue">
+                                            <td>
+                                                {!fieldValue}
+                                            </td>
+                                        </aura:iteration>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="display: flex; margin: 1%;">
+                        <!-- PAGE SIZE SELECTION -->
+                        <div style="display:flex; width:12%;">
+                            <p style="width: 70%; margin-top: 3%;"> Records Per Page: </p>
+                            <select style="width: 30%" value="{!v.pageSize}" onchange="{!c.changePageSize}" class="slds-select">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                        <!-- SELECTED -->
+                        <div style="display: flex; margin-left: 2%; width: 6%; margin-top: 0.4%;">
+                            Selected : &nbsp; <p id="selected"> 0 </p>
+                        </div>
+                        <!-- NAVIGATION BUTTONS -->
+                        <div style="text-align: center; width: 72%;">
+                            <lightning:button disabled="{!!v.hasPrevious}" class="btn" variant="brand" label="&lt;&lt;" onclick="{!c.fetchFirstRecordSet}" />
+                            <lightning:button disabled="{!!v.hasPrevious}" class="btn" variant="brand" label="Previous"  onclick="{!c.fetchPreviousRecordSet}" />
+                            <lightning:button disabled="{!!v.hasNext}" class="btn" variant="brand" label="Next" onclick="{!c.fetchNextRecordSet}"/>
+                            <lightning:button disabled="{!!v.hasNext}" class="btn" variant="brand" label=">>"  onclick="{!c.fetchLastRecordSet}" />
+                        </div>
+                        <!-- CURRENT PAGE NUMBER -->
+                        <div style="width: 7%; font-size: 14px; float: right;">
+                            {!'Page ' + v.pageNumber + '/' + v.totalPages }
+                        </div>
+                    </div>
+                    <!-- WHEN RECORD SET IS EMPTY -->
+                    <aura:set attribute="else">
+                        <div style="text-align: center; font-size: 49px; margin: 5%; background: aliceblue;">
+                            No Records Found!
+                        </div>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>

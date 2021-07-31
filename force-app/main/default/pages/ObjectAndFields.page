@@ -1,0 +1,62 @@
+<apex:page controller="SobjectAndFields" >
+   <apex:form id="form">
+     <apex:pageBlock title="Select Object and Fields">
+       <apex:pageBlockSection title="Select an Object" collapsible="false" columns="2">
+       <apex:pageBlockSectionItem >
+                 <apex:outputLabel value="Select an object:"></apex:outputLabel>
+        <apex:selectList value="{!selectedObject}" size="1">
+            <apex:selectOptions value="{!objectOptions}" />
+            <apex:actionSupport reRender="form" event="onchange" />
+        </apex:selectList>
+    </apex:pageBlockSectionItem>
+   <!--  <apex:pageBlockSectionItem>
+     <apex:outputLabel value="Select Fields:"> </apex:outputLabel>
+        <apex:selectList  multiselect="true" size="6">
+            <apex:selectOptions value="{!fieldOptions}" />
+        </apex:selectList>
+    </apex:pageBlockSectionItem> -->
+
+       </apex:pageBlockSection>
+      </apex:pageBlock>
+
+      <apex:panelGrid columns="3" id="abcd">
+            <apex:selectList id="sel1" value="{!leftSelected}" multiselect="true" style="width:200px" size="5">
+                <apex:selectOptions value="{!fieldOptions}" />
+            </apex:selectList>
+             
+            <apex:panelGroup >
+                <br/>
+                <apex:image styleClass="picklistArrowRight" value="/s.gif">
+                    <apex:actionSupport event="onclick" action="{!getSelect}" reRender="abcd"/>
+                </apex:image>
+                <br/><br/>
+                <apex:image styleClass="picklistArrowLeft" value="/s.gif">
+                    <apex:actionSupport event="onclick" action="{!getDeselect}" reRender="abcd"/>
+                </apex:image>
+            </apex:panelGroup>
+            <apex:selectList id="sel2" value="{!rightSelected}" multiselect="true" style="width:200px" size="5">
+                <apex:selectOptions value="{!SelectedValues}" />
+            </apex:selectList>
+            <!--  <apex:commandButton value="Submit" action="{!queryForRecord}" /> -->
+        </apex:panelGrid>
+        <apex:pageBlock >
+              
+
+                <apex:commandButton value="Show Record" action="{!FatchTheRecord}"/>
+                <!-- <apex:selectOptions value="{!queryForRecord}" /> -->
+                <apex:pageBlockTable value="{!queryOnRecord}" var="rec">
+                <apex:repeat value="{!showField}" var="fiel">
+                <apex:column value="{!rec[fiel]}"/>
+                
+                </apex:repeat>
+                </apex:pageBlockTable>
+
+                
+            </apex:pageBlock>
+        <!-- <apex:dataTable value="{!queryForRecord}" var="rec">
+        <apex:column value="{!rec.id}"/>
+            </apex:dataTable>
+             -->
+
+   </apex:form>
+</apex:page>

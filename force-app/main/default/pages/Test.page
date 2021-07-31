@@ -1,0 +1,78 @@
+<apex:page >
+    <html>
+<head>
+<script   src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+button {
+background: steelblue; 
+border-radius: 4px; 
+height: 40px; 
+width: 100px; 
+color: white; 
+font-size: 20px; 
+cursor: pointer; 
+border: none; 
+}
+button:focus {
+outline: 0; 
+}
+#minutes, #seconds, #hours {
+font-size: 40px; 
+}
+.bigger {
+font-size: 40px; 
+}
+.button {
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: hotpink}
+
+.button:active {
+  background-color: hotpink;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+<body align='center'>
+<button onclick='set_timer()' class='button'>START</button>
+<button onclick='stop_timer()' class='button'>STOP</button>
+<label id="hours">00</label><span class='bigger'>:</span><label id="minutes">00</label><span class='bigger'>:</span><label id="seconds">00</label>
+</body>
+</html>
+<script>
+
+function pad(val) {
+    console.log("==val==",val);
+  valString = val + "";
+  if(valString.length < 2) {
+     return "0" + valString;
+     } else {
+     return valString;
+     }
+}
+
+totalSeconds = 3600;
+function setTime(hoursLabel, minutesLabel, secondsLabel) {
+    totalSeconds--;
+    secondsLabel.innerHTML = pad(totalSeconds%60);
+    minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+    hoursLabel.innerHTML = pad(parseInt(totalSeconds/60/60));
+    }
+
+function set_timer() {
+    hoursLabel =document.getElementById("hours");
+    minutesLabel = document.getElementById("minutes");
+    secondsLabel = document.getElementById("seconds");
+    console.log("==hoursLabel==",hoursLabel);
+    my_int = setInterval(function() { setTime(hoursLabel, minutesLabel, secondsLabel)}, 1000);
+}
+
+function stop_timer() {
+  clearInterval(my_int);
+}
+
+
+</script>
+</apex:page>

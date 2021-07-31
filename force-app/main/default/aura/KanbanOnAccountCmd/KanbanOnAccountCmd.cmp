@@ -1,0 +1,18 @@
+<aura:component  implements="force:appHostable">
+   <div class="c-container">
+        <lightning:layout>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <div class="custom-box">1</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <div class="custom-box">2</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto, no-grow" padding="around-small">
+                <div class="custom-box">3</div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                <div class="custom-box">4</div>
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

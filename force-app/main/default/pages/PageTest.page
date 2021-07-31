@@ -1,0 +1,24 @@
+<apex:page standardController="Contact" extensions="accIdext">
+<apex:form >
+<apex:pageBlock >
+    <apex:pageBlockSection title="Create Contact">
+        <apex:inputField value="{!Contact.FirstName}"/>
+        <apex:inputField value="{!Contact.lastName}"/>
+    </apex:pageBlockSection>
+
+    <apex:pageBlockSection title="Select Account">
+    <apex:actionRegion >
+        <apex:outputLabel >Account Name</apex:outputLabel>
+        <apex:inputField value="{!Contact.AccountId}">
+            <apex:actionSupport event="onchange" rerender="accNo" action="{!retrieveAccName}" immediate="false"/>
+        </apex:inputField>
+        <apex:outputPanel id="accNo">
+            <apex:outputLabel >Account Number</apex:outputLabel>
+            <apex:outputText value="{!accNum}"/>
+        </apex:outputPanel>
+    </apex:actionRegion>
+    </apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+
+</apex:page>

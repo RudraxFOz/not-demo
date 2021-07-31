@@ -1,0 +1,30 @@
+.THIS .forFullWidth {
+    width: 100%;
+    margin-left: 0rem;
+}
+.THIS .Prospect {
+    background-color:yellowgreen;
+}
+.THIS .Customer {
+    background-color:wheat;
+}
+.THIS .Pending {
+    background-color:burlywood;
+}
+.THIS .Technology {
+    background-color:chocolate;
+}
+.THIS .Other {
+    background-color:pink;
+}
+
+.THIS .Direct {
+    background-color:rgb(236, 16, 145);
+}
+.THIS .Channel {
+    background-color:blanchedalmond;
+}
+
+.THIS .balck {
+    background-color:black;
+}

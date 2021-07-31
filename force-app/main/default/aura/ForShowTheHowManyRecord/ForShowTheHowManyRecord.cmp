@@ -1,0 +1,93 @@
+<aura:component controller="AccountsController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="accountList" type="Account[]"/>
+    <aura:attribute name="PageNumber" type="integer" default="1"/>
+    <aura:attribute name="TotalPages" type="integer" default="0"/>
+    <aura:attribute name="TotalRecords" type="integer" default="0"/>
+    <aura:attribute name="RecordStart" type="integer" default="0"/>
+    <aura:attribute name="RecordEnd" type="integer" default="0"/>
+    <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+       <thead>
+        <tr class="slds-text-heading_label">   
+          <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+          <th scope="col"><div class="slds-truncate" title="Type">Type</div></th>
+          <th scope="col"><div class="slds-truncate" title="Number of Contacts">Number of Contacts</div></th>
+          <th scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+         </tr>
+      </thead>
+      <!-- </table> -->
+      <tbody>
+        <aura:iteration items="{!v.accountList}" var="accountss">
+            <lightning:card >
+                <div class="slds-grid slds-gutters">
+                  <div class="slds-col slds-size_1-of-4">
+                    <span><div class="slds-truncate" title="{!accountss.Name}">{!accountss.Name}</div></span>
+                  </div>
+                  <div class="slds-col slds-size_1-of-4">
+                    <span><div class="slds-truncate" title="{!accountss.Type}">{!accountss.Type}</div></span>
+                  </div>
+                  <div class="slds-col slds-size_1-of-4">
+                    <span><div class="slds-truncate" title="{!accountss.Number_of_Contacts__c}">{!accountss.Number_of_Contacts__c}</div></span>
+                  </div>
+                  <div class="slds-col slds-size_1-of-4">
+                    <span><div class="slds-truncate" title="{!accountss.Phone}">{!accountss.Phone}</div></span>>
+                  </div>
+                </div>
+            </lightning:card>
+            <!-- <lightning:card class="">
+            <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-4">
+       
+                       
+                    <span><div class="slds-truncate" title="{!accountss.Name}">{!accountss.Name}</div></span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+               
+                       
+                                <span><div class="slds-truncate" title="{!accountss.Type}">{!accountss.Type}</div></span>
+                   
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                        
+                        <span><div class="slds-truncate" title="{!accountss.Number_of_Contacts__c}">{!accountss.Number_of_Contacts__c}</div></span>
+                   
+                    </div>
+                    <div class="slds-col slds-size_1-of-4">
+                       
+                        <span><div class="slds-truncate" title="{!accountss.Phone}">{!accountss.Phone}</div></span>
+                    
+               </div>
+           
+        </div> -->
+    
+        </aura:iteration>
+        </tbody>
+    </table>     
+    <div class="slds-m-around_xx-large">
+        <div class="slds-float_left">
+            <ui:inputSelect aura:id="pageSize" label="Display Records Per Page: " change="{!c.onSelectChange}">
+                <ui:inputSelectOption text="10" label="10" value="true"/>
+                <ui:inputSelectOption text="15" label="15"/>
+                <ui:inputSelectOption text="20" label="20"/>
+            </ui:inputSelect>
+            <br/>
+        </div>
+    </div>
+    <!-- <div >
+            <p class="slds-page-header__title">{!v.RecordStart}-{!v.RecordEnd} of {!v.TotalRecords} | Page {!v.PageNumber} of {!v.TotalPages}</p> 
+        <div > -->
+                <div class="slds-clearfix">
+                <div class="slds-float_right">
+            
+            <lightning:button disabled="{!v.PageNumber == 1}" variant="brand" aura:id="prevPage" label="Prev" onclick="{!c.handlePrev}" />            
+            <lightning:button disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="brand" label="Next" onclick="{!c.handleNext}"/>
+        </div>
+    </div>
+   
+    <div class="slds-clearfix">
+            <div class="slds-float_right">
+              <p>I’m floooaaaating</p>
+            </div>
+          </div>
+   
+</aura:component>

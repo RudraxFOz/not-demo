@@ -1,0 +1,190 @@
+<apex:page showheader="false" sidebar="false" cache="false" contenttype="text/html" controller="BoxIntegrationController"  standardStylesheets="false" action="{!getAuthCode}"  docType="html-5.0">
+    <html>
+		<head>
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/base/jquery-ui.css" />     
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		    <apex:composition template="CommunityWelcomeTemplte" />
+	        <apex:actionStatus id="Status"  >
+	            <apex:facet name="start">
+	                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+	                    &nbsp;
+	                </div>
+	                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+	                    <div style="display: inline-block; padding: 2px; background-color: #fff; width: 125px;">
+	                        <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+	                        <span style="display: inline-block; padding: 10px 0px;">Please Wait...</span>
+	                    </div>
+	                </div>
+	            </apex:facet> 
+	        </apex:actionStatus>
+    	</head>
+        <body> 
+	      	<apex:form style="font-size: 14px">
+	        <script type="text/javascript">
+	          function createFolder(){
+	            var folderName = document.getElementById("folderName").value;                        
+	            callCreateFunctio(folderName);
+	          }
+	        </script>
+	        <script type="text/javascript">
+	          function fileDownload(filename){   
+	            alert(fileName);              
+	            /*var element = document.createElement('a');
+	            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(data));
+	            element.setAttribute('download', filename);
+	            element.style.display = 'none';
+	            document.body.appendChild(element);
+	            element.click();
+	            document.body.removeChild(element);*/
+	          }
+	        </script>
+	        <apex:actionFunction name="callCreateFunctio" action="{!createFolder}" reRender="">
+	          <apex:param name="folderName" id="folderName" value=""/>
+	        </apex:actionFunction>
+        		<div class="container"  margin-top="100px !important" style="width: 100%;">
+            		<apex:actionRegion >
+	            		<div class="well">
+						  	<div class="row">
+			    				<div class="col-sm">
+			                    	<div class="breadcrumb breadcrumb-item badge badge-secondary" style="color: #42f308fa;">
+			                        	<apex:repeat value="{!breadcrum}" var="fName">              
+			                            	<!-- <apex:commandLink action="{!forBack}" value="{!karm.name}"  style="color:white"  status="Status">
+				                               	<apex:param name="folderid" value="{!karm.id}" assignTo="{!folderid}"/>             
+			                            	</apex:commandLink> -->
+			                            	 <apex:commandlink value="{!fName.name}" action="{!navigationUsingBreadcrum}" style="color:white">
+							                  	<apex:param name="folderId" value="{!fName.id}"/>
+							                 </apex:commandlink>
+			                          		<span class="glyphicon glyphicon-menu-right"></span>
+			                        	</apex:repeat>    
+			                    	</div>
+			                	</div>
+				            </div>  
+				        </div>
+	          			<div class="panel panel-success">
+					  		<div class="panel-heading">Create Folder</div>
+								<div class="panel-body">                             
+			        				<div class="form-group">
+				        				<b><p class="text-muted col-xs-1">FolderName</p> </b>  
+				                		<div class="col-xs-1">
+				                    			<!-- <apex:inputText value="{!foldername}"  styleclass="form-control input-sm" /> -->  
+				                    		<!-- <input type="text" value="{!folderName}" class="form-control input-sm" />  -->   
+				                    		<apex:inputText value="{!folderNa}"  styleclass="form-control input-sm" />    
+				                		</div>
+			                			<div>
+			                    			<apex:commandButton action="{!createFolder}" value="Create folder" styleclass="btn btn-default" status="Status"  />    
+			                    			<!-- <apex:pageMessages id="msg" />  -->                           
+			                			</div>
+			            			</div>  
+			            		</div>
+			           	</div>  
+        				<div class="panel panel-success">
+						  	<div class="panel-heading">Folders</div>
+							<div class="panel-body"> 
+					            <div class="table-responsive">   
+									  <table class="table">
+										   <thead>
+										      <tr>
+											      <th>Folder Name</th>
+											      <th>Action</th>
+										      </tr>
+										    </thead>
+										    <tbody>
+										    	 <apex:repeat value="{!lstOfFolder}" var="folderName">
+											      <tr>
+											        <td>
+		                                        		<apex:commandLink value="{!folderName.name}" action="{!showSubFolder}">
+						                                    <apex:param name="folderId" value="{!folderName.id}"/>
+						                                    <apex:param name="folderName" value="{!folderName.name}"/>
+						                                </apex:commandlink> 	
+											        </td>
+											        <td>
+		                                        		<apex:commandLink value="" onclick="return confirm('Are you sure you want to delete ' + '{!folderName.name}');" action="{!deleteFileFolder}">
+		                                        		    <span class="glyphicon glyphicon-trash launch-modal"></span>
+							                             	<apex:param name="folderId" value="{!folderName.id}"/>
+							                             	<apex:param name="fType" value="{!folderName.type}"/>
+							                            </apex:commandLink>
+											        </td>
+											      </tr>
+											    </apex:repeat>
+										    </tbody>
+								  	  </table>
+								</div>
+							</div>
+						</div>
+          				<div class="panel panel-success">
+						  	<div class="panel-heading">Files</div>
+							<div class="panel-body"> 
+			                	<div class="table-responsive">          
+							  		<table class="table">
+								   		<thead>
+								      		<tr>
+								        		<th>File Name</th>
+								        		<th>Action</th>
+								      		</tr>
+								    	</thead>
+								    	<tbody>
+								    		 <apex:repeat value="{!lstOfFile}" var="lstFile">
+									      		<tr>
+									        		<td>{!lstFile.name}</td>
+									        		<td>
+			                                     		<apex:commandLink value="" onclick="return confirm('Are you sure you want to delete ' + '{!lstFile.name}');"  action="{!deleteFileFolder}" status="Status"  >
+			                                     			<span class="glyphicon glyphicon-trash"></span>
+			                                            	<apex:param name="folderId" value="{!lstFile.id}"/>
+								                          	<apex:param name="fType" value="{!lstFile.type}"/>
+			                                        	</apex:commandLink> 
+			                                        	|
+			                                     		<apex:commandLink value=""  title="View File" action="{!viewFile}">
+						                                    <span class="glyphicon glyphicon-eye-open"></span>   
+						                                    <apex:param name="fileId" value="{!lstFile.id}"/>
+					                                	</apex:commandLink> 
+					                                	|
+					                                	<apex:commandLink value=""   status="Status"  >
+			                                     			<span class="glyphicon glyphicon-download-alt"></span>
+			                                            	<apex:param name="foldelname" value="{!lstFile.id}" assignTo="{!foldelid}"/>
+			                                        	</apex:commandLink>  
+									        		</td>
+									      		</tr>
+									     	</apex:repeat>
+								    	</tbody>
+						  	  		</table>
+						  		</div>
+						  	</div>
+						</div>
+            		</apex:actionRegion>
+					<div class="panel panel-success">
+						<div class="panel-heading">Upload Files</div>
+							<div class="panel-body"> 
+								<form class="md-form" action="#">
+  									<div class="file-field">
+    									<div class="btn btn-primary btn-sm float-left">
+      										<span>Choose files</span>
+      										
+      										<apex:inputFile value="{!fileData}" fileName="{!RecFileName}"/>
+    									</div>
+    								</div>
+    							</form>
+            					<apex:commandButton value="Upload File" action="{!uploadFile}" status="Status" styleClass="btn btn-primary btn-sm"/>
+            					<apex:pageMessages id="upload" />
+        					</div>
+    					</div>
+    					
+       				</div>
+       		</apex:form>
+        </body>
+    </html>
+</apex:page>
+
+
+
+
+
+<!-- <apex:actionRegion >
+                    <apex:inputFile value="{!attacementbody}" filename="{!attacename}" />
+                    <apex:commandButton value="upload" action="{!uploadNewFile}" status="Status" />
+                    <apex:pageMessages id="upload" />
+                </apex:actionRegion>
+ -->
